@@ -1,8 +1,8 @@
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
-import { Typography } from '@material-ui/core';
+import { Box, Paper, Typography } from '@material-ui/core';
+import logo from '../../Images/logo.png';
 
 interface Props {
   asideText: string;
@@ -12,7 +12,10 @@ const AuthHeader = ({ asideText }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <Box p={1} className={classes.authHeader}>
+    <Paper elevation={3} className={classes.authHeader}>
+      <Box className={classes.brand}>
+        <img src={logo} />
+      </Box>
       <Typography className={classes.accAside}>{asideText}</Typography>
       <Link to="/login" className={classes.link}>
         <Button color="primary" className={classes.accBtn} variant="outlined">
@@ -24,7 +27,7 @@ const AuthHeader = ({ asideText }: Props): JSX.Element => {
           Sign Up
         </Button>
       </Link>
-    </Box>
+    </Paper>
   );
 };
 

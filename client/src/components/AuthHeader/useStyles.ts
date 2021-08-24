@@ -2,11 +2,18 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   authHeader: {
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-start',
     justifyContent: 'flex-end',
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
+    minWidth: '100%',
+    minHeight: '16vh',
+    maxHeight: '16vh',
+  },
+  brand: {
+    marginRight: 'auto',
+    marginLeft: 35,
   },
   accAside: {
     fontSize: 12,

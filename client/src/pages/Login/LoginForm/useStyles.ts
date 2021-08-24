@@ -6,14 +6,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   label: {
-    fontSize: 19,
-    color: 'rgb(0,0,0,0.4)',
+    fontSize: 14,
+    color: 'rgb(0,0,0,1)',
     paddingLeft: '5px',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
   },
   inputs: {
-    marginTop: '.8rem',
+    marginTop: '.3rem',
     height: '2rem',
-    padding: '5px',
+    padding: '10px',
+    border: '1px solid lightgray',
+    borderRadius: theme.shape.borderRadius,
   },
   forgot: {
     paddingRight: 10,
