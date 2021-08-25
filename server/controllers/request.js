@@ -10,8 +10,8 @@ exports.getRequests = asyncHandler(async (req, res, next) => {
   let requests;
   if (user) {
     requests = await Request.find({
-      $or: [{ user_id: user }, sitter_id: user];
-    })
+      $or: [{ user_id: user }, (sitter_id: user)],
+    });
   }
 
   if (!user) {
@@ -22,12 +22,10 @@ exports.getRequests = asyncHandler(async (req, res, next) => {
   res.status(200).json({ requests: requests });
 });
 
-
 // @route POST /requests
 // @desc Create a new request
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
-
   const { user_id, sitter_id, start, end } = req.body;
 
   if (!user_id || !sitter_id || !start || end) {
@@ -38,16 +36,15 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
     user_id,
     sitter_id,
     start,
-    end
+    end,
   });
 
   if (request) {
-    res.status(200)
+    res.status(200);
   } else {
     res.status(400);
     throw new Error("Invalid request data");
   }
-
 });
 
 // @route UPDATE /requests
@@ -55,7 +52,11 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.updateRequest = asyncHandler(async (req, res, next) => {
   const { id } = req.body;
-  const request = await Request.findByIdAndUpdate(id, { $set: { accepted: true } }, { new: true })
+  const request = await Request.findByIdAndUpdate(
+    id,
+    { $set: { accepted: true } },
+    { new: true }
+  );
 
   if (request) {
     res.status(200).json({ request: request });
