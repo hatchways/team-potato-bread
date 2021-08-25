@@ -30,6 +30,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#3a8dff',
     fontWeight: 'bold',
   },
+  demo: {
+    margin: theme.spacing(3, 2, 2),
+    padding: 10,
+    width: 160,
+    height: 56,
+    borderRadius: theme.shape.borderRadius,
+    marginTop: 49,
+    fontSize: 16,
+    fontWeight: 'bold',
+    backgroundColor: '#00A300',
+  },
 }));
 
 export default useStyles;
