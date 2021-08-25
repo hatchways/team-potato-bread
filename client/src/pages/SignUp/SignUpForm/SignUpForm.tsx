@@ -70,7 +70,6 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             error={touched.email && Boolean(errors.email)}
             value={values.email}
             onChange={handleChange}
-            // variant="outlined"
             placeholder="Your email"
           />
           <TextField
@@ -92,7 +91,6 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             error={touched.username && Boolean(errors.username)}
             value={values.username}
             onChange={handleChange}
-            // variant="outlined"
             placeholder="Name"
           />
           <TextField
@@ -113,7 +111,6 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             error={touched.password && Boolean(errors.password)}
             value={values.password}
             onChange={handleChange}
-            // variant="outlined"
             placeholder="Password"
           />
 

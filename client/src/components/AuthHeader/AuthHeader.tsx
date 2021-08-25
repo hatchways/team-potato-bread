@@ -16,17 +16,21 @@ const AuthHeader = ({ asideText }: Props): JSX.Element => {
       <Box className={classes.brand}>
         <img src={logo} />
       </Box>
-      <Typography className={classes.accAside}>{asideText}</Typography>
-      <Link to="/login" className={classes.link}>
-        <Button color="primary" className={classes.accBtn} variant="outlined">
-          Login
-        </Button>
-      </Link>
-      <Link to="/signup" className={classes.link}>
-        <Button color="primary" className={`${classes.accBtn} ${classes.accBtnFilled}`} variant="contained">
-          Sign Up
-        </Button>
-      </Link>
+      <Box className={classes.authWrapper}>
+        <Typography className={classes.accAside}>{asideText}</Typography>
+        <Box>
+          <Link to="/login" className={classes.link}>
+            <Button color="primary" className={classes.accBtn} variant="outlined">
+              Login
+            </Button>
+          </Link>
+          <Link to="/signup" className={classes.link}>
+            <Button color="primary" className={`${classes.accBtn} ${classes.accBtnFilled}`} variant="contained">
+              Sign Up
+            </Button>
+          </Link>
+        </Box>
+      </Box>
     </Paper>
   );
 };
