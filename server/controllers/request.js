@@ -26,17 +26,19 @@ exports.getRequests = asyncHandler(async (req, res, next) => {
 // @desc Create a new request
 // @access Private
 exports.createRequest = asyncHandler(async (req, res, next) => {
-  const { user_id, sitter_id, start, end } = req.body;
+  const { userId, sitterId, start, end, timeZone } = req.body;
 
-  if (!user_id || !sitter_id || !start || end) {
+  if (!userId || !sitterId || !start || !end || !timeZone) {
     res.status(404);
     throw new Error("Incomplete required data");
   }
+
   const request = await Request.create({
-    user_id,
-    sitter_id,
+    userId,
+    sitterId,
     start,
     end,
+    timeZone
   });
 
   if (request) {
@@ -65,3 +67,4 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
     throw new Error("Invalid data");
   }
 });
+
