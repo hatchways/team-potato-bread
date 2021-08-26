@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const reuqestSchema = new mongoose.Schema({
-  user_id: {
+const requestSchema = new mongoose.Schema({
+  userId: {
     type: Number,
     required: true,
   },
-  sitter_id: {
+  sitterId: {
     type: Number,
     required: true,
   },
@@ -29,10 +29,14 @@ const reuqestSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  request_date: {
+  requestDate: {
     type: Date,
     default: Date.now,
   },
+  timeZone: {
+    type: String,
+    require: true
+  }
 });
 
-module.exports = Request = mongoose.model("request", reuqestSchema);
+module.exports = Request = mongoose.model("request", requestSchema);
