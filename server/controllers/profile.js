@@ -53,9 +53,9 @@ exports.profileCreate=asyncHandler(async (req, res, next) => {
 })
 
 exports.profileUpdate=asyncHandler(async (req, res, next) => {
-    const {newData} = req.body
-    const profileId = req.params.id
-    let update = await Profile.findOneAndUpdate(profileId,newData)
+    const {newData,_id} = req.body
+
+    let update = await Profile.findOneAndUpdate(_id,newData)
     if(!update){
         res.status(401)
         throw new Error('could not update with given data')
