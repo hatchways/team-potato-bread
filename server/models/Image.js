@@ -19,7 +19,7 @@ const imageSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
   },
-  upload_date: {
+  uploadDate: {
     type: Date,
     default: Date.now
   }
