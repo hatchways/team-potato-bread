@@ -6,5 +6,9 @@
   },
   "scripts": {
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "-": "0.0.1",
+    "package-lock-only": "0.0.4"
   }
 }
