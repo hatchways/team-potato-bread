@@ -10,6 +10,7 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "-": "0.0.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.26.3",
     "colors": "^1.4.0",
@@ -24,6 +25,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "nodemon": "^2.0.6",
+    "package-lock-only": "0.0.4",
     "socket.io": "^4.1.0"
   },
   "devDependencies": {
