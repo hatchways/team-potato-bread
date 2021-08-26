@@ -3,16 +3,17 @@ const asyncHandler = require("express-async-handler");
 
 
 exports.profileList = asyncHandler(async (req, res, next) => {
-   const listOfProfiles = await Profile.find({})
+    const filter = {}
+   const listOfProfiles = await Profile.find(filter)
    if(!listOfProfiles){
        res.status(404)
    }
-    res.status(200).json({profiles:listOfProfiles})
+    res.status(200).json({listOfProfiles})
 })
 
 exports.profileSearch = asyncHandler(async (req, res, next) => {
-   const profileId = req.params.id
-   const profile = await Profile.findOne({profileId})
+   const {_id} = req.body
+   const profile = await Profile.findById({_id})
    if(!profile){
        res.status(400)
    }
