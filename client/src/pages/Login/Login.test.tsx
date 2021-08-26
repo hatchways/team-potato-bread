@@ -28,7 +28,7 @@ describe('Login tests', () => {
     );
     const account = getByText("Don't have an account?");
     expect(account).toBeInTheDocument();
-    const create = getByText('Create account');
+    const create = getByText('Sign up');
     expect(create).toBeInTheDocument();
     const title = getByText('Welcome back!');
     expect(title).toBeInTheDocument();
