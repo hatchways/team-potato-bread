@@ -6,22 +6,15 @@ import useStyles from './useStyles';
 
 const BookingCalendar = (): JSX.Element => {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState(['8/13/2021', '8/16/2021', '9/16/2021']);
 
-  const handleDateChange = () => {
+  const handleDateChange = (): boolean => {
     return true;
   };
 
-  function getBookedDayElement(day: DateIOType, selectedDate: DateIOType, dayInCurrentMonth: boolean) {
-    let date = `${day.getMonth() + 1}/${day.getDate()}/${day.getFullYear()}`;
-    let datesButton = (
-      <>
-        <IconButton className={dayInCurrentMonth ? classes.dateButton : classes.notInMonth}>
-          <span> {date} </span>
-        </IconButton>
-      </>
-    );
+  function getBookedDayElement(day: Date, selectedDate: Date, dayInCurrentMonth: boolean): JSX.Element {
+    const date = `${day.getMonth() + 1}/${day.getDate()}/${day.getFullYear()}`;
+    let datesButton: JSX.Element;
     if (bookedDates.indexOf(date) >= 0) {
       datesButton = (
         <>
@@ -45,7 +38,7 @@ const BookingCalendar = (): JSX.Element => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Paper elevation={3}>
-        <Calendar date={selectedDate} onChange={handleDateChange} renderDay={getBookedDayElement} />
+        <Calendar date={new Date()} onChange={handleDateChange} renderDay={getBookedDayElement} />
       </Paper>
     </MuiPickersUtilsProvider>
   );
