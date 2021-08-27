@@ -42,7 +42,7 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   });
 
   if (request) {
-    res.status(200).end;
+    res.status(200).end("success");
   } else {
     res.status(400);
     throw new Error("Invalid request data");
