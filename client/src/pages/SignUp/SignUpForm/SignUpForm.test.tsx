@@ -17,7 +17,7 @@ describe('SignUpForm tests', () => {
     const { getByLabelText, getByText } = render(<SignUpForm {...props} />);
     const username = getByLabelText('Username');
     expect(username).toBeInTheDocument();
-    const email = getByLabelText('E-mail address');
+    const email = getByLabelText('Email address');
     expect(email).toBeInTheDocument();
     const password = getByLabelText('Password');
     expect(password).toBeInTheDocument();
