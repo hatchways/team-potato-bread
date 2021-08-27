@@ -10,6 +10,6 @@ router.route("/").get(getRequests);
 
 router.route("/").post(createRequest);
 
-router.route("/").update(updateRequest);
+router.route("/").put(updateRequest);
 
 module.exports = router;

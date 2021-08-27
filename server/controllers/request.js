@@ -5,12 +5,12 @@ const asyncHandler = require("express-async-handler");
 // @desc list of requests for logged in user
 // @access Private
 exports.getRequests = asyncHandler(async (req, res, next) => {
-  const user = req.body.user_id;
+  const user = req.body.userId;
 
   let requests;
   if (user) {
     requests = await Request.find({
-      $or: [{ user_id: user }, (sitter_id: user)],
+      $or: [{ userId: user }, { sitterId: user }],
     });
   }
 
@@ -38,11 +38,11 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
     sitterId,
     start,
     end,
-    timeZone
+    timeZone,
   });
 
   if (request) {
-    res.status(200);
+    res.status(200).end;
   } else {
     res.status(400);
     throw new Error("Invalid request data");
@@ -53,9 +53,9 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 // @desc Update request with approved or decline
 // @access Private
 exports.updateRequest = asyncHandler(async (req, res, next) => {
-  const { id } = req.body;
+  const { _id } = req.body;
   const request = await Request.findByIdAndUpdate(
-    id,
+    _id,
     { $set: { accepted: true } },
     { new: true }
   );
@@ -67,4 +67,3 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
     throw new Error("Invalid data");
   }
 });
-
