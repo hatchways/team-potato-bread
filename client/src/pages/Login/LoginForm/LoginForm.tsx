@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import AuthSubText from '../../../components/AuthSubText/AuthSubText';
 
 interface Props {
   handleSubmit: (
@@ -48,7 +49,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
             id="email"
-            label={<Typography className={classes.label}>E-mail address</Typography>}
+            label={<Typography className={classes.label}>Email address</Typography>}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -56,6 +57,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             }}
             InputProps={{
               classes: { input: classes.inputs },
+              disableUnderline: true,
             }}
             name="email"
             autoComplete="email"
@@ -64,6 +66,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             error={touched.email && Boolean(errors.email)}
             value={values.email}
             onChange={handleChange}
+            placeholder="Your Email"
           />
           <TextField
             id="password"
@@ -75,7 +78,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             }}
             InputProps={{
               classes: { input: classes.inputs },
-              endAdornment: <Typography className={classes.forgot}>Forgot?</Typography>,
+              disableUnderline: true,
             }}
             type="password"
             autoComplete="current-password"
@@ -83,14 +86,13 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             error={touched.password && Boolean(errors.password)}
             value={values.password}
             onChange={handleChange}
+            placeholder="Your Password"
           />
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
             </Button>
-            <Button type="button" size="large" variant="contained" className={classes.demo}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
-            </Button>
+            <AuthSubText linkTo="/signup" linkText="Signup" text="Don't have an account?"></AuthSubText>
           </Box>
           <div style={{ height: 95 }} />
         </form>
