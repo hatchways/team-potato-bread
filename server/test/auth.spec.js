@@ -59,7 +59,7 @@ describe("/POST register", () => {
 
 // Test for loadUser route with authentication
 describe("/GET user", () => {
-  it("it should return list of users or fail if token is invalid", (done) => {
+  it("it should return the user details or fail if token is invalid", (done) => {
     chai
       .request(server)
       .get(`/auth/user`)
