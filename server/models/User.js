@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  images: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Image'
+  }],
   register_date: {
     type: Date,
     default: Date.now
