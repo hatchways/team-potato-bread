@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { findByLabelText } from '@testing-library/react';
 
 const useStyles = makeStyles(() => ({
   dateButton: {
@@ -34,6 +33,18 @@ const useStyles = makeStyles(() => ({
     padding: '0',
     fontSize: '0.6428571428571428rem',
     display: 'flex',
+  },
+
+  today: {
+    color: 'white',
+    fontWeight: 500,
+    backgroundColor: '#D0D0D0',
+    borderRadius: '60%',
+    width: '36px',
+    height: '36px',
+    margin: '0 2px',
+    padding: '0',
+    fontSize: '0.6428571428571428rem',
   },
 }));
 
