@@ -19,10 +19,8 @@ const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    console.log(event.target.files);
     const uploadedImage = event.target.files;
     setImage(uploadedImage);
-    console.log(image);
   };
 
   return (
