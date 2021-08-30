@@ -5,11 +5,13 @@ import Grid from '@material-ui/core/Grid';
 import MgnBookingHeader from '../../components/MgnBookingHeader/MgnBookingHeader';
 import BookingCalendar from '../../components/BookingCalendar/BookingCalendar';
 import useStyles from './useStyles';
+import BookingList from '../../components/BookingList/BookingList';
 
 export default function MyBookings(): JSX.Element {
   return (
     <Grid container component="main">
       <MgnBookingHeader />
+      <BookingList />
       <BookingCalendar />
     </Grid>
   );

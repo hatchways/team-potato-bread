@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Paper, IconButton } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, Calendar } from '@material-ui/pickers';
 import useStyles from './useStyles';
 
+//TODO: pass props and update bookedDate to update current bookedDates if user (sitter)
 const BookingCalendar = (): JSX.Element => {
   const classes = useStyles();
   const [bookedDates, setBookedDates] = useState(['8/13/2021', '8/16/2021', '9/16/2021']);
@@ -21,7 +22,7 @@ const BookingCalendar = (): JSX.Element => {
           <span> {day.getDate()} </span>
         </IconButton>
       );
-    } else if (date === today) {
+    } else if (date === today && dayInCurrentMonth) {
       datesButton = (
         <IconButton className={classes.today}>
           <span> {day.getDate()} </span>
