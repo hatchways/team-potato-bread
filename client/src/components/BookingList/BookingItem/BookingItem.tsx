@@ -30,11 +30,10 @@ const BookingItem: React.FC<Props> = ({ booking, nextBooking }): JSX.Element => 
       <Box className={classes.bookingInfoRow2}>
         <Avatar alt="Profile Image" src={booking.url} />
         <Typography className={classes.bookingName}>{booking.username}</Typography>
-        {!nextBooking && (
-          <Typography color="textSecondary" variant="body2" className={classes.acceptedStatus}>
-            ACCEPTED
-          </Typography>
-        )}
+        <Typography color="textSecondary" variant="body2" className={classes.acceptedStatus}>
+          {booking.declined && `DECLINED`}
+          {booking.accepted && `ACCEPTED`}
+        </Typography>
       </Box>
     </Box>
   );

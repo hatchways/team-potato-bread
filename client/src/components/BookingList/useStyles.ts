@@ -12,6 +12,10 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bolder',
     fontSize: 'smaller',
   },
+  scrollableArea: {
+    overflowY: 'auto',
+    height: '400px',
+  },
 }));
 
 export default useStyles;

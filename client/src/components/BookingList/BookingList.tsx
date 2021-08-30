@@ -21,7 +21,7 @@ const BookingList = (): JSX.Element => {
       time: '10-12 AM',
       username: 'Amy Hilton',
       url: 'https://robohash.org/mockLoggedInUser3@gmail.com.png',
-      accepted: false,
+      accepted: true,
       declined: false,
     },
     {
@@ -31,7 +31,7 @@ const BookingList = (): JSX.Element => {
       username: 'Charles Blank',
       url: 'https://robohash.org/mockLoggedInUser@gmail.com.png',
       accepted: false,
-      declined: false,
+      declined: true,
     },
   ]);
   const [pastBookings, setPastBookings] = useState([
@@ -41,7 +41,16 @@ const BookingList = (): JSX.Element => {
       time: '10-12 AM',
       username: 'Charles Blank',
       url: 'https://robohash.org/mockLoggedInUser1@gmail.com.png',
-      accepted: false,
+      accepted: true,
+      declined: false,
+    },
+    {
+      id: '893829',
+      date: '5 Aug 2021',
+      time: '10-12 AM',
+      username: 'Charles Blank',
+      url: 'https://robohash.org/mockLoggedInUser1@gmail.com.png',
+      accepted: true,
       declined: false,
     },
   ]);
@@ -54,13 +63,15 @@ const BookingList = (): JSX.Element => {
       </Paper>
       <Paper elevation={3} className={classes.bookingList}>
         <Typography className={classes.bookingType}>CURRENT BOOKINGS:</Typography>
-        {currentBookings.map((booking) => {
-          return <BookingItem booking={booking} nextBooking={false} key={booking.id} />;
-        })}
-        <Typography className={classes.bookingType}>PAST BOOKINGS:</Typography>
-        {pastBookings.map((booking) => {
-          return <BookingItem booking={booking} nextBooking={false} key={booking.id} />;
-        })}
+        <Box className={classes.scrollableArea}>
+          {currentBookings.map((booking) => {
+            return <BookingItem booking={booking} nextBooking={false} key={booking.id} />;
+          })}
+          <Typography className={classes.bookingType}>PAST BOOKINGS:</Typography>
+          {pastBookings.map((booking) => {
+            return <BookingItem booking={booking} nextBooking={false} key={booking.id} />;
+          })}
+        </Box>
       </Paper>
     </Box>
   );
