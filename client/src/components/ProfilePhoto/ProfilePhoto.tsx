@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -14,17 +14,26 @@ interface Props {
 }
 
 const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
+  console.log('hyere');
   const classes = useStyles();
 
-  // const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (image) {
+      const formData = new FormData();
+      formData.append('avatar', image);
+
+      uploadAvatar(loggedInUser.email, formData);
+    }
+  }, [image, loggedInUser]);
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
+
     const avatar = event.target.files![0];
-    if (avatar) {
-      const email = loggedInUser.email;
-      uploadAvatar(email, avatar);
-    }
+
+    setImage(avatar);
   };
 
   return (
