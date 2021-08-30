@@ -7,6 +7,7 @@ import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import { useEffect } from 'react';
+import ProfilePhoto from '../../components/ProfilePhoto/ProfilePhoto';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -32,6 +33,7 @@ export default function Dashboard(): JSX.Element {
       <CssBaseline />
       <Grid item className={classes.drawerWrapper}>
         <ChatSideBanner loggedInUser={loggedInUser} />
+        <ProfilePhoto loggedInUser={loggedInUser} />
       </Grid>
     </Grid>
   );

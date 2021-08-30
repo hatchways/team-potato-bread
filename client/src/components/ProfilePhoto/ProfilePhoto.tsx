@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -16,12 +16,15 @@ interface Props {
 const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
 
-  const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const image = event.target.files![0];
+  // const [image, setImage] = useState<File | null>(null);
 
-    const avatar = image;
-    const email = loggedInUser.email;
-    uploadAvatar(email, avatar);
+  const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const avatar = event.target.files![0];
+    if (avatar) {
+      const email = loggedInUser.email;
+      uploadAvatar(email, avatar);
+    }
   };
 
   return (
@@ -38,12 +41,28 @@ const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
         </Typography>
       </Box>
       <Box>
-        <input accept="image/*" id="uploadImageButton" type="file" className={classes.input} onChange={handleUpload} />
-        <label htmlFor="uploadImageButton">
-          <Button className={classes.uploadButton} variant="outlined" color="primary" component="span">
-            Upload a file from your device
-          </Button>
-        </label>
+        <form action="/image/avatar" encType="multipart/form-data" method="POST">
+          <input
+            accept="image/*"
+            id="uploadImageButton"
+            type="file"
+            name="avatar"
+            multiple={false}
+            className={classes.input}
+            onChange={handleUpload}
+          />
+          <label htmlFor="uploadImageButton">
+            <Button
+              className={classes.uploadButton}
+              variant="outlined"
+              color="primary"
+              component="span"
+              onSubmit={handleUpload}
+            >
+              Upload a file from your device
+            </Button>
+          </label>
+        </form>
       </Box>
       <Box>
         <Grid item className={classes.delete}>

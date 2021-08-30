@@ -4,6 +4,5 @@ export interface FetchOptions {
     'Content-Type': string;
   };
   body?: string;
-  file?: File;
   credentials: RequestCredentials;
 }
