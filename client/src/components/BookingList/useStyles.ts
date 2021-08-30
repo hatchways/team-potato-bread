@@ -4,8 +4,9 @@ const useStyles = makeStyles(() => ({
   bookingList: {
     display: 'flex',
     flexDirection: 'column',
-    width: '400px',
+    width: '500px',
     padding: '15px 10px',
+    margin: '30px',
   },
   bookingType: {
     marginTop: '10px',

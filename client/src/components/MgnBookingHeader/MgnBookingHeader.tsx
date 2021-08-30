@@ -13,7 +13,6 @@ const MgnBookingHeader = (): JSX.Element => {
         <img src={logo} />
       </Box>
       <Box className={classes.authWrapper}>
-        <Typography className={classes.accAside}>My Sitters</Typography>
         <Typography className={classes.accAside}>Message</Typography>
         <Box>
           <AvatarDisplay user={mockLoggedInUser} loggedIn={true} />

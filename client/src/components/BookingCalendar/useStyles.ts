@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
+  calendar: {
+    margin: '30px',
+    height: 'fit-content',
+    transform: 'scale(1.5)',
+    transformOrigin: 'top left',
+  },
   dateButton: {
     color: 'black',
     fontWeight: 500,

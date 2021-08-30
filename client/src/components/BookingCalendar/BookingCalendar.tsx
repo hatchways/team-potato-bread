@@ -3,7 +3,8 @@ import { Paper, IconButton } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, Calendar } from '@material-ui/pickers';
 import useStyles from './useStyles';
-
+import { MuiThemeProvider } from '@material-ui/core';
+import { calendarTheme } from './calendarTheme';
 //TODO: pass props and update bookedDate to update current bookedDates if user (sitter)
 const BookingCalendar = (): JSX.Element => {
   const classes = useStyles();
@@ -39,17 +40,19 @@ const BookingCalendar = (): JSX.Element => {
   }
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Paper elevation={3}>
-        <Calendar
-          date={new Date()}
-          onChange={() => {
-            return;
-          }}
-          renderDay={(...props) => getBookedDayElement([...props])}
-        />
-      </Paper>
-    </MuiPickersUtilsProvider>
+    <MuiThemeProvider theme={calendarTheme}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Paper elevation={3} className={classes.calendar}>
+          <Calendar
+            date={new Date()}
+            onChange={() => {
+              return;
+            }}
+            renderDay={(...props) => getBookedDayElement([...props])}
+          />
+        </Paper>
+      </MuiPickersUtilsProvider>
+    </MuiThemeProvider>
   );
 };
 
