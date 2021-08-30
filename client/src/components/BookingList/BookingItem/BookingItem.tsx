@@ -1,5 +1,4 @@
 import { Box, Typography, IconButton } from '@material-ui/core';
-import { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import useStyles from './useStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
