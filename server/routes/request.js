@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const protect = require('../middleware/auth');
 const {
   getRequests,
   createRequest,
   updateRequest,
 } = require("../controllers/request");
 
-router.route("/").get(getRequests);
+router.route("/").get(protect, getRequests);
 
-router.route("/").post(createRequest);
+router.route("/").post(protect, createRequest);
 
 router.route("/").put(updateRequest);
 
