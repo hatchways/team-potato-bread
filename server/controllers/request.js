@@ -27,6 +27,8 @@ exports.getRequests = asyncHandler(async (req, res, next) => {
       time: `${request.start.getHours()}:${request.start.getMinutes()} - ${request.end.getHours()}:${request.end.getMinutes()} ${request.end
         .toLocaleTimeString()
         .slice(-2)}`,
+      start: request.start,
+      end: request.end,
       timeZone: request.timeZone,
       accepted: request.accepted,
       declined: request.declined,
@@ -49,7 +51,6 @@ exports.getRequests = asyncHandler(async (req, res, next) => {
   };
 
   getRequestsList().then((data) => {
-    console.log(data);
     res.status(200).json({ requests: data });
   });
 });
