@@ -16,21 +16,23 @@ interface Props {
 const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
 
-  const [image, setImage] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [avatar, setAvatar] = useState<string>(loggedInUser.avatar);
 
   useEffect(() => {
-    if (image) {
+    if (file) {
       const formData = new FormData();
-      formData.append('avatar', image);
+      formData.append('avatar', file);
       formData.append('email', loggedInUser.email);
 
       uploadAvatar(formData);
+      setAvatar(loggedInUser.avatar);
     }
-  }, [image, loggedInUser]);
+  }, [file, loggedInUser, avatar]);
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const avatar = event.target.files![0];
-    setImage(avatar);
+    const newFile = event.target.files![0];
+    setFile(newFile);
   };
 
   return (
@@ -41,7 +43,7 @@ const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
         </Typography>
       </Box>
       <Box className={classes.root}>
-        <Avatar className={classes.avatarImage} alt="Profile Image" src={loggedInUser.avatar} />
+        <Avatar className={classes.avatarImage} alt="Profile Image" src={avatar} />
         <Typography className={classes.subtext} variant="subtitle1">
           Be sure to use a photo that clearly shows your face
         </Typography>

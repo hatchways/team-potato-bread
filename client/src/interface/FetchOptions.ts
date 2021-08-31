@@ -3,6 +3,6 @@ export interface FetchOptions {
   headers?: {
     'Content-Type': string;
   };
-  body?: any;
+  body?: string | FormData;
   credentials: RequestCredentials;
 }
