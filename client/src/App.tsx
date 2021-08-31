@@ -19,13 +19,13 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <Switch>
-                <Route exact path="/login" component={MyBookings} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
                 <Route exact path="/mybookings">
-                  <Dashboard />
+                  <MyBookings />
                 </Route>
                 <Route path="*">
                   <Redirect to="/login" />

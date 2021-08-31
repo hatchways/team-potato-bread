@@ -5,7 +5,6 @@ import BookingList from '../../components/BookingList/BookingList';
 import useStyles from './useStyles';
 import { useState, useEffect } from 'react';
 import data from './mockData';
-import { User } from '../../interface/User';
 import React from 'react';
 
 export interface Bookings {
@@ -23,7 +22,7 @@ export interface Bookings {
   requestDate: string;
 }
 
-const MyBookings: React.FC<User> = (): JSX.Element => {
+const MyBookings = (): JSX.Element => {
   const classes = useStyles();
   const [bookings, setBookings] = useState<Bookings[]>();
   const [dates, setDates] = useState<string[]>();
