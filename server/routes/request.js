@@ -11,6 +11,6 @@ router.route("/").get(protect, getRequests);
 
 router.route("/").post(protect, createRequest);
 
-router.route("/").put(updateRequest);
+router.route("/").put(protect, updateRequest);
 
 module.exports = router;

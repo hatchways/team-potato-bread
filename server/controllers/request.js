@@ -1,25 +1,57 @@
 const Request = require("../models/Request");
 const asyncHandler = require("express-async-handler");
+const User = require("../models/User");
 
 // @route GET /requests
 // @desc list of requests for logged in user
 // @access Private
 exports.getRequests = asyncHandler(async (req, res, next) => {
-  const user = req.body.userId;
+  const userId = req.body.userId;
 
-  let requests;
-  if (user) {
-    requests = await Request.find({
-      $or: [{ userId: user }, { sitterId: user }],
-    });
-  }
+  const requests = await Request.find({
+    $or: [{ userId: userId }, { sitterId: userId }],
+  });
 
-  if (!user) {
-    res.status(404);
+  if (!requests) {
+    res.status(400);
     throw new Error("No quest found.");
   }
 
-  res.status(200).json({ requests: requests });
+  const makeRequestObj = async (id, request) => {
+    let user = await User.findOne({ _id: id });
+    let requestObj = {
+      id: request._id,
+      username: user.username,
+      url: "https://robohash.org/mockLoggedInUser3@gmail.com.png",
+      date: request.start.toGMTString().slice(5, 16),
+      time: `${request.start.getHours()}:${request.start.getMinutes()} - ${request.end.getHours()}:${request.end.getMinutes()} ${request.end
+        .toLocaleTimeString()
+        .slice(-2)}`,
+      timeZone: request.timeZone,
+      accepted: request.accepted,
+      declined: request.declined,
+      paid: request.paid,
+      requestDate: request.requestDate,
+    };
+    return requestObj;
+  };
+
+  const getRequestsList = async () => {
+    return Promise.all(
+      requests.map((request) => {
+        if (userId === request.userId) {
+          return makeRequestObj(request.sitterId, request);
+        } else {
+          return makeRequestObj(request.userId, request);
+        }
+      })
+    );
+  };
+
+  getRequestsList().then((data) => {
+    console.log(data);
+    res.status(200).json({ requests: data });
+  });
 });
 
 // @route POST /requests
@@ -29,7 +61,7 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   const { userId, sitterId, start, end, timeZone } = req.body;
 
   if (!userId || !sitterId || !start || !end || !timeZone) {
-    res.status(404);
+    res.status(400);
     throw new Error("Incomplete required data");
   }
 
@@ -42,7 +74,7 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
   });
 
   if (request) {
-    res.status(200).end("success");
+    res.status(200).json({ request: request });
   } else {
     res.status(400);
     throw new Error("Invalid request data");
