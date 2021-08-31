@@ -1,11 +1,10 @@
 import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const uploadAvatar = async (email: string, avatar: FormData): Promise<AuthApiData> => {
-  console.log({ email, avatar });
+const uploadAvatar = async (formData: FormData): Promise<AuthApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
-    body: avatar,
+    body: formData,
     credentials: 'include',
   };
   return await fetch(`/image/avatar`, fetchOptions)

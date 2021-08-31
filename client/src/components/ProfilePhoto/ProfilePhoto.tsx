@@ -14,7 +14,6 @@ interface Props {
 }
 
 const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
-  console.log('hyere');
   const classes = useStyles();
 
   const [image, setImage] = useState<File | null>(null);
@@ -23,16 +22,14 @@ const ProfilePhoto = ({ loggedInUser }: Props): JSX.Element => {
     if (image) {
       const formData = new FormData();
       formData.append('avatar', image);
+      formData.append('email', loggedInUser.email);
 
-      uploadAvatar(loggedInUser.email, formData);
+      uploadAvatar(formData);
     }
   }, [image, loggedInUser]);
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
     const avatar = event.target.files![0];
-
     setImage(avatar);
   };
 
