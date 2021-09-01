@@ -1,58 +1,25 @@
 const Request = require("../models/Request");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
-
+const mongoose = require("mongoose");
 // @route GET /requests
 // @desc list of requests for logged in user
 // @access Private
 exports.getRequests = asyncHandler(async (req, res, next) => {
   const userId = req.body.userId;
 
+  let user = await User.findOne({ _id: userId });
+
   const requests = await Request.find({
-    $or: [{ userId: userId }, { sitterId: userId }],
-  });
+    $or: [{ userId: user._id }, { sitterId: user._id }],
+  }).populate({ path: 'userId' }).populate({ path: 'sitterId' })
 
   if (!requests) {
     res.status(400);
     throw new Error("No request found.");
   }
 
-  const makeRequestObj = async (id, request) => {
-    let user = await User.findOne({ _id: id });
-    let requestObj = {
-      id: request._id,
-      username: user.username,
-      url: "https://robohash.org/mockLoggedInUser3@gmail.com.png",
-      date: request.start.toGMTString().slice(5, 16),
-      time: `${request.start.getHours()}:${request.start.getMinutes()} - ${request.end.getHours()}:${request.end.getMinutes()} ${request.end
-        .toLocaleTimeString()
-        .slice(-2)}`,
-      start: request.start,
-      end: request.end,
-      timeZone: request.timeZone,
-      accepted: request.accepted,
-      declined: request.declined,
-      paid: request.paid,
-      requestDate: request.requestDate,
-    };
-    return requestObj;
-  };
-
-  const getRequestsList = async () => {
-    return Promise.all(
-      requests.map((request) => {
-        if (userId === request.userId) {
-          return makeRequestObj(request.sitterId, request);
-        } else {
-          return makeRequestObj(request.userId, request);
-        }
-      })
-    );
-  };
-
-  getRequestsList().then((data) => {
-    res.status(200).json({ requests: data });
-  });
+  res.status(200).json({ requests: requests });
 });
 
 // @route POST /requests
