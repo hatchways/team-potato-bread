@@ -14,7 +14,7 @@ exports.getRequests = asyncHandler(async (req, res, next) => {
 
   if (!requests) {
     res.status(400);
-    throw new Error("No quest found.");
+    throw new Error("No request found.");
   }
 
   const makeRequestObj = async (id, request) => {
