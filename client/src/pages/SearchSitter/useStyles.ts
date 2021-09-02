@@ -8,8 +8,13 @@ const useStyles = makeStyles(() => ({
     },
     minWidth: '100%',
   },
+  authWrapper: {
+    minHeight: '130px',
+    minWidth: '100%',
+  },
   heading: {
     fontWeight: 700,
+    marginTop: '5rem',
   },
   searchForm: {
     marginTop: '3rem',
@@ -18,26 +23,14 @@ const useStyles = makeStyles(() => ({
   searchContainer: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
-    justifySelf: 'center',
-    alignSelf: 'center',
   },
   userList: {
-    // display: 'flex',
-    // flexDirection: 'row',
-    // flexWrap: 'wrap',
-    // justifyItems: 'space-evenly',
-    // alignSelf: 'center',
-    // justifySelf: 'center',
-    // minWidth: '100vw',
-  },
-  authWrapper: {
     display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    paddingTop: 23,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    maxWidth: '60vw',
   },
   welcome: {
     fontSize: 30,
@@ -46,9 +39,6 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     fontFamily: "'Open Sans'",
     textAlign: 'center',
-  },
-  cardsContainer: {
-    // minWidth: '100%',
   },
 }));
 

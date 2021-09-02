@@ -7,23 +7,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'row',
   },
+  locationInputContainer: {
+    // flexBasis: 350,
+  },
   locationInput: {
-    position: 'relative',
-    // borderRadius: theme.shape.borderRadius,
-    // backgroundColor: '#E9EEF9',
-    marginLeft: 0,
     height: '50px',
     lineHeight: '23px',
     border: '1px solid lightgray',
-
-    width: `calc(${drawerWidth} - 1rem)`,
+    width: '100%',
   },
   dateInput: {
     height: '50px',
     lineHeight: '23px',
     border: '1px solid lightgray',
     alignSelf: 'center',
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1, 1, 1, 2),
   },
   searchRoot: {
     color: 'inherit',

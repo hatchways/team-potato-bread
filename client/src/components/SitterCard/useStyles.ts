@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexFlow: 'row',
+    flexFlow: 'column',
     maxWidth: 345,
     margin: '2rem',
+    flex: '1 1 300px',
+    // flex: '1 1 335px',
   },
   contentWrapper: {
     textAlign: 'center',
@@ -16,8 +16,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '0',
     paddingBottom: '0',
   },
-  avatar: {
+  media: {
+    marginTop: '2rem',
     borderRadius: '50%',
+    height: 150,
+    width: 150,
+    margin: '0 auto',
   },
   name: {
     fontWeight: 700,
@@ -25,10 +29,15 @@ const useStyles = makeStyles((theme) => ({
   subTitle: {
     color: 'gray',
   },
+  rating: {
+    marginTop: '.5rem',
+  },
   description: {
     color: 'black',
     fontWeight: 700,
     margin: '0 2rem',
+    marginBottom: '1.8rem',
+    marginTop: '.6rem',
   },
   footerWrapper: {
     marginTop: '1rem',

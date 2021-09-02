@@ -77,6 +77,7 @@ const SearchSitterForm = ({ search, handleChange }: Props): JSX.Element => {
           inputValue={search}
           noOptionsText="Location Not Detected"
           freeSolo
+          className={classes.locationInputContainer}
           renderInput={(params) => (
             <div className={classes.locationInput}>
               <InputBase

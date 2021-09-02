@@ -41,7 +41,9 @@ export default function Register(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <AuthHeader asideText="Become a sitter" />
+      <Box className={classes.authWrapper}>
+        <AuthHeader asideText="Become a sitter" />
+      </Box>
       <Grid container className={classes.searchContainer}>
         <Typography className={classes.heading} component="h1" variant="h4">
           Your Search Results
