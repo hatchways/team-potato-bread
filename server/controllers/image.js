@@ -1,4 +1,5 @@
 const Image = require("../models/Image");
+const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const cloudinary = require("../cloudinary");
 
@@ -9,13 +10,13 @@ exports.uploadAvatar = asyncHandler(async (req, res, next) => {
     // upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
     // create new avatar image
-    const newAvatar = await Image.create({
+    const newImage = await Image.create({
         imageUrl: result.secure_url,
-        imageType: "avatar",
         cloudinaryId: result.public_id,
     });
-    res.status(201);
-    res.json(newAvatar.imageUrl);
+    // update avatar for current user
+    const updateUser = await User.findOneAndUpdate({email: req.body.email}, {avatar: newImage.imageUrl}, {new: true});
+    res.send('Successfully updated avatar');
 });
 
 // @route POST /image/upload
@@ -30,7 +31,6 @@ exports.uploadImages = asyncHandler(async (req, res, next) => {
         // create new image
         const newImage = await Image.create({
             imageUrl: result.secure_url,
-            imageType: "gallery",
             cloudinaryId: result.public_id
         });
     });

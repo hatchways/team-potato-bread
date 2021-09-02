@@ -6,10 +6,6 @@ const imageSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  imageType: {
-    type: String,
-    required: true
-  },
   cloudinaryId: {
     type: String,
     required: true,
