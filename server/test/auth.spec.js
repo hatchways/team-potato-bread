@@ -3,24 +3,59 @@ const chaiHttp = require("chai-http");
 const { server } = require("../app.js");
 const dotenv = require('dotenv')
 const expect = require("chai").expect;
+const request = require('supertest');
 
 dotenv.config();;
 
 chai.should();
 chai.use(chaiHttp);
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjdmYjA3OTNhYTZmM2ExYzkyM2ZiZiIsImlhdCI6MTYzMDAxMDExOSwiZXhwIjoxNjMwNjE0OTE5fQ.EE8omcwEkQkCEJUEMyY2ODQgBHOZk3g5spRPwQ6jynM';
+// valid credentials
+const userCredentials = {
+  email: 'jondoe@vmail.com',
+  password: '12345678',
+}
+
+//now let's login the user before we run any tests
+var authenticatedUser = request.agent(server);
+before((done) => {
+  authenticatedUser
+    .post('/auth/login')
+    .send(userCredentials)
+    .end((err, res) => {
+      res.should.have.status(200);
+      done();
+    });
+});
 
 
-// Test for login
+// Test for login with Invalid credentials
 describe("/POST login", () => {
-  it("it should  return 200 if credentials are valid or 401 if not", (done) => {
+  it("it should return 401", (done) => {
+    chai
+      .request(server)
+      .post(`/auth/login`)
+      .send({ email: "jondoe@vmail.com", password: "abcdefds" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+
+// Test for login with Valid credentials
+describe("/POST login", () => {
+  it("it should return 200", (done) => {
     chai
       .request(server)
       .post(`/auth/login`)
       .send({ email: "jondoe@vmail.com", password: "12345678" })
       .end((err, res) => {
-        expect(res.status).to.be.oneOf([200, 401]);
+        res.should.have.status(200);
+        res.body.should.have
+          .property("success")
+        res.body.should.have.nested.property("success.user")
+          .that.has.keys(["id", "username", "email"])
         done();
       });
   });
@@ -44,13 +79,13 @@ describe("/GET logout", () => {
 
 // Test for register
 describe("/POST register", () => {
-  it("it should return 201 or 400 is email or username already exists", (done) => {
+  it("it should return 400", (done) => {
     chai
-      .request(server)
+    authenticatedUser
       .post(`/auth/register`)
       .send({ email: "jondoe@vmail.com", password: "12345678", username: "joDe" })
       .end((err, res) => {
-        expect(res.status).to.be.oneOf([201, 400]);
+        res.should.have.status(400)
         done();
       });
   });
@@ -59,11 +94,10 @@ describe("/POST register", () => {
 
 // Test for loadUser route with authentication
 describe("/GET user", () => {
-  it("it should return the user details or fail if token is invalid", (done) => {
-    chai
-      .request(server)
+  it("it should return 200 status the user details", (done) => {
+    // Test with authentic user
+    authenticatedUser
       .get(`/auth/user`)
-      .set('Cookie', `token=${token}`)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.have
