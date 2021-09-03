@@ -2,7 +2,6 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const { server } = require("../app.js");
 const dotenv = require('dotenv')
-const expect = require("chai").expect;
 const request = require('supertest');
 
 dotenv.config();;
@@ -16,7 +15,7 @@ const userCredentials = {
   password: '12345678',
 }
 
-//now let's login the user before we run any tests
+//login the user before we run any tests
 var authenticatedUser = request.agent(server);
 before((done) => {
   authenticatedUser
@@ -77,11 +76,11 @@ describe("/GET logout", () => {
   });
 });
 
-// Test for register
+// Test for register expecting fail
 describe("/POST register", () => {
   it("it should return 400", (done) => {
     chai
-    authenticatedUser
+      .request(server)
       .post(`/auth/register`)
       .send({ email: "jondoe@vmail.com", password: "12345678", username: "joDe" })
       .end((err, res) => {
@@ -95,7 +94,7 @@ describe("/POST register", () => {
 // Test for loadUser route with authentication
 describe("/GET user", () => {
   it("it should return 200 status the user details", (done) => {
-    // Test with authentic user
+    // Test with authenticated user
     authenticatedUser
       .get(`/auth/user`)
       .end((err, res) => {
