@@ -11,6 +11,7 @@ import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import SearchSitterForm from '../../components/SearchSitterForm/SearchSitterForm';
 import SitterCard from '../../components/SitterCard/SitterCard';
+import { Button } from '@material-ui/core';
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
@@ -64,6 +65,7 @@ export default function Register(): JSX.Element {
           <SitterCard></SitterCard>
           <SitterCard></SitterCard>
         </Grid>
+        <Button className={classes.outlineBtn}>Show More</Button>
       </Grid>
     </Grid>
   );
