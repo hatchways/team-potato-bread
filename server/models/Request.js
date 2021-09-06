@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 
 const requestSchema = new mongoose.Schema({
   userId: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
   sitterId: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
   start: {
