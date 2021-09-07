@@ -15,7 +15,7 @@ describe('LoginForm tests', () => {
 
   test('can input values and submit form', async () => {
     const { getByLabelText, getByText } = render(<LoginForm {...props} />);
-    const email = getByLabelText('E-mail address');
+    const email = getByLabelText('Email address');
     expect(email).toBeInTheDocument();
     const password = getByLabelText('Password');
     expect(password).toBeInTheDocument();
