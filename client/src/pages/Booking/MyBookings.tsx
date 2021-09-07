@@ -5,7 +5,6 @@ import BookingList from '../../components/BookingList/BookingList';
 import useStyles from './useStyles';
 import { useState, useEffect } from 'react';
 import getRequests from '../../helpers/APICalls/getRequests';
-import { setDate } from 'date-fns';
 
 export interface Bookings {
   _id: string;
