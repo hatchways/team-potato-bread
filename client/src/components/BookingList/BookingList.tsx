@@ -29,18 +29,23 @@ const BookingList: React.FC<BookingsProps> = ({ bookings }): JSX.Element => {
       <Paper elevation={3} className={classes.bookingList}>
         <Typography className={classes.bookingType}>YOUR NEXT BOOKING:</Typography>
         {currentBookings.length > 1 && (
-          <BookingItem bookInfo={currentBookings[0]} nextBooking={true} key={currentBookings[0]._id} />
+          <BookingItem
+            bookInfo={currentBookings[0]}
+            nextBooking={true}
+            pastBooking={false}
+            key={currentBookings[0]._id}
+          />
         )}
       </Paper>
       <Paper elevation={3} className={classes.bookingList}>
         <Typography className={classes.bookingType}>CURRENT BOOKINGS:</Typography>
         <Box className={classes.scrollableArea}>
           {currentBookings.slice(1).map((booking) => {
-            return <BookingItem bookInfo={booking} nextBooking={false} key={booking._id} />;
+            return <BookingItem bookInfo={booking} nextBooking={false} pastBooking={false} key={booking._id} />;
           })}
           <Typography className={classes.bookingType}>PAST BOOKINGS:</Typography>
           {pastBookings.map((booking) => {
-            return <BookingItem bookInfo={booking} nextBooking={false} key={booking._id} />;
+            return <BookingItem bookInfo={booking} nextBooking={false} pastBooking={true} key={booking._id} />;
           })}
         </Box>
       </Paper>

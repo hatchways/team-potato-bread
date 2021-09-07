@@ -4,15 +4,19 @@ import Avatar from '@material-ui/core/Avatar';
 import useStyles from './useStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Bookings } from '../../../pages/Booking/MyBookings';
+import updateRequest from '../../../helpers/APICalls/updateRequest';
 
 interface BookingsProps {
   bookInfo: Bookings;
   nextBooking: boolean;
+  pastBooking: boolean;
 }
 
-const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking }): JSX.Element => {
+const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking, pastBooking }): JSX.Element => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [accept, setAccept] = useState<boolean>(bookInfo.accepted);
+  const [decline, setDecline] = useState<boolean>(bookInfo.declined);
 
   const getMinutesFormat = (min: number): string => {
     if (min == 0) {
@@ -28,8 +32,21 @@ const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking }): JSX.El
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClose = async (event: React.MouseEvent<HTMLElement>) => {
     const action = event.currentTarget.innerText;
+    if (action == 'accept') {
+      const response = await updateRequest(bookInfo._id, 'accepted');
+      if (!response.error) {
+        setAccept(true);
+        setDecline(false);
+      }
+    } else if (action == 'decline') {
+      const response = await updateRequest(bookInfo._id, 'declined');
+      if (!response.error) {
+        setAccept(false);
+        setDecline(true);
+      }
+    }
     setAnchorEl(null);
   };
 
@@ -44,20 +61,20 @@ const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking }): JSX.El
     <Box className={nextBooking ? classes.nextBookingItem : classes.bookingItem}>
       <Box className={classes.bookingInfoRow1}>
         <Typography>{`${date}, ${time}`}</Typography>
-        <IconButton aria-controls={'confirm-menu'} aria-haspopup="true" onClick={handleClick}>
+        <IconButton aria-controls={'confirm-menu'} aria-haspopup="true" disabled={pastBooking} onClick={handleClick}>
           <SettingsIcon fontSize="small" />
         </IconButton>
         <Menu id="confirm-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>Accept</MenuItem>
-          <MenuItem onClick={handleClose}>Decline</MenuItem>
+          <MenuItem onClick={handleClose}>accept</MenuItem>
+          <MenuItem onClick={handleClose}>decline</MenuItem>
         </Menu>
       </Box>
       <Box className={classes.bookingInfoRow2}>
         <Avatar alt="Profile Image" src={bookInfo.userId.avatar} />
         <Typography className={classes.bookingName}>{bookInfo.userId.username}</Typography>
         <Typography color="textSecondary" variant="body2" className={classes.acceptedStatus}>
-          {bookInfo.declined && `DECLINED`}
-          {bookInfo.accepted && `ACCEPTED`}
+          {decline && `DECLINED`}
+          {accept && `ACCEPTED`}
         </Typography>
       </Box>
     </Box>
