@@ -5,6 +5,7 @@ import BookingList from '../../components/BookingList/BookingList';
 import useStyles from './useStyles';
 import { useState, useEffect } from 'react';
 import getRequests from '../../helpers/APICalls/getRequests';
+import { useAuth } from '../../context/useAuthContext';
 
 export interface Bookings {
   _id: string;
@@ -42,21 +43,23 @@ const MyBookings = (): JSX.Element => {
   const [bookings, setBookings] = useState<Bookings[]>();
   const [dates, setDates] = useState<string[]>();
   const [statusChange, updateStatusChange] = useState(false);
+  const { loggedInUser } = useAuth();
 
   useEffect(() => {
     async function getAndSetBookings() {
-      //TODO: get real user id
-      const { requests } = await getRequests('6136532f059a432f38652654');
-      const arrDates: string[] = [];
-      requests.map((res: { start: string | number | Date }) => {
-        const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
-        arrDates.push(date);
-      });
-      setBookings(requests);
-      setDates(arrDates);
+      if (loggedInUser) {
+        const { requests } = await getRequests(loggedInUser['id']);
+        const arrDates: string[] = [];
+        requests.map((res: { start: string | number | Date }) => {
+          const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
+          arrDates.push(date);
+        });
+        setBookings(requests);
+        setDates(arrDates);
+      }
     }
     getAndSetBookings();
-  }, [statusChange]);
+  }, [statusChange, loggedInUser]);
 
   return (
     <Grid container>
