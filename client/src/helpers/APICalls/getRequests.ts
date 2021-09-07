@@ -1,4 +1,3 @@
-import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
 const getRequests = async (userId: string) => {
