@@ -16,7 +16,7 @@ const BookingList: React.FC<BookingsProps> = ({ bookings }): JSX.Element => {
 
   useEffect(() => {
     bookings.forEach((booking) => {
-      if (booking.start < today) {
+      if (new Date(booking.start) < today) {
         setPastBookings((pastBookings) => [...pastBookings, booking]);
       } else {
         setCurrentBookings((currentBookings) => [...currentBookings, booking]);
@@ -29,18 +29,18 @@ const BookingList: React.FC<BookingsProps> = ({ bookings }): JSX.Element => {
       <Paper elevation={3} className={classes.bookingList}>
         <Typography className={classes.bookingType}>YOUR NEXT BOOKING:</Typography>
         {currentBookings.length > 1 && (
-          <BookingItem bookInfo={currentBookings[0]} nextBooking={true} key={currentBookings[0].id} />
+          <BookingItem bookInfo={currentBookings[0]} nextBooking={true} key={currentBookings[0]._id} />
         )}
       </Paper>
       <Paper elevation={3} className={classes.bookingList}>
         <Typography className={classes.bookingType}>CURRENT BOOKINGS:</Typography>
         <Box className={classes.scrollableArea}>
           {currentBookings.slice(1).map((booking) => {
-            return <BookingItem bookInfo={booking} nextBooking={false} key={booking.id} />;
+            return <BookingItem bookInfo={booking} nextBooking={false} key={booking._id} />;
           })}
           <Typography className={classes.bookingType}>PAST BOOKINGS:</Typography>
           {pastBookings.map((booking) => {
-            return <BookingItem bookInfo={booking} nextBooking={false} key={booking.id} />;
+            return <BookingItem bookInfo={booking} nextBooking={false} key={booking._id} />;
           })}
         </Box>
       </Paper>

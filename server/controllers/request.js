@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // @desc list of requests for logged in user
 // @access Private
 exports.getRequests = asyncHandler(async (req, res, next) => {
-  const userId = req.body.userId;
+  const userId = req.query.userId;
 
   let user = await User.findOne({ _id: userId });
 

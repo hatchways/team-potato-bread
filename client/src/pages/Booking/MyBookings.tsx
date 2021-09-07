@@ -4,15 +4,31 @@ import BookingCalendar from '../../components/BookingCalendar/BookingCalendar';
 import BookingList from '../../components/BookingList/BookingList';
 import useStyles from './useStyles';
 import { useState, useEffect } from 'react';
-import data from './mockData';
-import React from 'react';
+import getRequests from '../../helpers/APICalls/getRequests';
+import { setDate } from 'date-fns';
 
 export interface Bookings {
-  id: string;
-  username: string;
-  url: string;
-  date: string;
-  time: string;
+  _id: string;
+  userId: {
+    avatar: string;
+    images: never[];
+    _id: string;
+    username: string;
+    email: string;
+    password: string;
+    register_date: string;
+    __v: number;
+  };
+  sitterId: {
+    avatar: string;
+    images: never[];
+    _id: string;
+    username: string;
+    email: string;
+    password: string;
+    register_date: string;
+    __v: number;
+  };
   timeZone: string;
   start: Date;
   end: Date;
@@ -28,11 +44,18 @@ const MyBookings = (): JSX.Element => {
   const [dates, setDates] = useState<string[]>();
 
   useEffect(() => {
-    setBookings(data);
-    const bookingDates = data.map((booking) => {
-      return booking.date.trim();
-    });
-    setDates(bookingDates);
+    async function getAndSetBookings() {
+      //TODO: get real user id
+      const { requests } = await getRequests('6136532f059a432f38652654');
+      const arrDates: string[] = [];
+      requests.map((res: { start: string | number | Date }) => {
+        const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
+        arrDates.push(date);
+      });
+      setBookings(requests);
+      setDates(arrDates);
+    }
+    getAndSetBookings();
   }, []);
 
   return (

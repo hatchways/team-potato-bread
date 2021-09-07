@@ -11,17 +11,34 @@ interface BookingsProps {
 
 const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking }): JSX.Element => {
   const classes = useStyles();
+  const start = new Date(bookInfo.start);
+  const end = new Date(bookInfo.end);
+  const date = start.toUTCString().slice(5, 16);
+  const time = `${start.getHours()}:${getMinutesFormat(start.getMinutes())} - ${end.getHours()}:${getMinutesFormat(
+    end.getMinutes(),
+  )} ${end.toLocaleString().slice(-2)}`;
+
+  function getMinutesFormat(min: number): string {
+    if (min == 0) {
+      return '00';
+    } else if (min < 10) {
+      return `0${min}`;
+    } else {
+      return `${min}`;
+    }
+  }
+
   return (
     <Box className={nextBooking ? classes.nextBookingItem : classes.bookingItem}>
       <Box className={classes.bookingInfoRow1}>
-        <Typography>{`${bookInfo.date}, ${bookInfo.time}`}</Typography>
+        <Typography>{`${date}, ${time}`}</Typography>
         <IconButton>
           <SettingsIcon fontSize="small" />
         </IconButton>
       </Box>
       <Box className={classes.bookingInfoRow2}>
-        <Avatar alt="Profile Image" src={bookInfo.url} />
-        <Typography className={classes.bookingName}>{bookInfo.username}</Typography>
+        <Avatar alt="Profile Image" src={bookInfo.userId.avatar} />
+        <Typography className={classes.bookingName}>{bookInfo.userId.username}</Typography>
         <Typography color="textSecondary" variant="body2" className={classes.acceptedStatus}>
           {bookInfo.declined && `DECLINED`}
           {bookInfo.accepted && `ACCEPTED`}
