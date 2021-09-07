@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Box, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import useStyles from './useStyles';
@@ -9,10 +9,18 @@ import updateRequest from '../../../helpers/APICalls/updateRequest';
 interface BookingsProps {
   bookInfo: Bookings;
   nextBooking: boolean;
-  pastBooking: boolean;
+  mngDisable: boolean;
+  statusChange: boolean;
+  updateStatusChange: Dispatch<SetStateAction<boolean>>;
 }
 
-const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking, pastBooking }): JSX.Element => {
+const BookingItem: React.FC<BookingsProps> = ({
+  bookInfo,
+  nextBooking,
+  mngDisable,
+  statusChange,
+  updateStatusChange,
+}): JSX.Element => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [accept, setAccept] = useState<boolean>(bookInfo.accepted);
@@ -34,17 +42,20 @@ const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking, pastBooki
 
   const handleClose = async (event: React.MouseEvent<HTMLElement>) => {
     const action = event.currentTarget.innerText;
+    const newStatus = !statusChange;
     if (action == 'accept') {
       const response = await updateRequest(bookInfo._id, 'accepted');
       if (!response.error) {
         setAccept(true);
         setDecline(false);
+        updateStatusChange(newStatus);
       }
     } else if (action == 'decline') {
       const response = await updateRequest(bookInfo._id, 'declined');
       if (!response.error) {
         setAccept(false);
         setDecline(true);
+        updateStatusChange(newStatus);
       }
     }
     setAnchorEl(null);
@@ -61,7 +72,7 @@ const BookingItem: React.FC<BookingsProps> = ({ bookInfo, nextBooking, pastBooki
     <Box className={nextBooking ? classes.nextBookingItem : classes.bookingItem}>
       <Box className={classes.bookingInfoRow1}>
         <Typography>{`${date}, ${time}`}</Typography>
-        <IconButton aria-controls={'confirm-menu'} aria-haspopup="true" disabled={pastBooking} onClick={handleClick}>
+        <IconButton aria-controls={'confirm-menu'} aria-haspopup="true" disabled={mngDisable} onClick={handleClick}>
           <SettingsIcon fontSize="small" />
         </IconButton>
         <Menu id="confirm-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>

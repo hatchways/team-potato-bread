@@ -41,6 +41,7 @@ const MyBookings = (): JSX.Element => {
   const classes = useStyles();
   const [bookings, setBookings] = useState<Bookings[]>();
   const [dates, setDates] = useState<string[]>();
+  const [statusChange, updateStatusChange] = useState(false);
 
   useEffect(() => {
     async function getAndSetBookings() {
@@ -55,13 +56,15 @@ const MyBookings = (): JSX.Element => {
       setDates(arrDates);
     }
     getAndSetBookings();
-  }, []);
+  }, [statusChange]);
 
   return (
     <Grid container>
       <MgnBookingHeader />
       <Grid container className={classes.myBooking} spacing={2}>
-        {bookings && <BookingList bookings={bookings} />}
+        {bookings && (
+          <BookingList bookings={bookings} statusChange={statusChange} updateStatusChange={updateStatusChange} />
+        )}
         {dates && <BookingCalendar dates={dates} />}
       </Grid>
     </Grid>
