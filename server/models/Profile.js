@@ -24,6 +24,9 @@ const profileSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  subtitle: {
+    type: String,
+  },
   gender: {
     type: String,
   },
@@ -41,14 +44,25 @@ const profileSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  ratePerHour: {
+    type: Number,
+  },
   joinDate: {
     type: Date,
     default: Date.now
   },
+  avgRating: {
+    type: Number,
+    default: 0,
+  },
   description: {
     type: String,
   },
-  availability: [availabilitySchema]
+  availability: [availabilitySchema],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+  }
 });
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
