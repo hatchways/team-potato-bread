@@ -4,6 +4,8 @@ import useStyles from './useStyles';
 import logo from '../../Images/logo.png';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
+import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
+import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
 
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
@@ -61,10 +63,20 @@ const NavBar = (): JSX.Element => {
       >
         <MenuItem onClick={handleMenuClose}>
           <Box>
-            <Avatar className={classes.avatar} variant="square" />
+            <Avatar className={classes.avatar} src={avatar2} variant="square" />
           </Box>
           <Box className={classes.notificationItemContent}>
-            <Typography className={classes.notificationText}>Mary has requested your service for 2 hours</Typography>
+            <Typography className={classes.notificationText}>Marry has requested your service for 2 hours</Typography>
+            <Typography className={classes.notificationSubject}>Dog sitting</Typography>
+            <Typography className={classes.notificationDate}>09/07/2021</Typography>
+          </Box>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <Box>
+            <Avatar className={classes.avatar} src={avatar} variant="square" />
+          </Box>
+          <Box className={classes.notificationItemContent}>
+            <Typography className={classes.notificationText}>Scott has requested your service for 2 days</Typography>
             <Typography className={classes.notificationSubject}>Dog sitting</Typography>
             <Typography className={classes.notificationDate}>09/07/2021</Typography>
           </Box>
@@ -103,7 +115,7 @@ const NavBar = (): JSX.Element => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={handleNotificationOpen}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge variant="dot" color="primary">
             {/* <MailIcon /> */}
@@ -114,7 +126,7 @@ const NavBar = (): JSX.Element => {
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge invisible={true} variant="dot" color="primary">
-            {/* <NotificationsIcon /> */}
+            {/* */}
           </Badge>
         </IconButton>
         <p>My Jobs</p>
