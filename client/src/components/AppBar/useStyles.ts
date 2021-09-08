@@ -45,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   profileMenu: {
-    zIndex: +99999,
+    '& .MuiPaper-root': {
+      // zIndex: 99999,
+    },
   },
   notificationMenu: {
     '& .MuiPaper-root': {

@@ -6,11 +6,12 @@ import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
 import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
 import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
+import { User } from '../../interface/User';
 
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
 
-  const user = {
+  const user: User = {
     email: '',
     username: '',
     avatar: '',
@@ -85,11 +86,10 @@ const NavBar = (): JSX.Element => {
     </Grid>
   );
 
-  // const notificationMenuItem = (props: any) => MenuItem;
-
   const menuId = 'primary-search-account-menu';
   const renderProfileMenu = (
     <Menu
+      style={{ zIndex: 1301 }}
       anchorEl={profileAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
@@ -99,8 +99,8 @@ const NavBar = (): JSX.Element => {
       onClose={handleMenuClose}
       className={classes.profileMenu}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 
@@ -117,17 +117,13 @@ const NavBar = (): JSX.Element => {
     >
       <MenuItem onClick={handleNotificationOpen}>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge variant="dot" color="primary">
-            {/* <MailIcon /> */}
-          </Badge>
+          <Badge variant="dot" color="primary"></Badge>
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge invisible={true} variant="dot" color="primary">
-            {/* */}
-          </Badge>
+          <Badge invisible={true} variant="dot" color="primary"></Badge>
         </IconButton>
         <p>My Jobs</p>
       </MenuItem>
@@ -138,9 +134,7 @@ const NavBar = (): JSX.Element => {
           aria-haspopup="true"
           color="inherit"
         >
-          <Badge variant="dot" color="primary">
-            {/* <AccountCircle /> */}
-          </Badge>
+          <Badge variant="dot" color="primary"></Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
@@ -151,9 +145,7 @@ const NavBar = (): JSX.Element => {
           aria-haspopup="true"
           color="inherit"
         >
-          <Badge invisible={true} variant="dot" color="primary">
-            {/* <AccountCircle /> */}
-          </Badge>
+          <Badge invisible={true} variant="dot" color="primary"></Badge>
         </IconButton>
         <p>My Profile</p>
       </MenuItem>
