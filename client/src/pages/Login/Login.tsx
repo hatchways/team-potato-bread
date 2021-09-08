@@ -10,6 +10,7 @@ import LoginForm from './LoginForm/LoginForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import NavBar from '../../components/AppBar/AppBar';
 
 export default function Login(): JSX.Element {
   const classes = useStyles();
@@ -39,7 +40,8 @@ export default function Login(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <AuthHeader asideText="Become a sitter" />
+      {/* <AuthHeader asideText="Become a sitter" /> */}
+      <NavBar />
       <Grid container className={classes.authContainer}>
         <Grid item xs={12} sm={8} md={5} elevation={6} component={Paper} square>
           <Box className={classes.authWrapper}>
