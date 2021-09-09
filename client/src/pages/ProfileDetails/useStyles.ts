@@ -31,12 +31,13 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '50%',
     minWidth: '30%',
     display: 'flex',
+    paddingBottom: 10,
     margin: 25,
     flexDirection: 'column',
     textAlign: 'center',
   },
   media: {
-    height: 150,
+    height: 160,
   },
   cardContent: {
     display: 'flex',
@@ -64,6 +65,14 @@ const useStyles = makeStyles((theme) => ({
   requestButton: {
     margin: 'auto',
     marginBottom: 40,
+  },
+  imageList: {
+    justifyContent: 'space-evenly',
+    padding: 10,
+  },
+  smallProfileImages: {
+    maxHeight: 100,
+    maxWidth: 100,
   },
 }));
 

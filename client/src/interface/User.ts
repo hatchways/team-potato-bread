@@ -1,5 +1,7 @@
-export interface Image {
-  imageUrl: string;
+export interface Sitter {
+  profile?: Profile;
+  user?: User;
+  images?: Image[];
 }
 
 export interface User {
@@ -9,10 +11,16 @@ export interface User {
   images?: Image[];
 }
 
+export interface Image {
+  _id?: string;
+  imageUrl: string;
+}
+
 export interface Profile {
-  email: string;
-  username: string;
-  avatar: string;
+  _id?: string;
+  email?: string;
+  username?: string;
+  avatar?: string;
   avgRating?: number;
   firstName: string;
   lastName: string;
@@ -24,7 +32,7 @@ export interface Profile {
   ratePerHour?: number;
   description?: string;
   availability?: string;
-  user?: string;
+  user?: User;
 }
 
 export interface SearchUsersApiData {

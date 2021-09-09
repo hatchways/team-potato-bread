@@ -15,18 +15,21 @@ exports.profileList = asyncHandler(async (req, res, next) => {
 // @route GET /profile/find
 // @desc Fine one profile
 exports.profileSearch = asyncHandler(async (req, res, next) => {
-    const { _id } = req.body;
-    const profile = await Profile.findById(_id);
+    const id = req.query._id;
+
+    const profile = await Profile.findById(id);
+    const user = await User.findOne({_id: profile.user._id}).populate('images').exec();
     if(!profile) {
         res.status(404);
         throw new Error('No matching profile found.');
     }
-    res.status(200).json(profile);
+    res.status(200).json({profile, user});
 });
 
 // @route POST /profile/create
 // @desc Create a profile
 exports.profileCreate = asyncHandler(async (req, res, next) => {
+    console.log(req.body);
     const { 
         firstName,
         lastName,
@@ -54,7 +57,7 @@ exports.profileCreate = asyncHandler(async (req, res, next) => {
         res.status(201).json(profile);
     } else {
         res.status(400);
-        throw new Error('Something went wrong.');
+        throw new Error('Could not create profile.');
     }
 });
 

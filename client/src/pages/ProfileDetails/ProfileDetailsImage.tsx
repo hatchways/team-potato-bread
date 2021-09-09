@@ -1,16 +1,13 @@
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
+import useStyles from './useStyles';
 
 interface Props {
   imageUrl: string;
 }
 
 const ProfileDetailsImage = ({ imageUrl }: Props): JSX.Element => {
-  return (
-    <Card>
-      <CardMedia image={imageUrl} />
-    </Card>
-  );
+  const classes = useStyles();
+
+  return <div> {imageUrl ? <img src={imageUrl} className={classes.smallProfileImages} /> : ''} </div>;
 };
 
 export default ProfileDetailsImage;

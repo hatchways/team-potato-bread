@@ -15,17 +15,56 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import useStyles from './useStyles';
 import ProfileImageList from './ProfileImageList';
 import { useAuth } from '../../context/useAuthContext';
-import { User } from '../../interface/User';
-import { mockLoggedInUser, mockProfileUser } from '../../mocks/mockUser';
+import { Sitter, User, Profile, Image } from '../../interface/User';
+import { getSitterProfile } from '../../helpers/APICalls/getSitterProfile';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 interface Props {
+  sitter: Sitter;
+  profile: Profile;
   user: User;
+  image: Image;
 }
+
+const initSitter: Sitter = {
+  profile: {
+    firstName: '',
+    lastName: '',
+    username: '',
+    location: '',
+    avgRating: 0,
+    user: {
+      email: '',
+      username: '',
+      avatar: '',
+      images: [{ imageUrl: '' }],
+    },
+  },
+};
+
+type idParams = {
+  profileId: string;
+};
 
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
-
+  const { profileId } = useParams<idParams>();
+  const [sitter, setSitter] = useState<Sitter>(initSitter);
+  const [images, setImages] = useState<Image[]>([{ imageUrl: '' }]);
+  const [bannerImage, setBannerImage] = useState<Image>();
   const { loggedInUser } = useAuth();
+
+  useEffect(() => {
+    getSitterProfile(profileId).then((data) => {
+      const sitterProfile = data;
+      setSitter(sitterProfile);
+      const profileImages = data.user?.images as Image[];
+      const newBannerImage = profileImages.shift();
+      setBannerImage(newBannerImage);
+      setImages(profileImages);
+    });
+  }, [profileId]);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -34,26 +73,23 @@ export default function ProfileDetails(): JSX.Element {
         <Grid item className={classes.profileCard}>
           <Card>
             <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-              />
+              <CardMedia className={classes.media} image={bannerImage ? bannerImage.imageUrl : ''} />
               <CardContent className={classes.cardContent}>
-                <Avatar className={classes.avatar} src={mockProfileUser.avatar} />
+                <Avatar className={classes.avatar} src={sitter?.user?.avatar} />
                 <Typography className={classes.nameField} align="center">
-                  {`${mockProfileUser.firstName} ${mockProfileUser.lastName}`}
+                  {`${sitter.profile?.firstName} ${sitter.profile?.lastName}`}
                 </Typography>
                 <Typography align="center" variant="subtitle1">
-                  {mockProfileUser.subtitle}
+                  {sitter.profile?.subtitle}
                 </Typography>
                 <IconButton className={classes.locationField} disabled>
                   <LocationOnIcon color="primary" fontSize="small" />
-                  {mockProfileUser.location}
+                  {sitter.profile?.location}
                 </IconButton>
                 <Typography variant="h3">About me</Typography>
-                <Typography variant="subtitle2">{mockProfileUser.description}</Typography>
+                <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
                 <Box className={classes.imagesBox}>
-                  <ProfileImageList />
+                  <ProfileImageList images={images} />
                 </Box>
               </CardContent>
             </CardActionArea>
@@ -63,13 +99,13 @@ export default function ProfileDetails(): JSX.Element {
           <Card>
             <CardActionArea>
               <CardContent component="form">
-                <Typography variant="h3">${mockProfileUser.ratePerHour}/hr</Typography>
+                <Typography variant="h3">${sitter.profile?.ratePerHour}/hr</Typography>
                 <Rating
-                  name="read-only"
+                  name="read-only-rating"
                   readOnly
                   className={classes.ratingStars}
                   precision={0.5}
-                  value={mockProfileUser.avgRating}
+                  value={sitter.profile?.avgRating}
                 />
                 <TextField
                   id="startDate"
