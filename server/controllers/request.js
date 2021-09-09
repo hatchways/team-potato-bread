@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // @desc list of requests for logged in user
 // @access Private
 exports.getRequests = asyncHandler(async (req, res, next) => {
-  const userId = req.query.userId;
+  const userId = req.user.id;
 
   let user = await User.findOne({ _id: userId });
 
@@ -57,13 +57,13 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 exports.updateRequest = asyncHandler(async (req, res, next) => {
   const { _id, action } = req.body;
   let request;
-  if (action == "accepted") {
+  if (action === "accepted") {
     request = await Request.findByIdAndUpdate(
       _id,
       { $set: { accepted: true, declined: false } },
       { new: true }
     );
-  } else if (action == "declined") {
+  } else if (action === "declined") {
     request = await Request.findByIdAndUpdate(
       _id,
       { $set: { accepted: false, declined: true } },

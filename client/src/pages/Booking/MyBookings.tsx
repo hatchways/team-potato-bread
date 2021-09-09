@@ -44,28 +44,24 @@ const MyBookings = (): JSX.Element => {
   const [bookings, setBookings] = useState<Bookings[]>();
   const [dates, setDates] = useState<string[]>();
   const [statusChange, updateStatusChange] = useState(false);
-  const { loggedInUser } = useAuth();
-  console.log(loggedInUser);
 
   useEffect(() => {
     async function getAndSetBookings() {
       try {
-        if (loggedInUser) {
-          const { requests } = await getRequests(loggedInUser['id']);
-          const arrDates: string[] = [];
-          requests.map((res: { start: string | number | Date }) => {
-            const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
-            arrDates.push(date);
-          });
-          setBookings(requests);
-          setDates(arrDates);
-        }
+        const { requests } = await getRequests();
+        const arrDates: string[] = [];
+        requests.map((res: { start: string | number | Date }) => {
+          const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
+          arrDates.push(date);
+        });
+        setBookings(requests);
+        setDates(arrDates);
       } catch (e) {
         console.log(e);
       }
     }
     getAndSetBookings();
-  }, [statusChange, loggedInUser]);
+  }, [statusChange]);
 
   return (
     <Grid container>

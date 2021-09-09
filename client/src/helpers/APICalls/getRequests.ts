@@ -1,12 +1,12 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const getRequests = async (userId: string) => {
+const getRequests = async () => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return await fetch(`/request?userId=${userId}`, fetchOptions)
+  return await fetch(`/request`, fetchOptions)
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
