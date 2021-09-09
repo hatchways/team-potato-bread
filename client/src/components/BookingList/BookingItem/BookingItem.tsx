@@ -26,16 +26,6 @@ const BookingItem: React.FC<BookingsProps> = ({
   const [accept, setAccept] = useState<boolean>(bookInfo.accepted);
   const [decline, setDecline] = useState<boolean>(bookInfo.declined);
 
-  const getMinutesFormat = (min: number): string => {
-    if (min == 0) {
-      return '00';
-    } else if (min < 10) {
-      return `0${min}`;
-    } else {
-      return `${min}`;
-    }
-  };
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -43,14 +33,14 @@ const BookingItem: React.FC<BookingsProps> = ({
   const handleClose = async (event: React.MouseEvent<HTMLElement>) => {
     const action = event.currentTarget.innerText;
     const newStatus = !statusChange;
-    if (action == 'accept') {
+    if (action === 'accept') {
       const response = await updateRequest(bookInfo._id, 'accepted');
       if (!response.error) {
         setAccept(true);
         setDecline(false);
         updateStatusChange(newStatus);
       }
-    } else if (action == 'decline') {
+    } else if (action === 'decline') {
       const response = await updateRequest(bookInfo._id, 'declined');
       if (!response.error) {
         setAccept(false);
@@ -64,9 +54,9 @@ const BookingItem: React.FC<BookingsProps> = ({
   const start = new Date(bookInfo.start);
   const end = new Date(bookInfo.end);
   const date = start.toUTCString().slice(5, 16);
-  const time = `${start.getHours()}:${getMinutesFormat(start.getMinutes())} - ${end.getHours()}:${getMinutesFormat(
-    end.getMinutes(),
-  )} ${end.toLocaleString().slice(-2)}`;
+  const time = `${start.toLocaleTimeString().slice(0, 5)} - ${end.toLocaleTimeString().slice(0, 5)} ${end
+    .toLocaleString()
+    .slice(-2)}`;
 
   return (
     <Box className={nextBooking ? classes.nextBookingItem : classes.bookingItem}>
@@ -84,8 +74,8 @@ const BookingItem: React.FC<BookingsProps> = ({
         <Avatar alt="Profile Image" src={bookInfo.userId.avatar} />
         <Typography className={classes.bookingName}>{bookInfo.userId.username}</Typography>
         <Typography color="textSecondary" variant="body2" className={classes.acceptedStatus}>
-          {decline && `DECLINED`}
-          {accept && `ACCEPTED`}
+          {decline && `declined`}
+          {accept && `accepted`}
         </Typography>
       </Box>
     </Box>
