@@ -2,7 +2,7 @@ import { FetchOptions } from '../../interface/FetchOptions';
 
 const updateRequest = async (id: string, action: string) => {
   const fetchOptions: FetchOptions = {
-    method: 'PUT',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ _id: id, action: action }),
     credentials: 'include',
