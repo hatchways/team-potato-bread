@@ -6,6 +6,7 @@ import useStyles from './useStyles';
 import { useState, useEffect } from 'react';
 import getRequests from '../../helpers/APICalls/getRequests';
 import { useAuth } from '../../context/useAuthContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export interface Bookings {
   _id: string;
@@ -44,18 +45,23 @@ const MyBookings = (): JSX.Element => {
   const [dates, setDates] = useState<string[]>();
   const [statusChange, updateStatusChange] = useState(false);
   const { loggedInUser } = useAuth();
+  console.log(loggedInUser);
 
   useEffect(() => {
     async function getAndSetBookings() {
-      if (loggedInUser) {
-        const { requests } = await getRequests(loggedInUser['id']);
-        const arrDates: string[] = [];
-        requests.map((res: { start: string | number | Date }) => {
-          const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
-          arrDates.push(date);
-        });
-        setBookings(requests);
-        setDates(arrDates);
+      try {
+        if (loggedInUser) {
+          const { requests } = await getRequests(loggedInUser['id']);
+          const arrDates: string[] = [];
+          requests.map((res: { start: string | number | Date }) => {
+            const date = new Date(res.start).toUTCString().slice(5, 16).trim().toUpperCase();
+            arrDates.push(date);
+          });
+          setBookings(requests);
+          setDates(arrDates);
+        }
+      } catch (e) {
+        console.log(e);
       }
     }
     getAndSetBookings();
@@ -65,10 +71,14 @@ const MyBookings = (): JSX.Element => {
     <Grid container>
       <MgnBookingHeader />
       <Grid container className={classes.myBooking} spacing={2}>
-        {bookings && (
-          <BookingList bookings={bookings} statusChange={statusChange} updateStatusChange={updateStatusChange} />
+        {bookings === undefined || dates === undefined ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <BookingList bookings={bookings} statusChange={statusChange} updateStatusChange={updateStatusChange} />
+            <BookingCalendar dates={dates} />
+          </>
         )}
-        {dates && <BookingCalendar dates={dates} />}
       </Grid>
     </Grid>
   );
