@@ -25,7 +25,7 @@ const BookingList: React.FC<BookingsProps> = ({ bookings, statusChange, updateSt
       if (new Date(booking.start) < today) {
         pastArr.push(booking);
       } else {
-        if (booking.accepted == true && !hasNextBooking) {
+        if (booking.accepted && !hasNextBooking) {
           setNextBooking(booking);
           hasNextBooking = true;
         } else {
