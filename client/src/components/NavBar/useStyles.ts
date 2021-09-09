@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     justifySelf: 'center',
     minWidth: '100%',
-    minHeight: '100%',
+    minHeight: 135,
     justifyContent: 'center',
   },
   brand: {
@@ -42,11 +42,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     [theme.breakpoints.up('md')]: {
       display: 'none',
-    },
-  },
-  profileMenu: {
-    '& .MuiPaper-root': {
-      // zIndex: 99999,
     },
   },
   notificationMenu: {

@@ -97,7 +97,6 @@ const NavBar = (): JSX.Element => {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isProfileMenuOpen}
       onClose={handleMenuClose}
-      className={classes.profileMenu}
     >
       <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
