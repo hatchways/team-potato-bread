@@ -26,22 +26,7 @@ interface Props {
     }>,
   ) => void;
 
-  handleDemoLogin: (
-    {
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    },
-    {
-      setStatus,
-      setSubmitting,
-    }: FormikHelpers<{
-      email: string;
-      password: string;
-    }>,
-  ) => void;
+  handleDemoLogin: () => void;
 }
 
 export default function Login({ handleSubmit, handleDemoLogin }: Props): JSX.Element {
@@ -109,7 +94,16 @@ export default function Login({ handleSubmit, handleDemoLogin }: Props): JSX.Ele
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
             </Button>
-            <Button type="button" size="large" variant="contained" color="primary" className={classes.submit}>
+            <Button
+              onClick={() => {
+                handleDemoLogin();
+              }}
+              type="button"
+              size="large"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Demo user'}
             </Button>
             <AuthSubText linkTo="/signup" linkText="Signup" text="Don't have an account?"></AuthSubText>

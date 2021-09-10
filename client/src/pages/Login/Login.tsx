@@ -36,13 +36,10 @@ export default function Login(): JSX.Element {
     });
   };
 
-  const handleDemoLogin = (
-    { email, password }: { email: string; password: string },
-    { setSubmitting }: FormikHelpers<{ email: string; password: string }>,
-  ) => {
+  const handleDemoLogin = () => {
     login('jondoe@vmail.com', '12345678').then((data) => {
       if (data.error) {
-        setSubmitting(false);
+        // setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         updateLoginContext(data.success);
@@ -50,7 +47,7 @@ export default function Login(): JSX.Element {
         // should not get here from backend but this catch is for an unknown issue
         console.error({ data });
 
-        setSubmitting(false);
+        // setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
     });
