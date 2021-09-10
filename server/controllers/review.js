@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 // @route GET /review
 // @desc Get all reviews of a user
-// @access Public
+// @access Private
 exports.userReviews = asyncHandler(async (req, res, next) => {
   const { uid } = req.params;
 
@@ -19,7 +19,7 @@ exports.userReviews = asyncHandler(async (req, res, next) => {
 
 // @route POST /review
 // @desc Add a review
-// @access Public
+// @access Private
 exports.addReview = asyncHandler(async (req, res, next) => {
   const { rating, text, userId } = req.body;
   const reviewerId = req.user.id;
