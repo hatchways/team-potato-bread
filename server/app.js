@@ -11,13 +11,11 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
-<<<<<<< HEAD
 const requestRouter = require("./routes/request");
-=======
 const profileRouter = require("./routes/profile");
->>>>>>> main
 const imageRouter = require("./routes/image");
-
+const conversationRouter=require('./routes/conversation')
+const {addUser,removeUser,getUser}=require('./utils/users')
 const { json, urlencoded } = express;
 
 connectDB();
@@ -31,7 +29,21 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected");
+  socket.on('JoinConversation', ({ userProfileId,conversationId },cb) => {
+    const{error}=addUser({id:socket.id,userProfileId,conversationId})
+    if(error)return cb(error)
+    socket.join(conversationId);
+    cb()
+  }) 
+  // Listen for chatMessage
+  socket.on('chatMessage', (message,cb) => {
+    const user=getUser(socket.id)
+    io.to(user.conversationId).emit('message', {userProfileId,message});
+  });
+
+  socket.on('disconnect',()=>{
+   removeUser(socket.id);
+  })
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -49,13 +61,10 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
-<<<<<<< HEAD
 app.use("/request", requestRouter);
-=======
 app.use("/profile",profileRouter);
->>>>>>> main
 app.use("/image", imageRouter);
-
+app.use('/conversation',conversationRouter)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
 

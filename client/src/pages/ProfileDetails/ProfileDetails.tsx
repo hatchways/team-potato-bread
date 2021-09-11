@@ -14,18 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import useStyles from './useStyles';
 import ProfileImageList from './ProfileImageList';
-import { useAuth } from '../../context/useAuthContext';
-import { User } from '../../interface/User';
-import { mockLoggedInUser, mockProfileUser } from '../../mocks/mockUser';
 
-interface Props {
-  user: User;
-}
+import { mockProfileUser } from '../../mocks/mockUser';
 
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
-
-  const { loggedInUser } = useAuth();
 
   return (
     <Grid container component="main" className={classes.root}>
