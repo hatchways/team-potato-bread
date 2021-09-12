@@ -9,10 +9,7 @@ const mockLoggedInUser: User = {
 
 const mockProfileUser: Profile = {
   _id: '123abc',
-  email: 'mockProfileUser@email.com',
-  username: 'mockProfileUser',
   subtitle: 'Loving Pet Sitter',
-  avatar: `https://robohash.org/mockProfileUser@email.com.png?set=set4`,
   avgRating: 3.5,
   firstName: 'Jane',
   lastName: 'Doe',
