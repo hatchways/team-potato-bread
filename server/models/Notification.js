@@ -5,19 +5,18 @@ const notificationSchema = new mongoose.Schema({
     type: [String],
     enum: {
       values: ["message", "booking"],
-      message: "{VALUE} is not supported",
+      message:
+        "{VALUE} is not valid enum value for type, please choose either 'message' or 'booking'",
     },
+    required: true,
   },
   anchor: {
     type: [String],
     enum: {
       values: ["message", "notification center"],
-      message: "{VALUE} is not supported",
+      message:
+        "{VALUE} is not valid enum value for anchor, please choose either 'message' or 'notification center'",
     },
-  },
-  source: {
-    type: String,
-    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +32,7 @@ const notificationSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  src: String,
   title: String,
   description: String,
   createdAt: {
@@ -45,4 +45,3 @@ module.exports = Notification = mongoose.model(
   "notification",
   notificationSchema
 );
-
