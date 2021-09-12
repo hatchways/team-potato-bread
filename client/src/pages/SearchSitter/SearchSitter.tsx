@@ -12,31 +12,23 @@ import { useSnackBar } from '../../context/useSnackbarContext';
 import SearchSitterForm from '../../components/SearchSitterForm/SearchSitterForm';
 import SitterCard from '../../components/SitterCard/SitterCard';
 import { Button } from '@material-ui/core';
+import { useState, ChangeEvent } from 'react';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
+  const [search, setSearch] = useState<string>('test');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const handleSubmit = (
-    { username, email, password }: { email: string; password: string; username: string },
-    { setSubmitting }: FormikHelpers<{ email: string; password: string; username: string }>,
-  ) => {
-    register(username, email, password).then((data) => {
-      if (data.error) {
-        console.error({ error: data.error.message });
-        setSubmitting(false);
-        updateSnackBarMessage(data.error.message);
-      } else if (data.success) {
-        updateLoginContext(data.success);
-      } else {
-        // should not get here from backend but this catch is for an unknown issue
-        console.error({ data });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, newInputValue: string) => {
+    setSearch(newInputValue);
+  };
 
-        setSubmitting(false);
-        updateSnackBarMessage('An unexpected error occurred. Please try again');
-      }
-    });
+  const handleDateChange = (date: MaterialUiPickersDate) => {
+    // console.log(date);
+    // setSelectedDate(date?.getDate());
   };
 
   return (
@@ -51,10 +43,10 @@ export default function Register(): JSX.Element {
         </Typography>
         <Box className={classes.searchForm}>
           <SearchSitterForm
-            search=""
-            handleChange={() => {
-              console.log();
-            }}
+            date={selectedDate}
+            handleDateChange={handleDateChange}
+            search={search}
+            handleChange={handleChange}
           ></SearchSitterForm>
         </Box>
         <Grid item className={classes.userList}>

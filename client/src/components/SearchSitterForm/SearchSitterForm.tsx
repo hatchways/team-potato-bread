@@ -8,12 +8,20 @@ import { User } from '../../interface/User';
 import { useDebounce } from 'use-debounce';
 import { searchUsers } from '../../helpers/APICalls/searchUsers';
 import TextField from '@material-ui/core/TextField';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { IconButton } from '@material-ui/core';
+import { format } from 'date-fns';
 
 interface Props {
   search: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>, newInputValue: string) => void;
+  date: Date;
+  handleDateChange: (date: MaterialUiPickersDate) => void;
 }
-const SearchSitterForm = ({ search, handleChange }: Props): JSX.Element => {
+
+const SearchSitterForm = ({ search, handleChange, date, handleDateChange }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
@@ -49,6 +57,18 @@ const SearchSitterForm = ({ search, handleChange }: Props): JSX.Element => {
       active = false;
     };
   }, [debouncedSearch]);
+
+  const renderDay = (date: any, selectedDate: any, dayInCurrentMonth: any) => {
+    const dateClone = new Date(date);
+
+    return (
+      <div>
+        <IconButton className={classes.day}>
+          <span> {format(dateClone, 'd')} </span>
+        </IconButton>
+      </div>
+    );
+  };
 
   // creates a combobox search which is dynamically updated with call's to the API
   return (
@@ -90,7 +110,6 @@ const SearchSitterForm = ({ search, handleChange }: Props): JSX.Element => {
                 inputProps={{
                   'aria-label': 'search',
                   ref: params.InputProps.ref,
-                  disableUnderline: true,
                 }}
                 startAdornment={
                   <div className={classes.searchIcon}>
@@ -101,7 +120,37 @@ const SearchSitterForm = ({ search, handleChange }: Props): JSX.Element => {
             </div>
           )}
         />
-        <TextField
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <DatePicker
+            autoOk
+            // label="Clearable"
+            renderDay={renderDay}
+            clearable
+            disableFuture
+            value={date}
+            onChange={handleDateChange}
+            InputProps={{
+              disableUnderline: true,
+              startAdornment: <DateRangeIcon color="action" />,
+            }}
+            className={classes.dateInput}
+          />
+          <DatePicker
+            autoOk
+            // label="Clearable"
+            renderDay={renderDay}
+            clearable
+            disableFuture
+            value={date}
+            onChange={handleDateChange}
+            InputProps={{
+              disableUnderline: true,
+              startAdornment: <DateRangeIcon color="action" />,
+            }}
+            className={classes.dateInput}
+          />
+        </MuiPickersUtilsProvider>
+        {/* <TextField
           id="date"
           type="date"
           InputProps={{
@@ -113,7 +162,7 @@ const SearchSitterForm = ({ search, handleChange }: Props): JSX.Element => {
           inputProps={{
             'aria-label': 'date',
           }}
-        />
+        /> */}
       </div>
     </form>
   );

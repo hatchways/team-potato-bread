@@ -44,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  day: {
+    width: 36,
+    height: 36,
+    fontSize: theme.typography.caption.fontSize,
+    margin: '0 2px',
+    color: 'inherit',
+  },
 }));
 
 export default useStyles;
