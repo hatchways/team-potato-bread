@@ -8,6 +8,7 @@ const mockLoggedInUser: User = {
 };
 
 const mockProfileUser: Profile = {
+  _id: '123abc',
   email: 'mockProfileUser@email.com',
   username: 'mockProfileUser',
   subtitle: 'Loving Pet Sitter',
@@ -20,7 +21,6 @@ const mockProfileUser: Profile = {
   ratePerHour: 14,
   description:
     'Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum',
-  user: '6127dc10b8b67f546492919b',
 };
 
 const mockOtherUser1: User = {
