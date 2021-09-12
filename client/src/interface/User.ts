@@ -5,6 +5,7 @@ export interface Sitter {
 }
 
 export interface User {
+  _id?: string;
   email: string;
   username: string;
   avatar: string;
@@ -18,9 +19,6 @@ export interface Image {
 
 export interface Profile {
   _id?: string;
-  email?: string;
-  username?: string;
-  avatar?: string;
   avgRating?: number;
   firstName: string;
   lastName: string;

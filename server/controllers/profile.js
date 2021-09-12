@@ -29,7 +29,6 @@ exports.profileSearch = asyncHandler(async (req, res, next) => {
 // @route POST /profile/create
 // @desc Create a profile
 exports.profileCreate = asyncHandler(async (req, res, next) => {
-    console.log(req.body);
     const { 
         firstName,
         lastName,

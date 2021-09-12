@@ -7,7 +7,11 @@ interface Props {
 const ProfileDetailsImage = ({ imageUrl }: Props): JSX.Element => {
   const classes = useStyles();
 
-  return <div> {imageUrl ? <img src={imageUrl} className={classes.smallProfileImages} /> : ''} </div>;
+  return (
+    <div>
+      <img src={imageUrl} className={classes.smallProfileImages} />
+    </div>
+  );
 };
 
 export default ProfileDetailsImage;

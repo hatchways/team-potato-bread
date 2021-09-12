@@ -13,7 +13,7 @@ const ProfileImageList = ({ images }: Props): JSX.Element => {
 
   return (
     <Grid container className={classes.imageList}>
-      {imageList ? imageList : ''}
+      {imageList}
     </Grid>
   );
 };
