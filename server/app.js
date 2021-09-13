@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/request", requestRouter);
-app.use("/profile",profileRouter);
+app.use("/profile", profileRouter);
 app.use("/image", imageRouter);
 app.use('/conversation',conversationRouter)
 if (process.env.NODE_ENV === "production") {
