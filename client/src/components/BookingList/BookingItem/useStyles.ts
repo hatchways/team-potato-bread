@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold',
     margin: '0px 20px auto auto',
     padding: '0px',
+    textTransform: 'uppercase',
   },
   nextBookingItem: {
     border: 'none',

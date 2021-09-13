@@ -13,7 +13,7 @@ router.route("/").get(protect, getRequests);
 
 router.route("/").post(protect, createRequest);
 
-router.route("/").put(protect, updateRequest);
+router.route("/").patch(protect, updateRequest);
 
 router.route("/:id/pay").post(protect,payRequest);
 

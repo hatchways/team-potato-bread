@@ -33,10 +33,6 @@ const profileSchema = new mongoose.Schema({
   birthDate: {
     type: Date,
   },
-  email: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
   phone: {
     type: String,
   },
@@ -61,7 +57,7 @@ const profileSchema = new mongoose.Schema({
   availability: [availabilitySchema],
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: User,
+    ref: 'user',
   }
 });
 

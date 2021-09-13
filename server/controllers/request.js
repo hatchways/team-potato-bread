@@ -7,13 +7,15 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // @desc list of requests for logged in user
 // @access Private
 exports.getRequests = asyncHandler(async (req, res, next) => {
-  const userId = req.body.userId;
+  const userId = req.user.id;
 
   let user = await User.findOne({ _id: userId });
 
   const requests = await Request.find({
     $or: [{ userId: user._id }, { sitterId: user._id }],
-  }).populate({ path: 'userId' }).populate({ path: 'sitterId' })
+  })
+    .populate({ path: "userId" })
+    .populate({ path: "sitterId" });
 
   if (!requests) {
     res.status(400);
@@ -54,12 +56,21 @@ exports.createRequest = asyncHandler(async (req, res, next) => {
 // @desc Update request with approved or decline
 // @access Private
 exports.updateRequest = asyncHandler(async (req, res, next) => {
-  const { _id } = req.body;
-  const request = await Request.findByIdAndUpdate(
-    _id,
-    { $set: { accepted: true } },
-    { new: true }
-  );
+  const { _id, action } = req.body;
+  let request;
+  if (action === "accepted") {
+    request = await Request.findByIdAndUpdate(
+      _id,
+      { $set: { accepted: true, declined: false } },
+      { new: true }
+    );
+  } else if (action === "declined") {
+    request = await Request.findByIdAndUpdate(
+      _id,
+      { $set: { accepted: false, declined: true } },
+      { new: true }
+    );
+  }
 
   if (request) {
     res.status(200).json({ request: request });

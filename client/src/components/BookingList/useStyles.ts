@@ -15,7 +15,21 @@ const useStyles = makeStyles(() => ({
   },
   scrollableArea: {
     overflowY: 'auto',
-    height: '400px',
+    maxHeight: '400px',
+  },
+  nextBooking: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '500px',
+    padding: '15px 10px',
+    margin: '30px',
+    height: '200px',
+    justifyContent: 'center',
+  },
+  nextBookingType: {
+    marginLeft: '15px',
+    fontSize: 'larger',
+    fontWeight: 'bolder',
   },
 }));
 

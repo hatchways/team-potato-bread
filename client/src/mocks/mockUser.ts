@@ -8,10 +8,8 @@ const mockLoggedInUser: User = {
 };
 
 const mockProfileUser: Profile = {
-  email: 'mockProfileUser@email.com',
-  username: 'mockProfileUser',
+  _id: '123abc',
   subtitle: 'Loving Pet Sitter',
-  avatar: `https://robohash.org/mockProfileUser@email.com.png?set=set4`,
   avgRating: 3.5,
   firstName: 'Jane',
   lastName: 'Doe',
@@ -20,7 +18,6 @@ const mockProfileUser: Profile = {
   ratePerHour: 14,
   description:
     'Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum Lorem ipsum delorum',
-  user: '6127dc10b8b67f546492919b',
 };
 
 const mockOtherUser1: User = {
