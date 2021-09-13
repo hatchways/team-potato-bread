@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+let rand = Math.random();
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -16,9 +18,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  avatar: {
+    type: String,
+    default: `https://robohash.org/${rand}.png?set=set4`
+  },
   images: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image'
+    ref: 'image'
   }],
   register_date: {
     type: Date,

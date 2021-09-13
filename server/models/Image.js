@@ -6,10 +6,6 @@ const imageSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  imageType: {
-    type: String,
-    required: true
-  },
   cloudinaryId: {
     type: String,
     required: true,
@@ -17,7 +13,7 @@ const imageSchema = new mongoose.Schema({
   },
   userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'user'
   },
   uploadDate: {
     type: Date,
