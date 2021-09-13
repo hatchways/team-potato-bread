@@ -32,7 +32,6 @@ const notificationSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  src: String,
   title: String,
   description: String,
   createdAt: {
