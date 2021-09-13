@@ -2,43 +2,50 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+  card: {
+    minWidth: '55%',
+    minHeight: '75%',
+    margin: '25px auto',
+    [theme.breakpoints.down('md')]: {
+      width: '400px',
+    },
   },
   pageTitle: {
     fontWeight: 'bold',
     fontSize: 26,
     margin: 20,
-    fontFamily: theme.typography.fontFamily,
   },
   avatarImage: {
     width: 150,
     height: 150,
-    margin: 25,
+    margin: '25px auto',
   },
   subtext: {
     width: 175,
-    textAlign: 'center',
     color: 'gray',
+    margin: 'auto',
+  },
+  form: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   uploadButton: {
-    margin: 35,
+    margin: '20px auto',
     width: 220,
     height: 50,
-    borderRadius: theme.shape.borderRadius,
     fontWeight: 'bold',
-    color: theme.palette.primary.main,
   },
   input: {
     display: 'none',
   },
   delete: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
+    padding: 10,
   },
   deleteText: {
     paddingLeft: 10,

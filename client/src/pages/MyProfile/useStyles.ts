@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   profileCard: {
     minWidth: '55%',
     minHeight: '75%',
-    margin: 25,
+    margin: '25px auto',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
   },
   imagesBox: {
     height: 100,
+    display: 'flex',
+    justifyContent: 'center',
   },
   imageList: {
     justifyContent: 'space-evenly',
@@ -47,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
   smallProfileImages: {
     maxHeight: 100,
     maxWidth: 100,
+  },
+  buttons: {
+    margin: 'auto',
+    alignSelf: 'center',
   },
 }));
 

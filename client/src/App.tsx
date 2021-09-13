@@ -13,6 +13,8 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
+import MyProfile from './pages/MyProfile/MyProfile';
+import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
 
 function App(): JSX.Element {
   return (
@@ -31,6 +33,12 @@ function App(): JSX.Element {
                   </Route>
                   <Route path="/sitter/:profileId">
                     <ProfileDetails />
+                  </Route>
+                  <Route exact path="/myprofile">
+                    <MyProfile />
+                  </Route>
+                  <Route exact path="/myprofile/editphoto">
+                    <ProfilePhoto />
                   </Route>
                   <Route exact path="/mybookings">
                     <MyBookings />
