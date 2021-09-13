@@ -4,12 +4,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
   },
-  // cards: {
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-evenly',
-  //   alignContent: 'center',
-  // },
   profileCard: {
     minWidth: '55%',
     minHeight: '75%',
@@ -26,15 +20,6 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid white',
     width: 100,
     height: 100,
-  },
-  requestCard: {
-    minHeight: '50%',
-    minWidth: '30%',
-    display: 'flex',
-    paddingBottom: 10,
-    margin: 25,
-    flexDirection: 'column',
-    textAlign: 'center',
   },
   media: {
     height: 160,
@@ -54,17 +39,6 @@ const useStyles = makeStyles((theme) => ({
   },
   imagesBox: {
     height: 100,
-  },
-  ratingStars: {
-    padding: 15,
-  },
-  datePicker: {
-    display: 'block',
-    margin: '15px',
-  },
-  requestButton: {
-    margin: 'auto',
-    marginBottom: 40,
   },
   imageList: {
     justifyContent: 'space-evenly',

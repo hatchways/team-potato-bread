@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   images: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image'
+    ref: 'image'
   }],
   register_date: {
     type: Date,
