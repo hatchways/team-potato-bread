@@ -7,21 +7,30 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { User } from '../../interface/User';
 import { useDebounce } from 'use-debounce';
 import { searchUsers } from '../../helpers/APICalls/searchUsers';
-import TextField from '@material-ui/core/TextField';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { IconButton } from '@material-ui/core';
 import { format } from 'date-fns';
+import isValid from 'date-fns/isValid';
 
 interface Props {
   search: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>, newInputValue: string) => void;
-  date: Date;
-  handleDateChange: (date: MaterialUiPickersDate) => void;
+  selectedStartDate: Date | null;
+  handleStartDateChange: (date: MaterialUiPickersDate) => void;
+  selectedEndDate: Date | null;
+  handleEndDateChange: (date: MaterialUiPickersDate) => void;
 }
 
-const SearchSitterForm = ({ search, handleChange, date, handleDateChange }: Props): JSX.Element => {
+const SearchSitterForm = ({
+  search,
+  handleChange,
+  selectedStartDate,
+  handleStartDateChange,
+  selectedEndDate,
+  handleEndDateChange,
+}: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,6 +66,12 @@ const SearchSitterForm = ({ search, handleChange, date, handleDateChange }: Prop
       active = false;
     };
   }, [debouncedSearch]);
+
+  const formatWeekSelectLabel = (date: any, invalidLabel: string) => {
+    const dateClone = new Date(date);
+
+    return dateClone && isValid(dateClone) ? `${format(dateClone, 'd MMMM')}` : invalidLabel;
+  };
 
   const renderDay = (date: any, selectedDate: any, dayInCurrentMonth: any) => {
     const dateClone = new Date(date);
@@ -123,44 +138,31 @@ const SearchSitterForm = ({ search, handleChange, date, handleDateChange }: Prop
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <DatePicker
             autoOk
-            // label="Clearable"
             renderDay={renderDay}
             clearable
-            value={date}
-            onChange={handleDateChange}
+            value={selectedStartDate}
+            onChange={handleStartDateChange}
             InputProps={{
               disableUnderline: true,
               startAdornment: <DateRangeIcon color="action" />,
             }}
             className={classes.dateInput}
+            labelFunc={formatWeekSelectLabel}
           />
           <DatePicker
             autoOk
-            // label="Clearable"
             renderDay={renderDay}
             clearable
-            value={date}
-            onChange={handleDateChange}
+            value={selectedEndDate}
+            onChange={handleEndDateChange}
             InputProps={{
               disableUnderline: true,
               startAdornment: <DateRangeIcon color="action" />,
             }}
             className={classes.dateInput}
+            labelFunc={formatWeekSelectLabel}
           />
         </MuiPickersUtilsProvider>
-        {/* <TextField
-          id="date"
-          type="date"
-          InputProps={{
-            startAdornment: <DateRangeIcon color="action" />,
-            disableUnderline: true,
-          }}
-          className={classes.dateInput}
-          defaultValue="2017-05-24"
-          inputProps={{
-            'aria-label': 'date',
-          }}
-        /> */}
       </div>
     </form>
   );
