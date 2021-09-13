@@ -10,8 +10,7 @@ exports.userReviews = asyncHandler(async (req, res, next) => {
   const reviews = await Review.find({ userId: uid });
 
   if (!reviews) {
-    res.status(404);
-    throw new Error('No reviews found for this user.');
+    res.status(200).json({ message: 'No reviews found for this user.' });
   }
 
   res.status(200).json({ reviews: reviews });

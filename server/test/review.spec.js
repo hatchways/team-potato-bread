@@ -18,7 +18,7 @@ const userCredentials = {
 const lorem = "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jícama salsify.";
 
 //login the user before we run any tests
-var authenticatedUser = request.agent(server);
+let authenticatedUser = request.agent(server);
 before((done) => {
   authenticatedUser
     .post('/auth/login')
@@ -31,7 +31,7 @@ before((done) => {
 
 // Test adding a new review
 describe("/POST review", () => {
-  it("it should return 201 status the added review", (done) => {
+  it("it should return 201 status and the added review", (done) => {
     // valid userId for whome review is added
     const uid = "612401d05be2e31e30a8d65e";
     // Test with authenticated user
@@ -75,21 +75,21 @@ describe("/POST review", () => {
               "value": 6,
               "msg": "Rating is required and must be between 1-5",
               "param": "rating",
-              "location": "body"
+              "location": "body",
             },
             {
               "value": uid,
               "msg": "Please provide a valid id for userId",
               "param": "userId",
-              "location": "body"
+              "location": "body",
             },
             {
               "value": lorem,
               "msg": "Review cannot be longer than 200 characters.",
               "param": "text",
-              "location": "body"
-            })
-        done();
+              "location": "body",
+            }),
+          done();
       });
   });
 });
