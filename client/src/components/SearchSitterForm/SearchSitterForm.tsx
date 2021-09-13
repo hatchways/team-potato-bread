@@ -126,7 +126,6 @@ const SearchSitterForm = ({ search, handleChange, date, handleDateChange }: Prop
             // label="Clearable"
             renderDay={renderDay}
             clearable
-            disableFuture
             value={date}
             onChange={handleDateChange}
             InputProps={{
@@ -140,7 +139,6 @@ const SearchSitterForm = ({ search, handleChange, date, handleDateChange }: Prop
             // label="Clearable"
             renderDay={renderDay}
             clearable
-            disableFuture
             value={date}
             onChange={handleDateChange}
             InputProps={{
