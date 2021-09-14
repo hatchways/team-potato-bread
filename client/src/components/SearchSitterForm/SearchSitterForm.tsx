@@ -1,12 +1,10 @@
-import { ChangeEvent, useState, useEffect, SyntheticEvent } from 'react';
+import { ChangeEvent, useState, SyntheticEvent } from 'react';
 import useStyles from './useStyles';
 import SearchIcon from '@material-ui/icons/Search';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import InputBase from '@material-ui/core/InputBase';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { User } from '../../interface/User';
-import { useDebounce } from 'use-debounce';
-import { searchUsers } from '../../helpers/APICalls/searchUsers';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
@@ -34,38 +32,8 @@ const SearchSitterForm = ({
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
-  // limit our call to the api with a debounced value at max of 1 per 0.5 seconds
-  const [debouncedSearch] = useDebounce(search, 500);
 
   const classes = useStyles();
-
-  const saveOptions = (users: User[]) => {
-    setOptions(users);
-  };
-
-  useEffect(() => {
-    let active = true;
-
-    async function searchAndSaveUsers() {
-      // send request to backend API to get users limited to 20.
-      setLoading(true);
-      const response = await searchUsers({
-        search: debouncedSearch,
-      });
-
-      if (active && response && response.users) {
-        console.log(response);
-        saveOptions(response.users);
-      }
-      setLoading(false);
-    }
-
-    searchAndSaveUsers();
-
-    return () => {
-      active = false;
-    };
-  }, [debouncedSearch]);
 
   const formatWeekSelectLabel = (date: any, invalidLabel: string) => {
     const dateClone = new Date(date);
@@ -85,7 +53,6 @@ const SearchSitterForm = ({
     );
   };
 
-  // creates a combobox search which is dynamically updated with call's to the API
   return (
     <form
       onSubmit={(e: SyntheticEvent) => {

@@ -3,9 +3,6 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
-import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import { useAuth } from '../../context/useAuthContext';
-import { useSnackBar } from '../../context/useSnackbarContext';
 import SearchSitterForm from '../../components/SearchSitterForm/SearchSitterForm';
 import SitterCard from '../../components/SitterCard/SitterCard';
 import { Button } from '@material-ui/core';
@@ -33,9 +30,6 @@ export default function Register(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Box className={classes.authWrapper}>
-        <AuthHeader asideText="Become a sitter" />
-      </Box>
       <Grid container className={classes.searchContainer}>
         <Typography className={classes.heading} component="h1" variant="h4">
           Your Search Results
