@@ -43,21 +43,8 @@ exports.getAllUnreadNotification = asyncHandler(async (req, res, next) => {
 exports.createNotification = asyncHandler(async (req, res, next) => {
   const { type, ownerId, recipientId, title, description } = req.body;
 
-  if (!type || !ownerId || !recipientId || !title || !description) {
-    res.status(400);
-    throw new Error("Incomplete required data");
-  }
-
-  let anchor;
-  if (type === "message") {
-    anchor = "message";
-  } else {
-    anchor = "notification center";
-  }
-
   const notification = await Notification.create({
     type: type,
-    anchor: anchor,
     owner: ownerId,
     recipient: recipientId,
     title: title,
@@ -86,5 +73,5 @@ exports.updateNotificationStatus = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("Cannot update read status.");
   }
-  res.status(200).json({ notification: notification });
+  res.status(200).json({ notification });
 });
