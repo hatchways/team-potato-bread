@@ -4,11 +4,15 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
+import MyBookings from './pages/Booking/MyBookings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 
 import './App.css';
+import { Fragment } from 'react';
+import NavBar from './components/NavBar/NavBar';
 
 function App(): JSX.Element {
   return (
@@ -20,9 +24,18 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
+                <Fragment>
+                  <NavBar />
+                  <Route exact path="/dashboard">
+                    <Dashboard />
+                  </Route>
+                  <Route path="/sitter/:profileId">
+                    <ProfileDetails />
+                  </Route>
+                  <Route exact path="/mybookings">
+                    <MyBookings />
+                  </Route>
+                </Fragment>
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>

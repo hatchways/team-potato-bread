@@ -42,7 +42,8 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
+          email: user.email,
+          avatar: user.avatar
         }
       }
     });
@@ -74,7 +75,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
+          email: user.email,
+          avatar: user.avatar
         }
       }
     });
@@ -100,7 +102,8 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
       user: {
         id: user._id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        avatar: user.avatar
       }
     }
   });
@@ -112,5 +115,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
 exports.logoutUser = asyncHandler(async (req, res, next) => {
   res.clearCookie("token");
 
-  res.send("You have successfully logged out");
+  res.status(205).json({
+    message: "You have successfully logged out"
+  });
 });
