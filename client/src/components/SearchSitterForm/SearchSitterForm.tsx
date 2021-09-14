@@ -73,7 +73,7 @@ const SearchSitterForm = ({
     return dateClone && isValid(dateClone) ? `${format(dateClone, 'd MMMM')}` : invalidLabel;
   };
 
-  const renderDay = (date: any, selectedDate: any, dayInCurrentMonth: any) => {
+  const renderDay = (date: any) => {
     const dateClone = new Date(date);
 
     return (

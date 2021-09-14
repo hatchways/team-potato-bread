@@ -23,8 +23,7 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <Switch>
-                <Route exact path="/search" component={SearchSitter} />
-                <Route exact path="/login" component={SearchSitter} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Fragment>
                   <NavBar />
@@ -36,6 +35,9 @@ function App(): JSX.Element {
                   </Route>
                   <Route exact path="/mybookings">
                     <MyBookings />
+                  </Route>
+                  <Route exact path="/search">
+                    <SearchSitter />
                   </Route>
                 </Fragment>
                 <Route path="*">

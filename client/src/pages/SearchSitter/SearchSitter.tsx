@@ -14,8 +14,6 @@ import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
-  const { updateLoginContext } = useAuth();
-  const { updateSnackBarMessage } = useSnackBar();
   const [search, setSearch] = useState<string>('test');
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(new Date());
