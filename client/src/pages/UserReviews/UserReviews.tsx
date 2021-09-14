@@ -23,8 +23,8 @@ export default function UserReviews(): JSX.Element {
             subheader="September 14, 2016"
           />
           <CardContent>
-            <Rating />
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Rating name="user rating" value={5} readOnly />
+            <Typography variant="body2" component="p">
               This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup
               of frozen peas along with the mussels, if you like.
             </Typography>
