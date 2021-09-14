@@ -29,7 +29,6 @@ const initSitter: Sitter = {
   profile: {
     firstName: '',
     lastName: '',
-    username: '',
     location: '',
     avgRating: 0,
     user: {
