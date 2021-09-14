@@ -28,7 +28,6 @@ interface Props {
   image: Image;
 }
 
-
 const initSitter: Sitter = {
   profile: {
     firstName: '',
@@ -66,7 +65,6 @@ export default function ProfileDetails(): JSX.Element {
       setImages(profileImages);
     });
   }, [profileId]);
-
 
   return (
     <Grid container component="main" className={classes.root}>

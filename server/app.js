@@ -1,21 +1,21 @@
-const colors = require("colors");
-const path = require("path");
-const http = require("http");
-const express = require("express");
-const socketio = require("socket.io");
-const { notFound, errorHandler } = require("./middleware/error");
-const connectDB = require("./db");
-const { join } = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const colors = require('colors');
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketio = require('socket.io');
+const { notFound, errorHandler } = require('./middleware/error');
+const connectDB = require('./db');
+const { join } = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-const authRouter = require("./routes/auth");
-const userRouter = require("./routes/user");
-const requestRouter = require("./routes/request");
-const profileRouter = require("./routes/profile");
-const imageRouter = require("./routes/image");
-const conversationRouter=require('./routes/conversation')
-const {addUser,removeUser,getUser}=require('./utils/users')
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
+const requestRouter = require('./routes/request');
+const profileRouter = require('./routes/profile');
+const imageRouter = require('./routes/image');
+const conversationRouter = require('./routes/conversation');
+const { addUser, removeUser, getUser } = require('./utils/users');
 const { json, urlencoded } = express;
 
 connectDB();
@@ -24,56 +24,54 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "*",
+    origin: '*',
   },
 });
 
-io.on("connection", (socket) => {
-  socket.on('JoinConversation', ({ userProfileId,conversationId },cb) => {
-    const{error}=addUser({id:socket.id,userProfileId,conversationId})
-    if(error)return cb(error)
+io.on('connection', (socket) => {
+  socket.on('JoinConversation', ({ userProfileId, conversationId }, cb) => {
+    const { error } = addUser({ id: socket.id, userProfileId, conversationId });
+    if (error) return cb(error);
     socket.join(conversationId);
-    cb()
-  }) 
-  // Listen for chatMessage
-  socket.on('chatMessage', (message,cb) => {
-    const user=getUser(socket.id)
-    io.to(user.conversationId).emit('message', {userProfileId,message});
+    cb();
   });
 
-  socket.on('disconnect',()=>{
-   removeUser(socket.id);
-  })
+  socket.on('chatMessage', (message, cb) => {
+    const user = getUser(socket.id);
+    io.to(user.conversationId).emit('message', { userProfileId, message });
+  });
+
+  socket.on('disconnect', () => {
+    removeUser(socket.id);
+  });
 });
 
-if (process.env.NODE_ENV === "development") {
-  app.use(logger("dev"));
+if (process.env.NODE_ENV === 'development') {
+  app.use(logger('dev'));
 }
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(join(__dirname, "public")));
+app.use(express.static(join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-app.use("/auth", authRouter);
-app.use("/users", userRouter);
-app.use("/request", requestRouter);
-app.use("/profile",profileRouter);
-app.use("/image", imageRouter);
-app.use('/conversation',conversationRouter)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/client/build")));
+app.use('/auth', authRouter);
+app.use('/users', userRouter);
+app.use('/request', requestRouter);
+app.use('/profile', profileRouter);
+app.use('/image', imageRouter);
+app.use('/conversation', conversationRouter);
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname), "client", "build", "index.html")
-  );
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname), 'client', 'build', 'index.html'));
 } else {
-  app.get("/", (req, res) => {
-    res.send("API is running");
+  app.get('/', (req, res) => {
+    res.send('API is running');
   });
 }
 
@@ -81,7 +79,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Handle unhandled promise rejections
-process.on("unhandledRejection", (err, promise) => {
+process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`.red);
   // Close server & exit process
   server.close(() => process.exit(1));

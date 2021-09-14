@@ -1,12 +1,7 @@
 const express = require('express');
 const protect = require('../middleware/auth');
 const router = express.Router();
-const {
-  getAllConversations,
-  sendMessage,
-  createConversation,
-  getMessages,
-} = require('../controllers/conversation');
+const { getAllConversations, sendMessage, createConversation, getMessages } = require('../controllers/conversation');
 
 router.route('/:id/messages').get(protect, getMessages);
 

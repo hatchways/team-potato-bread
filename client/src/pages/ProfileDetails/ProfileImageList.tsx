@@ -16,7 +16,6 @@ const ProfileImageList = ({ images }: Props): JSX.Element => {
       {imageList}
     </Grid>
   );
-
 };
 
 export default ProfileImageList;

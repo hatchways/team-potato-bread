@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
   userId: {
@@ -37,8 +37,8 @@ const requestSchema = new mongoose.Schema({
   },
   timeZone: {
     type: String,
-    require: true
-  }
+    require: true,
+  },
 });
 
-module.exports = Request = mongoose.model("request", requestSchema);
+module.exports = Request = mongoose.model('request', requestSchema);

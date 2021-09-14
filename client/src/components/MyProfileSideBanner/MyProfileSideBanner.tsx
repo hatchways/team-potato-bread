@@ -7,7 +7,7 @@ import useStyles from './useStyles';
 
 interface Props {
   user: User;
-  profile: Profile
+  profile: Profile;
 }
 
 const MyProfileSideBanner = ({ user, profile }: Props): JSX.Element => {

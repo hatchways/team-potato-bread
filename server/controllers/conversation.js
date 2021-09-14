@@ -12,12 +12,12 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error('Missing sender profileId or reciever profileId !');
   }
-  const existingConversation=await Conversation.findOne({senderProfileId,recieverProfileId})
-  if(existingConversation){
+  const existingConversation = await Conversation.findOne({ senderProfileId, recieverProfileId });
+  if (existingConversation) {
     res.status(400);
-    throw new Error("The conversation exists");
+    throw new Error('The conversation exists');
   }
-  
+
   const conversation = await Conversation.create({
     senderProfileId,
     recieverProfileId,
@@ -29,12 +29,12 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
   });
 });
 // @route POST /conversation/sendMessage
-// @desc send a messsage 
+// @desc send a messsage
 // @access Private
 exports.sendMessage = asyncHandler(async (req, res, next) => {
   const { conversationId, senderProfileId, content } = req.body;
 
-  if (!conversationId || !senderProfileId|| !content) {
+  if (!conversationId || !senderProfileId || !content) {
     res.status(400);
     throw new Error('Incomplete required data');
   }
@@ -58,10 +58,7 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
   const { userProfileId } = req.params;
 
   const conversations = await Conversation.find({
-    $or: [
-      { senderProfileId: userProfileId },
-      { recieverProfileId: userProfileId },
-    ],
+    $or: [{ senderProfileId: userProfileId }, { recieverProfileId: userProfileId }],
   })
     .populate({ path: 'senderProfileId' })
     .populate({ path: 'recieverProfileId' });
@@ -73,12 +70,12 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
 });
 
 // @route GET /conversation/:id/messages
-// @params id =>  conversationId 
+// @params id =>  conversationId
 // @desc all messages for a specific conversation
 // @access Private
 exports.getMessages = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const massages= await Message.find({conversationId:id}).populate("senderProfileId")
+  const massages = await Message.find({ conversationId: id }).populate('senderProfileId');
   res.status(200).json({
     success: {
       massages,

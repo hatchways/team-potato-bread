@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/multer');
-const { uploadAvatar, uploadImages } = require("../controllers/image");
+const { uploadAvatar, uploadImages } = require('../controllers/image');
 
-router.route("/avatar").post(upload.single('avatar'), uploadAvatar);
+router.route('/avatar').post(upload.single('avatar'), uploadAvatar);
 
-router.route("/upload").post(upload.array('gallery', 5), uploadImages);
+router.route('/upload').post(upload.array('gallery', 5), uploadImages);
 
 module.exports = router;
