@@ -24,12 +24,6 @@ const AuthMenu = (): JSX.Element => {
     handleClose();
     logout();
   };
-  const handleProfile = () => {
-    history.push('/profiledetails');
-  };
-  const handlemybookings = () => {
-    history.push('/bookings');
-  };
 
   return (
     <div>
@@ -49,8 +43,6 @@ const AuthMenu = (): JSX.Element => {
         getContentAnchorEl={null}
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        <MenuItem onClick={handleProfile}>Profile</MenuItem>
-        <MenuItem onClick={handlemybookings}>mybookings</MenuItem>
       </Menu>
     </div>
   );
