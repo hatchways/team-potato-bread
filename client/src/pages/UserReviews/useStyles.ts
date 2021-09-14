@@ -6,9 +6,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: '0 auto',
   },
-  reviewCard: {
-    // minWidth: '100vw',
-  },
   reviewsWrapper: {
     display: 'flex',
     flexFlow: 'column nowrap',
