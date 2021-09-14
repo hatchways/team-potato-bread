@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'black',
     fontWeight: 700,
     textAlign: 'center',
+    cursor: 'pointer',
   },
 }));
 
