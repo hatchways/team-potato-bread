@@ -20,7 +20,7 @@ const NotificationItem = (): JSX.Element => {
         alt="ownername"
         src="/static/images/avatar/1.jpg"
       />
-      <Link to={`/${reRoute}`}>
+      <Link to={`/${reRoute}`} className={classes.route}>
         <Box className={classes.infoBox}>
           <Typography className={classes.description}>Marry has requested your service for 2 hurs</Typography>
           <Typography variant="caption">Dog Sitting</Typography>

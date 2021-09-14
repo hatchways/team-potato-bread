@@ -22,14 +22,14 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <Route exact path="/mybookings">
+                  <MyBookings />
+                </Route>
                 <Route exact path="/dashboard">
-                  <Dashboard />
+                  <MyBookings />
                 </Route>
                 <Route exact path="/profiledetails">
                   <ProfileDetails />
-                </Route>
-                <Route exact path="/mybookings">
-                  <MyBookings />
                 </Route>
                 <Route path="*">
                   <Redirect to="/login" />

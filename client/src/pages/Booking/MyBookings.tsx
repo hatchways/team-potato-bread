@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import MgnBookingHeader from '../../components/MgnBookingHeader/MgnBookingHeader';
+import NavBar from '../../components/NavBar/NavBar';
 import BookingCalendar from '../../components/BookingCalendar/BookingCalendar';
 import BookingList from '../../components/BookingList/BookingList';
 import useStyles from './useStyles';
@@ -37,7 +37,7 @@ const MyBookings = (): JSX.Element => {
 
   return (
     <Grid container>
-      <MgnBookingHeader />
+      <NavBar />
       <Grid container className={classes.myBooking} spacing={2}>
         {bookings && <BookingList bookings={bookings} />}
         {dates && <BookingCalendar dates={dates} />}

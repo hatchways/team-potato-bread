@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
   mainBox: {
     display: 'flex',
-    padding: '15px',
+    padding: '7px 15px',
   },
   infoBox: {
     display: 'flex',
@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     marginTop: '5px',
   },
+  route: { textDecoration: 'none' },
 }));
 
 export default useStyles;
