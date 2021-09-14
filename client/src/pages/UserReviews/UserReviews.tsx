@@ -1,7 +1,4 @@
-import { Avatar, Card, CardContent, CardHeader, CssBaseline, Grid, IconButton, Typography } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Rating } from '@material-ui/lab';
-import { useState } from 'react';
+import { CssBaseline, Grid } from '@material-ui/core';
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
 import useStyles from './useStyles';
 
