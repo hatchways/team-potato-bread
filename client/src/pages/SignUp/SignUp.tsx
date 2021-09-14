@@ -10,7 +10,6 @@ import SignUpForm from './SignUpForm/SignUpForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import login from '../../helpers/APICalls/login';
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
@@ -38,23 +37,6 @@ export default function Register(): JSX.Element {
     });
   };
 
-  const handleDemoLogin = () => {
-    login('jondoe@vmail.com', '12345678').then((data) => {
-      if (data.error) {
-        // setSubmitting(false);
-        updateSnackBarMessage(data.error.message);
-      } else if (data.success) {
-        updateLoginContext(data.success);
-      } else {
-        // should not get here from backend but this catch is for an unknown issue
-        console.error({ data });
-
-        // setSubmitting(false);
-        updateSnackBarMessage('An unexpected error occurred. Please try again');
-      }
-    });
-  };
-
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -70,7 +52,7 @@ export default function Register(): JSX.Element {
                   </Typography>
                 </Grid>
               </Grid>
-              <SignUpForm handleSubmit={handleSubmit} handleDemoLogin={handleDemoLogin} />
+              <SignUpForm handleSubmit={handleSubmit} />
             </Box>
             <Box p={1} alignSelf="center" />
           </Box>
