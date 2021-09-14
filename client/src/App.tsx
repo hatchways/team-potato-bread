@@ -13,6 +13,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
+import UserReviews from './pages/UserReviews/UserReviews';
 
 function App(): JSX.Element {
   return (
@@ -27,13 +28,17 @@ function App(): JSX.Element {
                 <Fragment>
                   <NavBar />
                   <Route exact path="/dashboard">
-                    <Dashboard />
+                    {/* <Dashboard /> */}
+                    <UserReviews />
                   </Route>
                   <Route path="/sitter/:profileId">
                     <ProfileDetails />
                   </Route>
                   <Route exact path="/mybookings">
                     <MyBookings />
+                  </Route>
+                  <Route exact path="/reviews/:userId">
+                    <UserReviews />
                   </Route>
                 </Fragment>
                 <Route path="*">
