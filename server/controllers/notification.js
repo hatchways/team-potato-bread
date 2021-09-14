@@ -17,10 +17,10 @@ exports.getAllNotifications = asyncHandler(async (req, res, next) => {
     throw new Error("No notification found.");
   }
 
-  res.status(200).json({ notifications: notifications });
+  res.status(200).json({ notifications });
 });
 
-exports.getAllunreadNotifications = asyncHandler(async (req, res, next) => {
+exports.getAllUnreadNotification = asyncHandler(async (req, res, next) => {
   const userId = req.body.userId;
   let notifications;
   if (userId) {
@@ -37,7 +37,7 @@ exports.getAllunreadNotifications = asyncHandler(async (req, res, next) => {
     throw new Error("No notification found.");
   }
 
-  res.status(200).json({ notifications: notifications });
+  res.status(200).json({ notifications });
 });
 
 exports.createNotification = asyncHandler(async (req, res, next) => {
@@ -65,7 +65,7 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
   });
 
   if (notification) {
-    res.status(200).json({ notification: notification });
+    res.status(200).json({ notification });
   } else {
     res.status(400);
     throw new Error("Cannot create new notification");
