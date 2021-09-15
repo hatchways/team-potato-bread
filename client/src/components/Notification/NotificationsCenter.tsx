@@ -4,6 +4,7 @@ import { Badge, Typography, ThemeProvider, Popover } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core';
 import { lightGreen } from '@material-ui/core/colors';
 import NotificationList from './NotificationList/NotificationList';
+import { string } from 'yup/lib/locale';
 
 const theme = createMuiTheme({
   palette: {
@@ -11,22 +12,16 @@ const theme = createMuiTheme({
   },
 });
 
-const NotificationCenter = (): JSX.Element => {
+interface NotificationTypeProps {
+  text: string;
+}
+const NotificationCenter: React.FC<NotificationTypeProps> = ({ text }): JSX.Element => {
   const [newNotifications, hasNewNotification] = useState(true);
-  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-
   const classes = useStyles();
-
-  const open = Boolean(anchorEl);
 
   const read = (event: React.MouseEvent): void => {
     hasNewNotification(false);
-    setAnchorEl(event.currentTarget);
     //send update to backend
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   useEffect(() => {
@@ -34,30 +29,15 @@ const NotificationCenter = (): JSX.Element => {
   }, []);
 
   return (
-    <div className={classes.main}>
+    <>
       <ThemeProvider theme={theme}>
         <Badge color="secondary" variant="dot" invisible={!newNotifications}>
-          <Typography onClick={read} className={classes.text}>
-            Notifications
+          <Typography onClick={read} variant="h6" className={classes.text}>
+            {text}
           </Typography>
         </Badge>
       </ThemeProvider>
-      <Popover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <NotificationList />
-      </Popover>
-    </div>
+    </>
   );
 };
 

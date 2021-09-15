@@ -1,20 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  main: {
-    textAlign: 'center',
-    marginRight: 35,
-    whiteSpace: 'nowrap',
-    display: 'flex',
-    alignItems: 'center',
-  },
-
   text: {
-    fontSize: 12,
-    color: 'black',
     fontWeight: 700,
-    textAlign: 'center',
+    fontSize: '1.0714285714285714rem',
+    color: 'black',
+    marginLeft: 70,
+    paddingRight: 5,
     cursor: 'pointer',
+    fontFamily: 'Open Sans, sans-serif, Roboto',
   },
 }));
 

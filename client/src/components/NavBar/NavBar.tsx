@@ -8,6 +8,7 @@ import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
 import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
 import { User } from '../../interface/User';
 import NotificationList from '../Notification/NotificationList/NotificationList';
+import NotificationCenter from '../Notification/NotificationsCenter';
 
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
@@ -162,22 +163,24 @@ const NavBar = (): JSX.Element => {
         <div className={classes.sectionDesktop}>
           <Box className={classes.navWrapper}>
             <Box onClick={handleNotificationOpen}>
-              <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
+              <NotificationCenter text="Notifications" />
+              {/* <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
                 <Typography className={classes.navLink} variant="h6">
                   Notifications
                 </Typography>
-              </Badge>
+              </Badge> */}
             </Box>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={true}>
               <Typography className={classes.navLink} variant="h6">
                 My Jobs
               </Typography>
             </Badge>
-            <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
+            <NotificationCenter text="Message" />
+            {/* <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
               <Typography className={classes.navLink} variant="h6">
                 Messages
               </Typography>
-            </Badge>
+            </Badge> */}
             <Box
               aria-label="account of current user"
               aria-controls={menuId}
