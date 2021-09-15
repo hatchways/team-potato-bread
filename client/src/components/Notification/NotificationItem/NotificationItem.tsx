@@ -23,7 +23,7 @@ const NotificationItem = (): JSX.Element => {
       <Link to={`/${reRoute}`} className={classes.route}>
         <Box className={classes.infoBox}>
           <Typography className={classes.description}>Marry has requested your service for 2 hurs</Typography>
-          <Typography variant="caption">Dog Sitting</Typography>
+          <Typography className={classes.profileType}>Dog Sitting</Typography>
           <Typography className={classes.date}>{new Date().toLocaleDateString()}</Typography>
         </Box>
       </Link>

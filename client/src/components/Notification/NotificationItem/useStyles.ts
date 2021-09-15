@@ -17,12 +17,14 @@ const useStyles = makeStyles(() => ({
     alignSelf: 'center',
   },
   description: {
-    fontSize: 12,
     color: 'black',
     fontWeight: 700,
   },
+  profileType: {
+    color: 'grey',
+    fontWeight: 700,
+  },
   date: {
-    fontSize: 12,
     color: 'black',
     fontWeight: 700,
     marginTop: '5px',

@@ -6,19 +6,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Rating from '@material-ui/lab/Rating';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import useStyles from './useStyles';
-import ProfileImageList from './ProfileImageList';
+import ProfileImageList from '../ProfileDetails/ProfileImageList';
 import { useAuth } from '../../context/useAuthContext';
 import { Sitter, User, Profile, Image } from '../../interface/User';
 import { getSitterProfile } from '../../helpers/APICalls/getSitterProfile';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import MyProfileSideBanner from '../../components/MyProfileSideBanner/MyProfileSideBanner';
 
 interface Props {
   sitter: Sitter;
@@ -42,20 +40,15 @@ const initSitter: Sitter = {
   },
 };
 
-type idParams = {
-  profileId: string;
-};
-
-export default function ProfileDetails(): JSX.Element {
+export default function MyProfile(): JSX.Element {
   const classes = useStyles();
-  const { profileId } = useParams<idParams>();
   const [sitter, setSitter] = useState<Sitter>(initSitter);
   const [images, setImages] = useState<Image[]>([{ imageUrl: '' }]);
   const [bannerImage, setBannerImage] = useState<Image>();
   const { loggedInUser } = useAuth();
 
   useEffect(() => {
-    getSitterProfile(profileId).then((data) => {
+    getSitterProfile(loggedInUser?._id as string).then((data) => {
       const sitterProfile = data;
       setSitter(sitterProfile);
       const profileImages = data.user?.images as Image[];
@@ -63,16 +56,25 @@ export default function ProfileDetails(): JSX.Element {
       setBannerImage(newBannerImage);
       setImages(profileImages);
     });
-  }, [profileId]);
+  }, [loggedInUser]);
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid container>
+        <Grid>
+          <MyProfileSideBanner profile={sitter.profile as Profile} user={sitter.user as User} />
+        </Grid>
         <Grid item className={classes.profileCard}>
           <Card>
             <CardActionArea>
-              <CardMedia className={classes.media} image={bannerImage ? bannerImage.imageUrl : ''} />
+              {bannerImage ? (
+                <CardMedia className={classes.media} image={bannerImage && bannerImage.imageUrl} />
+              ) : (
+                <Button variant="contained" size="large">
+                  Upload Banner
+                </Button>
+              )}
               <CardContent className={classes.cardContent}>
                 <Avatar className={classes.avatar} src={sitter?.user?.avatar} />
                 <Typography className={classes.nameField} align="center">
@@ -87,46 +89,15 @@ export default function ProfileDetails(): JSX.Element {
                 </IconButton>
                 <Typography variant="h3">About me</Typography>
                 <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
-                <Box className={classes.imagesBox}>{images && <ProfileImageList images={images} />}</Box>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-        <Grid item className={classes.requestCard}>
-          <Card>
-            <CardActionArea>
-              <CardContent component="form">
-                <Typography variant="h3">${sitter.profile?.ratePerHour}/hr</Typography>
-                <Rating
-                  name="read-only-rating"
-                  readOnly
-                  className={classes.ratingStars}
-                  precision={0.5}
-                  value={sitter.profile?.avgRating}
-                />
-                <TextField
-                  id="startDate"
-                  label="Start Date"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  className={classes.datePicker}
-                />
-                <TextField
-                  id="endDate"
-                  label="End Date"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  className={classes.datePicker}
-                />
-                <Button className={classes.requestButton} size="large" color="primary" variant="contained">
-                  Send Request
-                </Button>
+                <Box className={classes.imagesBox}>
+                  {images ? (
+                    <ProfileImageList images={images} />
+                  ) : (
+                    <Button variant="contained" size="large">
+                      Add Images
+                    </Button>
+                  )}
+                </Box>
               </CardContent>
             </CardActionArea>
           </Card>
