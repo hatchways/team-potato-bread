@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import useStyles from './useStyles';
-import { Badge, Typography, ThemeProvider, Popover } from '@material-ui/core';
+import { Badge, Typography, ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core';
 import { lightGreen } from '@material-ui/core/colors';
-import NotificationList from './NotificationList/NotificationList';
-import { string } from 'yup/lib/locale';
+import updateNotificationStatus from '../../helpers/APICalls/updateNotificationStatus';
+import { useAuth } from '../../context/useAuthContext';
+import { getUnreadStatus } from '../../helpers/APICalls/getAllUnreadNotifications';
 
 const theme = createMuiTheme({
   palette: {
@@ -16,17 +17,34 @@ interface NotificationTypeProps {
   text: string;
 }
 const NotificationCenter: React.FC<NotificationTypeProps> = ({ text }): JSX.Element => {
-  const [newNotifications, hasNewNotification] = useState(true);
+  const [newNotifications, hasNewNotification] = useState(false);
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
 
   const read = (event: React.MouseEvent): void => {
     hasNewNotification(false);
-    //send update to backend
+    if (loggedInUser) {
+      if (text.toLowerCase() === 'messages') {
+        updateNotificationStatus(loggedInUser._id, 'message');
+      } else {
+        updateNotificationStatus(loggedInUser._id, 'booking');
+      }
+    }
   };
 
   useEffect(() => {
-    //get all unread message
-  }, []);
+    const getStatus = async () => {
+      let type = '';
+      if (text.toLowerCase() === 'messages') {
+        type = 'message';
+      } else {
+        type = 'booking';
+      }
+      const status = await getUnreadStatus(type);
+      hasNewNotification(status);
+    };
+    getStatus();
+  }, [text]);
 
   return (
     <>
