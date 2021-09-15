@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
   },
   profileCard: {
     minWidth: '55%',
+    maxWidth: '700px',
     minHeight: '75%',
     margin: '25px auto',
     [theme.breakpoints.down('md')]: {
@@ -36,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'gray',
     padding: 15,
     fontSize: 12,
+  },
+  aboutMe: {
+    margin: '10px 15px',
   },
   imagesBox: {
     height: 100,

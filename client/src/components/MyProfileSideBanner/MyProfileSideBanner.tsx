@@ -19,7 +19,7 @@ const MyProfileSideBanner = ({ user, profile }: Props): JSX.Element => {
         <Typography variant="h5">Edit Profile</Typography>
         <Typography variant="h5">
           <NavLink
-            to={{ pathname: `/myprofile/editphoto`, state: { user: user, profile: profile } }}
+            to={{ pathname: `/myprofile/edit/photo`, state: { user: user, profile: profile } }}
             className={classes.navigation}
             activeClassName={classes.activeLink}
           >

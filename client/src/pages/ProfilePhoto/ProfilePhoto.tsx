@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CssBaseline, Grid, Card, Typography, Button, Avatar } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -6,6 +6,7 @@ import useStyles from './useStyles';
 import { User, Profile } from '../../interface/User';
 import MyProfileSideBanner from '../../components/MyProfileSideBanner/MyProfileSideBanner';
 import uploadAvatar from '../../helpers/APICalls/uploadAvatar';
+import UploadPhotoForm from './UploadPhotoForm/UploadPhotoForm';
 
 type locationState = {
   user: User;
@@ -33,13 +34,17 @@ const ProfilePhoto = (): JSX.Element => {
 
       uploadAvatar(formData).then((data) => {
         setAvatar(data.imageUrl as string);
+        setFile(null);
       });
     }
-  }, [file, user, avatar]);
+  }, [file, user]);
+  // saving below values in case I need them later...
+  // event: ChangeEvent<HTMLInputElement>,
+  // event.target.files![0]
 
-  const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const newFile = event.target.files![0];
-    setFile(newFile);
+  const handleUpload = (newFile: File) => {
+    const newAvatar = newFile;
+    setFile(newAvatar);
   };
 
   return (
@@ -58,28 +63,7 @@ const ProfilePhoto = (): JSX.Element => {
             <Typography className={classes.subtext} align="center" variant="subtitle1">
               Be sure to use a photo that clearly shows your face
             </Typography>
-            <form action="/image/avatar" encType="multipart/form-data" method="POST" className={classes.form}>
-              <input
-                accept="image/*"
-                id="uploadImageButton"
-                type="file"
-                name="avatar"
-                multiple={false}
-                className={classes.input}
-                onChange={handleUpload}
-              />
-              <label htmlFor="uploadImageButton">
-                <Button
-                  className={classes.uploadButton}
-                  variant="outlined"
-                  color="primary"
-                  component="span"
-                  onSubmit={handleUpload}
-                >
-                  Upload a file from your device
-                </Button>
-              </label>
-            </form>
+            <UploadPhotoForm handleUpload={handleUpload} />
             <Grid item className={classes.delete}>
               <Button startIcon={<DeleteIcon />}>Delete Photo</Button>
             </Grid>

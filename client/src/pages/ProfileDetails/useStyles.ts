@@ -4,12 +4,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
   },
-  // cards: {
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-evenly',
-  //   alignContent: 'center',
-  // },
   profileCard: {
     minWidth: '55%',
     minHeight: '75%',

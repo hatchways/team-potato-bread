@@ -95,8 +95,12 @@ export default function MyProfile(): JSX.Element {
                 )}
                 {userData.profile && (
                   <>
-                    <Typography variant="h3">About me</Typography>
-                    <Typography variant="subtitle2">{userData.profile?.description}</Typography>
+                    <Typography variant="h3" className={classes.aboutMe}>
+                      About me
+                    </Typography>
+                    <Typography variant="subtitle2" className={classes.aboutMe}>
+                      {userData.profile?.description}
+                    </Typography>
                   </>
                 )}
                 <Box className={classes.imagesBox}>
