@@ -35,8 +35,7 @@ io.on("connection", (socket) => {
     socket.join(conversationId);
     cb()
   }) 
-  // Listen for chatMessage
-  socket.on('chatMessage', (message,cb) => {
+  socket.on('chatMessage', (message) => {
     const user=getUser(socket.id)
     io.to(user.conversationId).emit('message', {userProfileId,message});
   });

@@ -34,7 +34,6 @@ exports.validateLogin = [
 exports.validateProfileCreation = [
   check("firstName", "Please enter a First Name").not().isEmpty(),
   check("lastName", "Please enter a Last Name").not().isEmpty(),
-  // check("email", "Please enter a valid email address").isEmail().normalizeEmail(),
   check("location", "Please enter your location").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
