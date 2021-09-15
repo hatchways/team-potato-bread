@@ -1,6 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const getAllUnreadNotifications = async () => {
+export const getAllUnreadNotifications = async () => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -11,4 +11,17 @@ const getAllUnreadNotifications = async () => {
     .catch((err) => console.log(err));
 };
 
-export default getAllUnreadNotifications;
+export const getUnreadStatus = async (type: string) => {
+  const { notifications } = await getAllUnreadNotifications();
+  let isUnread = false;
+
+  if (notifications) {
+    for (let i = 0; i < notifications.length; i++) {
+      if (notifications[i].type.toLowerCase() === type.toLowerCase()) {
+        isUnread = true;
+        break;
+      }
+    }
+  }
+  return isUnread;
+};
