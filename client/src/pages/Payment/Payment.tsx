@@ -4,7 +4,7 @@ import StripeForm from '../../components/Payment/StripeForm';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Modal } from '@material-ui/core';
-const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY ? process.env.STRIPE_PUBLIC_KEY : '');
+const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
 
 const Payment = (): JSX.Element => {
   const [open, setOpen] = React.useState(false);

@@ -31,7 +31,7 @@ const PaymentForm = ({ handleOpen }: Props): JSX.Element => {
                 />
               </Box>
               <Box className={classes.cardNo}>**** **** **** 4242</Box>
-              <Box className={classes.cardExp}>Exp Data:02/23</Box>
+              <Box className={classes.cardExp}>Exp Date:02/23</Box>
               <Box className={classes.cardHoldName}>Jone Doe</Box>
             </Grid>
           </Grid>

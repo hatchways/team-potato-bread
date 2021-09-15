@@ -33,15 +33,12 @@ const StripeForm = ({ onClose }: Props): JSX.Element => {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    if (elements == null) {
-      return;
-    }
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
+
     const cardElement = elements.getElement(CardElement);
 
     if (!cardElement) return;
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
