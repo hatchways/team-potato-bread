@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { validateNotificationCreation } = require("../validate");
+const protect = require('../middleware/auth');
 const {
   getAllNotifications,
   getAllUnreadNotification,
@@ -8,9 +9,9 @@ const {
   updateNotificationStatus,
 } = require("../controllers/notification");
 
-router.route("/").get(getAllNotifications);
+router.route("/").get(protect, getAllNotifications);
 
-router.route("/unread").get(getAllUnreadNotification);
+router.route("/unread").get(protect, getAllUnreadNotification);
 
 router.route("/").post(validateNotificationCreation, createNotification);
 
