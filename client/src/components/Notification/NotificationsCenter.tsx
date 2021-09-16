@@ -15,9 +15,10 @@ const theme = createMuiTheme({
 
 interface NotificationTypeProps {
   text: string;
+  mode: string;
 }
-const NotificationCenter: React.FC<NotificationTypeProps> = ({ text }): JSX.Element => {
-  const [newNotifications, hasNewNotification] = useState(false);
+const NotificationCenter: React.FC<NotificationTypeProps> = ({ text, mode }): JSX.Element => {
+  const [newNotifications, hasNewNotification] = useState<boolean>(false);
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 
@@ -49,8 +50,20 @@ const NotificationCenter: React.FC<NotificationTypeProps> = ({ text }): JSX.Elem
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Badge color="secondary" variant="dot" invisible={!newNotifications}>
-          <Typography onClick={read} variant="h6" className={classes.text}>
+        <Badge
+          color="secondary"
+          variant="dot"
+          invisible={!newNotifications}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: mode === 'mobile' ? 'left' : 'right',
+          }}
+        >
+          <Typography
+            onClick={read}
+            variant="h6"
+            className={mode === 'mobile' ? classes.textMobile : classes.textNormal}
+          >
             {text}
           </Typography>
         </Badge>
