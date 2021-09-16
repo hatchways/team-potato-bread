@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CssBaseline, Grid, Card, Typography, Button, Avatar } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { FormikHelpers } from 'formik';
 import useStyles from './useStyles';
 import { User, Profile } from '../../interface/User';
 import MyProfileSideBanner from '../../components/MyProfileSideBanner/MyProfileSideBanner';
-import uploadAvatar from '../../helpers/APICalls/uploadAvatar';
 import UploadPhotoForm from './UploadPhotoForm/UploadPhotoForm';
 
 type locationState = {
@@ -23,28 +23,24 @@ const ProfilePhoto = (): JSX.Element => {
   const location = useLocation();
   const { user, profile } = location.state as locationState;
 
-  const [file, setFile] = useState<File | null>(null);
+  const [newAvatar, setNewAvatar] = useState<string>('');
   const [avatar, setAvatar] = useState<string>(user.avatar);
 
   useEffect(() => {
-    if (file) {
-      const formData = new FormData();
-      formData.append('avatar', file);
-      formData.append('email', user.email);
-
-      uploadAvatar(formData).then((data) => {
-        setAvatar(data.imageUrl as string);
-        setFile(null);
-      });
+    if (newAvatar !== '') {
+      setAvatar(newAvatar);
     }
-  }, [file, user]);
-  // saving below values in case I need them later...
-  // event: ChangeEvent<HTMLInputElement>,
-  // event.target.files![0]
+  }, [newAvatar, user]);
 
-  const handleUpload = (newFile: File) => {
-    const newAvatar = newFile;
-    setFile(newAvatar);
+  const handleAvatar = (
+    { avatarUrl }: { avatarUrl: string },
+    { setSubmitting }: FormikHelpers<{ avatarUrl: string }>,
+  ) => {
+    setAvatar(avatarUrl);
+  };
+
+  const handleNewAvatar = (avatarUrl: string) => {
+    setNewAvatar(avatarUrl);
   };
 
   return (
@@ -63,7 +59,7 @@ const ProfilePhoto = (): JSX.Element => {
             <Typography className={classes.subtext} align="center" variant="subtitle1">
               Be sure to use a photo that clearly shows your face
             </Typography>
-            <UploadPhotoForm handleUpload={handleUpload} />
+            <UploadPhotoForm handleAvatar={handleAvatar} handleNewAvatar={handleNewAvatar} user={user} />
             <Grid item className={classes.delete}>
               <Button startIcon={<DeleteIcon />}>Delete Photo</Button>
             </Grid>

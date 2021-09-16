@@ -1,30 +1,63 @@
 import { useState } from 'react';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Button from '@material-ui/core/Button';
+import uploadAvatar from '../../../helpers/APICalls/uploadAvatar';
+import { User } from '../../../interface/User';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
 
 interface Props {
-  handleUpload: (newFile: File) => void;
+  handleAvatar: (
+    { avatarUrl }: { avatarUrl: string },
+    formikHelpers: FormikHelpers<{
+      avatarUrl: string;
+    }>,
+  ) => void;
+  handleNewAvatar: (avatarUrl: string) => void;
+  user: User;
 }
 
-const UploadPhotoForm = ({ handleUpload }: Props): JSX.Element => {
+interface Values {
+  newFile: File | null;
+}
+
+const UploadPhotoForm = ({ handleAvatar, handleNewAvatar, user }: Props): JSX.Element => {
   const classes = useStyles();
-  const [newFile, setNewFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const handleUpload = async (file: File) => {
+    const newFile = file as File;
+    setFile(newFile);
+    if (file) {
+      setIsSubmitting(true);
+
+      const formData = new FormData();
+      formData.append('avatar', file);
+      formData.append('email', user.email);
+
+      const data = await uploadAvatar(formData).then((data) => {
+        return data;
+      });
+      setAvatarUrl(data.imageUrl);
+      handleNewAvatar(data.imageUrl);
+      setFile(null);
+      setIsSubmitting(false);
+      return data.imageUrl;
+    }
+  };
 
   return (
     <Formik
-      initialValues={{ newFile: null }}
+      initialValues={{ avatarUrl }}
       validationSchema={Yup.object().shape({
         file: Yup.mixed().required(),
       })}
-      onSubmit={(newFile: File) => {
-        console.log(newFile);
-        handleUpload(newFile);
-      }}
+      onSubmit={handleAvatar}
     >
-      {({ isSubmitting, handleSubmit }) => (
+      {({ handleSubmit, setFieldValue }) => (
         <form
           action="/image/avatar"
           encType="multipart/form-data"
@@ -35,17 +68,19 @@ const UploadPhotoForm = ({ handleUpload }: Props): JSX.Element => {
         >
           <input
             accept="image/*"
-            id="newFile"
+            id="avatar"
             type="file"
-            name="newFile"
+            name="avatar"
             multiple={false}
             className={classes.input}
             onChange={(event) => {
-              setNewFile(event.target.files?.[0] as File);
-              handleSubmit;
+              handleUpload(event.target.files![0]).then((data) => {
+                setFieldValue('avatar', data);
+                setAvatarUrl(data as string);
+              });
             }}
           />
-          <label htmlFor="newFile">
+          <label htmlFor="avatar">
             <Button className={classes.uploadButton} variant="outlined" color="primary" component="span">
               {isSubmitting ? <CircularProgress style={{ color: 'firebrick' }} /> : 'Upload a file from your device'}
             </Button>
