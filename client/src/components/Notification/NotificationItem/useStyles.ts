@@ -4,6 +4,9 @@ const useStyles = makeStyles(() => ({
   mainBox: {
     display: 'flex',
     padding: '7px 15px',
+    '&:hover': {
+      background: '#fafafa',
+    },
   },
   infoBox: {
     display: 'flex',

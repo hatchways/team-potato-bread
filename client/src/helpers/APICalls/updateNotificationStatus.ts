@@ -1,6 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const updateNotificationStatus = async (userId: string, type: string) => {
+const updateNotificationStatus = async (userId: string | undefined, type: string) => {
   const fetchOptions: FetchOptions = {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },

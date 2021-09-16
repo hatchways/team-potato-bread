@@ -74,11 +74,7 @@ const NavBar = (): JSX.Element => {
         onClose={handleNotificationClose}
         className={classes.notificationMenu}
       >
-        <MenuItem onClick={handleMenuClose}>
-          <Box className={classes.notificationItemContent}>
-            <NotificationList text="notification" />
-          </Box>
-        </MenuItem>
+        <NotificationList text="notification" />
       </Menu>
     </Grid>
   );
@@ -95,11 +91,7 @@ const NavBar = (): JSX.Element => {
         onClose={handleNotificationMessageClose}
         className={classes.notificationMenu}
       >
-        <MenuItem onClick={handleMenuClose}>
-          <Box className={classes.notificationItemContent}>
-            <NotificationList text="message" />
-          </Box>
-        </MenuItem>
+        <NotificationList text="message" />
       </Menu>
     </Grid>
   );
