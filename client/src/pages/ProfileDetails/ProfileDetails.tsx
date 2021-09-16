@@ -85,8 +85,10 @@ export default function ProfileDetails(): JSX.Element {
                   <LocationOnIcon color="primary" fontSize="small" />
                   {sitter.profile?.location}
                 </IconButton>
-                <Typography variant="h3">About me</Typography>
-                <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                <Box className={classes.aboutMe}>
+                  <Typography variant="h3">About me</Typography>
+                  <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                </Box>
                 <Box className={classes.imagesBox}>{images && <ProfileImageList images={images} />}</Box>
               </CardContent>
             </CardActionArea>

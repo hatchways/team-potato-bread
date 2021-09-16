@@ -3,11 +3,14 @@ const protect = require("../middleware/auth");
 const { validateProfileCreation } = require('../validate');
 const router = express.Router();
 const { 
+    searchSitters,
     profileList, 
     profileCreate, 
     profileUpdate, 
     profileSearch 
 } = require('../controllers/profile');
+
+router.route("/").get(searchSitters);
 
 router.route("/all").get(profileList);
 

@@ -37,5 +37,6 @@ export interface Profile {
 
 export interface SearchUsersApiData {
   users?: User[];
+  sitters?: Profile[];
   error?: { message: string };
 }
