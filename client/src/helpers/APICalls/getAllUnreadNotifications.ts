@@ -8,20 +8,23 @@ export const getAllUnreadNotifications = async () => {
   };
   return await fetch(`/notification/unread`, fetchOptions)
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => console.log('----', err));
 };
 
 export const getUnreadStatus = async (type: string) => {
-  const { notifications } = await getAllUnreadNotifications();
-  let isUnread = false;
-
-  if (notifications) {
-    for (let i = 0; i < notifications.length; i++) {
-      if (notifications[i].type.toLowerCase() === type.toLowerCase()) {
-        isUnread = true;
-        break;
+  try {
+    const { notifications } = await getAllUnreadNotifications();
+    let isUnread = false;
+    if (notifications) {
+      for (let i = 0; i < notifications.length; i++) {
+        if (notifications[i].type.toLowerCase() === type.toLowerCase()) {
+          isUnread = true;
+          break;
+        }
       }
     }
+    return isUnread;
+  } catch (e) {
+    console.log(e);
   }
-  return isUnread;
 };

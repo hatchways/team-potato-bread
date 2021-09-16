@@ -18,7 +18,7 @@ interface NotificationTypeProps {
   mode: string;
 }
 const NotificationCenter: React.FC<NotificationTypeProps> = ({ text, mode }): JSX.Element => {
-  const [newNotifications, hasNewNotification] = useState<boolean>(false);
+  const [newNotifications, hasNewNotification] = useState<boolean | undefined>(false);
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 

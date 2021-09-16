@@ -43,20 +43,23 @@ const NotificationList: React.FC<NotificationTypeProps> = ({ text }): JSX.Elemen
 
   useEffect(() => {
     const getData = async () => {
-      const { notifications } = await getAllNotifications();
-      const messages: Notification[] = [];
-      const bookings: Notification[] = [];
-      notifications.map((item: Notification) => {
-        if (item.type === 'message') {
-          messages.push(item);
-        } else {
-          bookings.push(item);
-        }
-      });
-      setMessageNotifications(messages);
-      setBookingNotifications(bookings);
+      try {
+        const { notifications } = await getAllNotifications();
+        const messages: Notification[] = [];
+        const bookings: Notification[] = [];
+        notifications.map((item: Notification) => {
+          if (item.type === 'message') {
+            messages.push(item);
+          } else {
+            bookings.push(item);
+          }
+        });
+        setMessageNotifications(messages);
+        setBookingNotifications(bookings);
+      } catch (e) {
+        console.log(e);
+      }
     };
-
     getData();
   }, []);
 
