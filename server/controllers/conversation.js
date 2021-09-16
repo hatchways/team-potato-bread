@@ -62,7 +62,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   );
   if(!message){
     res.status(400);
-    throw new Error('Incomplete required data');
+    throw new Error('The message update failed!');
   }
   res.status(200).json({
     success: {
