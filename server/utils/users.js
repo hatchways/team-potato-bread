@@ -1,18 +1,19 @@
 const Conversation = require('../models/Conversation');
 const users = [];
-const addUser = async({ id, userProfileId, conversationId }) => {
-   
-  const conversation=await Conversation.findById({_id:conversationId})
-    
-   if(userProfileId!==conversation.senderProfileId||userProfileId!==conversation.recieverProfileId)
-       return { error: 'Wrong userProfileId' };
-   
- 
-  const user = { id, userProfileId, conversationId };
+const addUser = async ({ id, userProfileId, conversationId }) => {
+  const conversation = await Conversation.findById({ _id: conversationId });
 
-  users.push(user);
+  if (
+    conversation.recieverProfileId.equals(userProfileId) ||
+    conversation.senderProfileId.equals(userProfileId)
+  ) {
+    const user = { id, userProfileId, conversationId };
 
-  return { user };
+    users.push(user);
+
+    return { user };
+  }
+  return { error: 'Wrong userProfileId' };
 };
 
 const removeUser = (id) => {
@@ -22,6 +23,7 @@ const removeUser = (id) => {
 
 const getUser = (id) => users.find((user) => user.id === id);
 
-const getUsersInRoom = (conversationId) => users.filter((user) => user.conversationId == conversationId);
+const getUsersInRoom = (conversationId) =>
+  users.filter((user) => user.conversationId === conversationId);
 
 module.exports = { addUser, removeUser, getUser, getUsersInRoom };

@@ -25,8 +25,16 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     senderProfileId,
     recieverProfileId,
   });
+  if (!conversation) {
+    res.status(400);
+    throw new Error('The conversation creation failed');
+  }
   //create the new Message with conversationId to store all text messages
   const massage = await Message.create({ conversationId: conversation._id });
+  if (!massage) {
+    res.status(400);
+    throw new Error('The massage creation failed');
+  }
   res.status(200).json({
     success: {
       conversation,
@@ -52,6 +60,10 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     },
     { new: true }
   );
+  if(!message){
+    res.status(400);
+    throw new Error('Incomplete required data');
+  }
   res.status(200).json({
     success: {
       message,
@@ -89,6 +101,10 @@ exports.getMessages = asyncHandler(async (req, res, next) => {
   const massage = await Message.findOne({ conversationId: id })
     .populate('content.senderProfileId', 'firstName')
     .exec();
+  if(!massage){
+    res.status(400);
+    throw new Error('Invalid message Id !');
+  }  
   res.status(200).json({
     success: {
       massage,
