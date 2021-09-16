@@ -37,7 +37,7 @@ export default function UserReviews(): JSX.Element {
   return (
     <Grid item xs={11} sm={10} md={8} className={classes.root}>
       <CssBaseline />
-      {<ReviewProfile profile={profile} />}
+      <ReviewProfile profile={profile} />
       <Grid className={classes.reviewsWrapper}>
         {reviews.map((review) => {
           return <ReviewCard review={review} key={review._id} />;
