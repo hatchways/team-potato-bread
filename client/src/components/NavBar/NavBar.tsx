@@ -65,6 +65,7 @@ const NavBar = (): JSX.Element => {
     <Grid>
       <Menu
         anchorEl={notificationAnchorEl}
+        getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         id={notificationMenuId}
         keepMounted
@@ -85,6 +86,7 @@ const NavBar = (): JSX.Element => {
     <Grid>
       <Menu
         anchorEl={notificationMessageAnchorEl}
+        getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         id={notificationMenuId}
         keepMounted
