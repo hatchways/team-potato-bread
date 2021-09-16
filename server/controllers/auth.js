@@ -40,7 +40,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     res.status(201).json({
       success: {
         user: {
-          id: user._id,
+          _id: user._id,
           username: user.username,
           email: user.email,
           avatar: user.avatar
@@ -64,6 +64,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
+    console.log("token", token)
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -73,7 +74,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     res.status(200).json({
       success: {
         user: {
-          id: user._id,
+          _id: user._id,
           username: user.username,
           email: user.email,
           avatar: user.avatar
@@ -100,7 +101,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: {
       user: {
-        id: user._id,
+        _id: user._id,
         username: user.username,
         email: user.email,
         avatar: user.avatar
