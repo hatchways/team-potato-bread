@@ -1,3 +1,4 @@
+
 const colors = require('colors');
 const path = require('path');
 const http = require('http');
@@ -15,7 +16,9 @@ const requestRouter = require('./routes/request');
 const profileRouter = require('./routes/profile');
 const imageRouter = require('./routes/image');
 const conversationRouter = require('./routes/conversation');
+const notificationRouter = require("./routes/notification");
 const { addUser, removeUser, getUser } = require('./utils/users');
+
 const { json, urlencoded } = express;
 
 connectDB();
@@ -59,14 +62,16 @@ app.use((req, res, next) => {
   next();
 });
 
+
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/request', requestRouter);
 app.use('/profile', profileRouter);
 app.use('/image', imageRouter);
 app.use('/conversation', conversationRouter);
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/client/build')));
+app.use("/notification", notificationRouter);
+
+
 
   app.get('*', (req, res) => res.sendFile(path.resolve(__dirname), 'client', 'build', 'index.html'));
 } else {
