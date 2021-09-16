@@ -1,30 +1,55 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useStyles from './useStyles';
-import { Box, Avatar, Badge, Typography, ThemeProvider, Paper, createMuiTheme } from '@material-ui/core';
+import { Box, Avatar, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-const NotificationItem = (): JSX.Element => {
+import { Notification } from '../NotificationList/NotificationList';
+interface bookingNotificationProps {
+  bookingNotification: Notification;
+  type: string;
+}
+const NotificationItem: React.FC<bookingNotificationProps> = ({ bookingNotification, type }): JSX.Element => {
   const classes = useStyles();
   const [reRoute, setReRoute] = useState<string>('');
 
-  const handleClick = () => {
-    //if booking type link booking > rerout to booking page
-    setReRoute('mybookings');
-  };
+  const notificationCenterItem = (
+    <>
+      <Typography className={classes.description}>{bookingNotification.description}</Typography>
+      <Typography className={classes.profileType}>Dog Sitting</Typography>
+    </>
+  );
+
+  const notificationMessageItem = (
+    <>
+      <Typography className={classes.description}>
+        {`You received a new message from ${bookingNotification.owner.username}`}
+      </Typography>
+      <Typography className={classes.profileType}>{bookingNotification.description}</Typography>
+    </>
+  );
+
+  useEffect(() => {
+    if (bookingNotification.type === 'booking') {
+      setReRoute('mybookings');
+    } else {
+      setReRoute('dashboard');
+    }
+  }, [bookingNotification]);
 
   return (
-    <Box className={classes.mainBox} onClick={handleClick}>
+    <Box className={classes.mainBox}>
       <Avatar
         className={classes.ownerAvatar}
         variant="square"
         sizes="large"
         alt="ownername"
-        src="/static/images/avatar/1.jpg"
+        src={bookingNotification.recipient.avatar}
       />
       <Link to={`/${reRoute}`} className={classes.route}>
         <Box className={classes.infoBox}>
-          <Typography className={classes.description}>Marry has requested your service for 2 hurs</Typography>
-          <Typography className={classes.profileType}>Dog Sitting</Typography>
-          <Typography className={classes.date}>{new Date().toLocaleDateString()}</Typography>
+          {type === 'message' ? notificationMessageItem : notificationCenterItem}
+          <Typography className={classes.date}>
+            {new Date(bookingNotification.createdAt).toLocaleDateString()}
+          </Typography>
         </Box>
       </Link>
     </Box>
