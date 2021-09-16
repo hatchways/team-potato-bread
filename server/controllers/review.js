@@ -6,8 +6,7 @@ const asyncHandler = require("express-async-handler");
 // @access Private
 exports.userReviews = asyncHandler(async (req, res, next) => {
   const { uid } = req.params;
-
-  const reviews = await Review.find({ userId: uid });
+  const reviews = await Review.find({ userId: uid }).populate('reviewer').exec();
 
   if (!reviews) {
     res.status(200).json({ message: 'No reviews found for this user.' });
@@ -21,13 +20,13 @@ exports.userReviews = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.addReview = asyncHandler(async (req, res, next) => {
   const { rating, text, userId } = req.body;
-  const reviewerId = req.user.id;
+  const reviewer = req.user.id;
 
   const createdReview = await Review.create({
     rating,
     text,
     userId,
-    reviewerId
+    reviewer
   });
 
   if (!createdReview) {

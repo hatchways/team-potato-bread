@@ -28,8 +28,7 @@ function App(): JSX.Element {
                 <Fragment>
                   <NavBar />
                   <Route exact path="/dashboard">
-                    {/* <Dashboard /> */}
-                    <UserReviews />
+                    <Dashboard />
                   </Route>
                   <Route path="/sitter/:profileId">
                     <ProfileDetails />

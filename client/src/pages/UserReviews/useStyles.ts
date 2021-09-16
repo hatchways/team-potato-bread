@@ -9,8 +9,6 @@ const useStyles = makeStyles(() => ({
   reviewsWrapper: {
     display: 'flex',
     flexFlow: 'column nowrap',
-    flexGrow: 1,
-    justifyContent: 'center',
   },
 }));
 

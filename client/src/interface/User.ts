@@ -37,3 +37,16 @@ export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
+
+export interface UserReviewsApiData {
+  reviews?: Review[];
+  message?: string;
+}
+
+export interface Review {
+  _id: string;
+  rating: number;
+  text: string;
+  userId: string;
+  reviewer: User;
+}

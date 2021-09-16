@@ -13,11 +13,12 @@ const reviewSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    require: true,
+    required: true,
   },
   reviewer: {
     type: mongoose.Schema.Types.ObjectId,
-    require: true,
+    required: true,
+    ref: 'user',
   },
 });
 
