@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
     margin: '2rem',
     flex: '1 1 300px',
-    // flex: '1 1 335px',
   },
   contentWrapper: {
     textAlign: 'center',

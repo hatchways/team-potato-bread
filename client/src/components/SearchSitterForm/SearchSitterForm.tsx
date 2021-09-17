@@ -8,7 +8,7 @@ import { User } from '../../interface/User';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
 import { format } from 'date-fns';
 import isValid from 'date-fns/isValid';
 
@@ -45,11 +45,9 @@ const SearchSitterForm = ({
     const dateClone = new Date(date);
 
     return (
-      <div>
-        <IconButton className={classes.day}>
-          <span> {format(dateClone, 'd')} </span>
-        </IconButton>
-      </div>
+      <Box>
+        <IconButton className={classes.day}>{format(dateClone, 'd')}</IconButton>
+      </Box>
     );
   };
 
@@ -59,7 +57,7 @@ const SearchSitterForm = ({
         e.preventDefault();
       }}
     >
-      <div className={classes.container}>
+      <Box className={classes.container}>
         <Autocomplete
           id="asynchronous-search"
           open={open}
@@ -79,9 +77,8 @@ const SearchSitterForm = ({
           inputValue={search}
           noOptionsText="Location Not Detected"
           freeSolo
-          className={classes.locationInputContainer}
           renderInput={(params) => (
-            <div className={classes.locationInput}>
+            <Box className={classes.locationInput}>
               <InputBase
                 {...params.inputProps}
                 placeholder="Your location"
@@ -94,12 +91,12 @@ const SearchSitterForm = ({
                   ref: params.InputProps.ref,
                 }}
                 startAdornment={
-                  <div className={classes.searchIcon}>
+                  <Box className={classes.searchIcon}>
                     <SearchIcon color="primary" />
-                  </div>
+                  </Box>
                 }
               />
-            </div>
+            </Box>
           )}
         />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -130,7 +127,7 @@ const SearchSitterForm = ({
             labelFunc={formatWeekSelectLabel}
           />
         </MuiPickersUtilsProvider>
-      </div>
+      </Box>
     </form>
   );
 };

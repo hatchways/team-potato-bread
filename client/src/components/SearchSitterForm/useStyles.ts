@@ -7,9 +7,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'row',
   },
-  locationInputContainer: {
-    // flexBasis: 350,
-  },
   locationInput: {
     height: '50px',
     lineHeight: '23px',

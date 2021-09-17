@@ -28,7 +28,8 @@ function App(): JSX.Element {
                 <Fragment>
                   <NavBar />
                   <Route exact path="/dashboard">
-                    <Dashboard />
+                    {/* <Dashboard /> */}
+                    <SearchSitter />
                   </Route>
                   <Route path="/sitter/:profileId">
                     <ProfileDetails />
