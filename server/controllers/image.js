@@ -16,7 +16,7 @@ exports.uploadAvatar = asyncHandler(async (req, res, next) => {
     });
     // update avatar for current user
     const updateUser = await User.findOneAndUpdate({email: req.body.email}, {avatar: newImage.imageUrl}, {new: true});
-    res.send('Successfully updated avatar');
+    res.json(newImage);
 });
 
 // @route POST /image/upload

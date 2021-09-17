@@ -1,15 +1,36 @@
 const Profile = require('../models/Profile');
 const asyncHandler = require("express-async-handler");
 
+// @route POST /profile
+// @desc Search for sitters by city
+// @access Public
+exports.searchSitters = asyncHandler(async (req, res, next) => {
+    const searchString = req.query.search;
+  
+    let sitters;
+    if (searchString) {
+      sitters = await Profile.find({
+        location: { $regex: searchString, $options: "i" }
+      }).populate('user').exec();
+    }
+  
+    if (!sitters) {
+      res.status(404);
+      throw new Error("No sitters found in search");
+    }
+  
+    res.status(200).json(sitters);
+  });
+  
 // @route GET /profile/all
 // @desc Find a list of profiles by a filter
 exports.profileList = asyncHandler(async (req, res, next) => {
-    const filter = {};
-    const listOfProfiles = await Profile.find(filter);
+    const listOfProfiles = await Profile.find().populate('user').exec();
     if(!listOfProfiles) {
         res.status(404);
+        throw new Error("No sitters found in search");
     }
-    res.status(200).json({listOfProfiles});
+    res.status(200).json(listOfProfiles);
 });
 
 // @route GET /profile/find

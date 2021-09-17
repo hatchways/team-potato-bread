@@ -1,20 +1,24 @@
 import { AppBar, Avatar, Badge, Box, Grid, IconButton, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import { Link, NavLink } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
 import logo from '../../Images/logo.png';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
+import { useAuth } from '../../context/useAuthContext';
+import { User } from '../../interface/User';
 import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
 import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
-import { User } from '../../interface/User';
 
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
+  const { logout, loggedInUser } = useAuth();
 
   const user: User = {
-    email: '',
-    username: '',
-    avatar: '',
+    email: loggedInUser?.email as string,
+    username: loggedInUser?.username as string,
+    avatar: loggedInUser?.avatar as string,
   };
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,6 +51,11 @@ const NavBar = (): JSX.Element => {
 
   const handleNotificationClose = () => {
     setNotificationAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    logout();
   };
 
   const notificationMenuId = 'primary-notification-menu';
@@ -98,8 +107,14 @@ const NavBar = (): JSX.Element => {
       open={isProfileMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to={`/myprofile`} className={classes.navLinkSmall}>
+          My Profile
+        </Link>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+        <Typography className={classes.navLinkSmall}>Logout</Typography>
+      </MenuItem>
     </Menu>
   );
 
@@ -155,7 +170,9 @@ const NavBar = (): JSX.Element => {
     <AppBar className={classes.root} position="static">
       <Toolbar>
         <IconButton edge="start" className={classes.brand} color="inherit" aria-label="home">
-          <img src={logo} />
+          <Link to={'/dashboard'}>
+            <img src={logo} />
+          </Link>
         </IconButton>
         <div className={classes.sectionDesktop}>
           <Box className={classes.navWrapper}>
@@ -167,8 +184,14 @@ const NavBar = (): JSX.Element => {
               </Badge>
             </Box>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={true}>
-              <Typography className={classes.navLink} variant="h6">
-                My Jobs
+              <Typography variant="h6">
+                <NavLink
+                  to={{ pathname: `/mybookings` }}
+                  className={classes.navLink}
+                  activeClassName={classes.activeLink}
+                >
+                  My Jobs
+                </NavLink>
               </Typography>
             </Badge>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>

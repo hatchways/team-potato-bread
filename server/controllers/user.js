@@ -21,3 +21,16 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ users: users });
 });
+
+// @route GET /users/find
+// @desc Find your user info
+exports.getUserInfo = asyncHandler(async (req, res, next) => {
+  const id = req.query._id;
+
+  const user = await User.findById(id).populate('images').populate('profile').exec();
+  if(!user) {
+      res.status(404);
+      throw new Error('No matching profile found.');
+  }
+  res.status(200).json(user);
+});
