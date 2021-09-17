@@ -65,7 +65,6 @@ const MyBookings = (): JSX.Element => {
 
   return (
     <Grid container>
-      <MgnBookingHeader />
       <Grid container className={classes.myBooking} spacing={2}>
         {bookings === undefined || dates === undefined ? (
           <CircularProgress />

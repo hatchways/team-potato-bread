@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import useStyles from './useStyles';
 import ProfileImageList from './ProfileImageList';
+
 import { mockProfileUser } from '../../mocks/mockUser';
 import { useAuth } from '../../context/useAuthContext';
 import { Sitter, User, Profile, Image } from '../../interface/User';
@@ -50,6 +51,7 @@ type idParams = {
 
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
+
   const { profileId } = useParams<idParams>();
   const [sitter, setSitter] = useState<Sitter>(initSitter);
   const [images, setImages] = useState<Image[]>([{ imageUrl: '' }]);
@@ -88,8 +90,10 @@ export default function ProfileDetails(): JSX.Element {
                   <LocationOnIcon color="primary" fontSize="small" />
                   {sitter.profile?.location}
                 </IconButton>
-                <Typography variant="h3">About me</Typography>
-                <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                <Box className={classes.aboutMe}>
+                  <Typography variant="h3">About me</Typography>
+                  <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                </Box>
                 <Box className={classes.imagesBox}>{images && <ProfileImageList images={images} />}</Box>
               </CardContent>
             </CardActionArea>

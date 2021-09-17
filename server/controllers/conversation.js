@@ -12,38 +12,57 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error('Missing sender profileId or reciever profileId !');
   }
-  const existingConversation=await Conversation.findOne({senderProfileId,recieverProfileId})
-  if(existingConversation){
+
+  const existingConversation = await Conversation.findOne({
+    senderProfileId,
+    recieverProfileId,
+  });
+  if (existingConversation) {
     res.status(400);
-    throw new Error("The conversation exists");
+    throw new Error('The conversation exists');
   }
-  
+
   const conversation = await Conversation.create({
     senderProfileId,
     recieverProfileId,
   });
+  if (!conversation) {
+    res.status(400);
+    throw new Error('The conversation creation failed');
+  }
+  //create the new Message with conversationId to store all text messages
+  const massage = await Message.create({ conversationId: conversation._id });
+  if (!massage) {
+    res.status(400);
+    throw new Error('The massage creation failed');
+  }
   res.status(200).json({
     success: {
       conversation,
+      massage,
     },
   });
 });
 // @route POST /conversation/sendMessage
-// @desc send a messsage 
+// @desc send a messsage
 // @access Private
 exports.sendMessage = asyncHandler(async (req, res, next) => {
-  const { conversationId, senderProfileId, content } = req.body;
+  const { conversationId, senderProfileId, text } = req.body;
 
-  if (!conversationId || !senderProfileId|| !content) {
+  if (!conversationId || !senderProfileId || !text) {
     res.status(400);
     throw new Error('Incomplete required data');
   }
 
-  const message = await Message.create({
-    conversationId,
-    senderProfileId,
-    content,
-  });
+  const message = await Message.findOneAndUpdate(
+    { conversationId },
+    { $push: { content: { senderProfileId, text } } },
+    { new: true }
+  );
+  if (!message) {
+    res.status(400);
+    throw new Error('The message update failed!');
+  }
   res.status(200).json({
     success: {
       message,
@@ -73,15 +92,21 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
 });
 
 // @route GET /conversation/:id/messages
-// @params id =>  conversationId 
+// @params id =>  conversationId
 // @desc all messages for a specific conversation
 // @access Private
 exports.getMessages = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const massages= await Message.find({conversationId:id}).populate("senderProfileId")
+  const message = await Message.findOne({ conversationId: id })
+    .populate('content.senderProfileId', 'firstName')
+    .exec();
+  if (!message) {
+    res.status(400);
+    throw new Error('Invalid message Id !');
+  }
   res.status(200).json({
     success: {
-      massages,
+      message,
     },
   });
 });
