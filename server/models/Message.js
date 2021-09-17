@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const contentSchema = new mongoose.Schema({
       senderProfileId:{
         type: mongoose.Schema.Types.ObjectId,
@@ -21,3 +22,4 @@ module.exports = Message = mongoose.model(
   'message',
   messageSchema
 );
+

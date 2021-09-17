@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
     socket.join(conversationId);
     cb()
   }) 
+
   socket.on('chatMessage', (message) => {
     const user=getUser(socket.id)
     io.to(user.conversationId).emit('message', {userProfileId,message});
@@ -63,7 +64,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/request", requestRouter);
-app.use("/profile", profileRouter);
+app.use("/profile",profileRouter);
 app.use("/image", imageRouter);
 app.use('/conversation',conversationRouter)
 app.use("/notification", notificationRouter);

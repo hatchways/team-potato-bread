@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import useStyles from './useStyles';
 import ProfileImageList from './ProfileImageList';
-
 import { mockProfileUser } from '../../mocks/mockUser';
 import { useAuth } from '../../context/useAuthContext';
 import { Sitter, User, Profile, Image } from '../../interface/User';
