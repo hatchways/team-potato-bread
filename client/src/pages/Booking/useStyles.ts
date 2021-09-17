@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   myBooking: {
     margin: '30px',
     justifyContent: 'center',
+    maxWidth: '90%',
   },
 }));
 
