@@ -33,7 +33,7 @@ const StripeForm = ({ onClose }: Props): JSX.Element => {
   );
 
   const handleSubmit = async () => {
-    // event.preventDefault();
+    
     if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
