@@ -33,6 +33,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
+  demo: {
+    margin: theme.spacing(3, 2, 2),
+    padding: 10,
+    width: 160,
+    height: 56,
+    borderRadius: theme.shape.borderRadius,
+    marginTop: 49,
+    fontSize: 16,
+    fontWeight: 'bold',
+    backgroundColor: '#00A300',
+  },
 }));
 
 export default useStyles;

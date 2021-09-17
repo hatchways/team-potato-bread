@@ -13,7 +13,7 @@ const imageSchema = new mongoose.Schema({
   },
   userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'user'
   },
   uploadDate: {
     type: Date,

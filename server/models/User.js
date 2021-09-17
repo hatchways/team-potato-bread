@@ -24,11 +24,17 @@ const userSchema = new mongoose.Schema({
   },
   images: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image'
+    ref: 'image'
   }],
   register_date: {
     type: Date,
     default: Date.now
+  },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'profile',
+    required: false,
+    default: null
   }
 });
 

@@ -3,17 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
+    justifyContent: 'center',
   },
-  // cards: {
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-evenly',
-  //   alignContent: 'center',
-  // },
   profileCard: {
-    minWidth: '55%',
+    minWidth: '40%',
+    maxWidth: '50%',
     minHeight: '75%',
-    margin: 25,
+    margin: '25px auto',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
@@ -29,14 +25,16 @@ const useStyles = makeStyles((theme) => ({
   },
   requestCard: {
     minHeight: '50%',
-    minWidth: '30%',
+    minWidth: '20%',
+    maxWidth: '30%',
     display: 'flex',
-    margin: 25,
+    paddingBottom: 10,
+    margin: '25px auto',
     flexDirection: 'column',
     textAlign: 'center',
   },
   media: {
-    height: 150,
+    height: 160,
   },
   cardContent: {
     display: 'flex',
@@ -64,6 +62,18 @@ const useStyles = makeStyles((theme) => ({
   requestButton: {
     margin: 'auto',
     marginBottom: 40,
+  },
+  imageList: {
+    justifyContent: 'space-evenly',
+    padding: 10,
+  },
+  smallProfileImages: {
+    maxHeight: 100,
+    maxWidth: 100,
+  },
+  aboutMe: {
+    margin: 20,
+    maxWidth: 450,
   },
 }));
 
