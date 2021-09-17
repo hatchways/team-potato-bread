@@ -6,6 +6,7 @@ import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import MyBookings from './pages/Booking/MyBookings';
+import Payment from './pages/Payment/Payment';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -42,6 +43,9 @@ function App(): JSX.Element {
                   </Route>
                   <Route exact path="/mybookings">
                     <MyBookings />
+                  </Route>
+                  <Route exact path="/payment">
+                    <Payment />
                   </Route>
                 </Fragment>
                 <Route path="*">
