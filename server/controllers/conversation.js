@@ -55,12 +55,10 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
 
   const message = await Message.findOneAndUpdate(
     { conversationId },
-    {
-      $push: { content: { senderProfileId, text } },
-    },
+    { $push: { content: { senderProfileId, text } } },
     { new: true }
   );
-  if(!message){
+  if (!message) {
     res.status(400);
     throw new Error('The message update failed!');
   }
@@ -98,16 +96,16 @@ exports.getAllConversations = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getMessages = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const massage = await Message.findOne({ conversationId: id })
+  const message = await Message.findOne({ conversationId: id })
     .populate('content.senderProfileId', 'firstName')
     .exec();
-  if(!massage){
+  if (!message) {
     res.status(400);
     throw new Error('Invalid message Id !');
-  }  
+  }
   res.status(200).json({
     success: {
-      massage,
+      message,
     },
   });
 });

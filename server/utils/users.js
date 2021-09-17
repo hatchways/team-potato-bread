@@ -3,6 +3,8 @@ const users = [];
 const addUser = async ({ id, userProfileId, conversationId }) => {
   const conversation = await Conversation.findById({ _id: conversationId });
 
+  if (!conversation) return { error: 'The conversation does not exist!' };
+
   if (
     conversation.recieverProfileId.equals(userProfileId) ||
     conversation.senderProfileId.equals(userProfileId)
