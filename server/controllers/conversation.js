@@ -12,7 +12,6 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error('Missing sender profileId or reciever profileId !');
   }
-
   const existingConversation = await Conversation.findOne({
     senderProfileId,
     recieverProfileId,
@@ -31,15 +30,15 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     throw new Error('The conversation creation failed');
   }
   //create the new Message with conversationId to store all text messages
-  const massage = await Message.create({ conversationId: conversation._id });
-  if (!massage) {
+  const message = await Message.create({ conversationId: conversation._id });
+  if (!message) {
     res.status(400);
-    throw new Error('The massage creation failed');
+    throw new Error('The message creation failed');
   }
   res.status(200).json({
     success: {
       conversation,
-      massage,
+      message,
     },
   });
 });
