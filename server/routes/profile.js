@@ -1,6 +1,6 @@
 const express = require('express');
 const protect = require("../middleware/auth");
-const { validateProfileCreation } = require('../validate');
+const { validateProfileCreation, validateSearch } = require('../validate');
 const router = express.Router();
 const { 
     searchSitters,
@@ -10,7 +10,7 @@ const {
     profileSearch 
 } = require('../controllers/profile');
 
-router.route("/").get(searchSitters);
+router.route("/").get(validateSearch, searchSitters);
 
 router.route("/all").get(profileList);
 

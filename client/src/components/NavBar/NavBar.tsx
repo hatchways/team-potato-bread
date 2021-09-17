@@ -12,12 +12,12 @@ import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
 
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
-  const { logout } = useAuth();
+  const { logout, loggedInUser } = useAuth();
 
   const user: User = {
-    email: '',
-    username: '',
-    avatar: '',
+    email: loggedInUser?.email as string,
+    username: loggedInUser?.username as string,
+    avatar: loggedInUser?.avatar as string,
   };
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
@@ -169,7 +169,9 @@ const NavBar = (): JSX.Element => {
     <AppBar className={classes.root} position="static">
       <Toolbar>
         <IconButton edge="start" className={classes.brand} color="inherit" aria-label="home">
-          <img src={logo} />
+          <Link to={'/dashboard'}>
+            <img src={logo} />
+          </Link>
         </IconButton>
         <div className={classes.sectionDesktop}>
           <Box className={classes.navWrapper}>

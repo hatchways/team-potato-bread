@@ -38,14 +38,16 @@ const UploadPhotoForm = ({ handleAvatar, handleNewAvatar, user }: Props): JSX.El
       formData.append('avatar', file);
       formData.append('email', user.email);
 
-      const data = await uploadAvatar(formData).then((data) => {
-        return data;
-      });
-      setAvatarUrl(data.imageUrl);
-      handleNewAvatar(data.imageUrl);
-      setFile(null);
-      setIsSubmitting(false);
-      return data.imageUrl;
+      try {
+        const data = await uploadAvatar(formData);
+        setAvatarUrl(data.imageUrl);
+        handleNewAvatar(data.imageUrl);
+        setFile(null);
+        setIsSubmitting(false);
+        return data.imageUrl;
+      } catch (error) {
+        throw new Error('Something went wrong.');
+      }
     }
   };
 
