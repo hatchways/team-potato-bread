@@ -34,4 +34,3 @@ const Payment = (): JSX.Element => {
 };
 
 export default Payment;
-

@@ -11,6 +11,7 @@ import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { Box, IconButton } from '@material-ui/core';
 import { format } from 'date-fns';
 import isValid from 'date-fns/isValid';
+import { Formik } from 'formik';
 
 interface Props {
   search: string;
@@ -52,11 +53,7 @@ const SearchSitterForm = ({
   };
 
   return (
-    <form
-      onSubmit={(e: SyntheticEvent) => {
-        e.preventDefault();
-      }}
-    >
+    <Formik onSubmit={() => {}} initialValues={{}}>
       <Box className={classes.container}>
         <Autocomplete
           id="asynchronous-search"
@@ -128,7 +125,7 @@ const SearchSitterForm = ({
           />
         </MuiPickersUtilsProvider>
       </Box>
-    </form>
+    </Formik>
   );
 };
 
