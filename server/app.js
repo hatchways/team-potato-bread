@@ -14,7 +14,10 @@ const userRouter = require("./routes/user");
 const requestRouter = require("./routes/request");
 const profileRouter = require("./routes/profile");
 const imageRouter = require("./routes/image");
+const conversationRouter=require('./routes/conversation')
+const {addUser,removeUser,getUser}=require('./utils/users')
 const notificationRouter = require("./routes/notification");
+
 const { json, urlencoded } = express;
 
 connectDB();
@@ -28,7 +31,21 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected");
+  socket.on('JoinConversation', ({ userProfileId,conversationId },cb) => {
+    const{error}=addUser({id:socket.id,userProfileId,conversationId})
+    if(error)return cb(error)
+    socket.join(conversationId);
+    cb()
+  }) 
+
+  socket.on('chatMessage', (message) => {
+    const user=getUser(socket.id)
+    io.to(user.conversationId).emit('message', {userProfileId,message});
+  });
+
+  socket.on('disconnect',()=>{
+   removeUser(socket.id);
+  })
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -47,9 +64,11 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/request", requestRouter);
-app.use("/profile", profileRouter);
+app.use("/profile",profileRouter);
 app.use("/image", imageRouter);
+app.use('/conversation',conversationRouter)
 app.use("/notification", notificationRouter);
+
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
