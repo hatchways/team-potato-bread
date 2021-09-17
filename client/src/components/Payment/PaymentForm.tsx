@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Box, Card, Container, Checkbox, Button } from '@material-ui/core';
+import { Grid, Box, Card, Container, Checkbox, Button, Typography } from '@material-ui/core';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import useStyles from './useStyles';
@@ -14,8 +14,12 @@ const PaymentForm = ({ handleOpen }: Props): JSX.Element => {
     <Container>
       <Card className={classes.containerStyle}>
         <Box>
-          <h1 className={classes.paymentTitle}>Payment Methods</h1>
-          <p className={classes.paymentText}>Saved Payment Profiles:</p>
+          <Typography variant="h2" className={classes.paymentTitle}>
+            Payment Methods
+          </Typography>
+          <Typography variant="body1" className={classes.paymentText}>
+            Saved Payment Profiles:
+          </Typography>
           <Grid container>
             <Grid className={classes.cardBox} item xs={6}>
               <Box className={classes.flexBox}>

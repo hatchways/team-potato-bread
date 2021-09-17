@@ -3,7 +3,7 @@ import PaymentForm from '../../components/Payment/PaymentForm';
 import StripeForm from '../../components/Payment/StripeForm';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { Modal } from '@material-ui/core';
+import { Modal, Box } from '@material-ui/core';
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
 
 const Payment = (): JSX.Element => {
@@ -17,7 +17,7 @@ const Payment = (): JSX.Element => {
     setOpen(false);
   };
   return (
-    <div>
+    <Box>
       <PaymentForm handleOpen={handleOpen} />
       <Modal
         open={open}
@@ -29,8 +29,9 @@ const Payment = (): JSX.Element => {
           <StripeForm onClose={handleClose} />
         </Elements>
       </Modal>
-    </div>
+    </Box>
   );
 };
 
 export default Payment;
+

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Button, Box, Grid, IconButton } from '@material-ui/core';
+import { Button, Box, Grid, IconButton, Typography } from '@material-ui/core';
+import { Formik } from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import useStyles from './useStyles';
@@ -31,8 +32,8 @@ const StripeForm = ({ onClose }: Props): JSX.Element => {
     [],
   );
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    // event.preventDefault();
     if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
@@ -50,19 +51,30 @@ const StripeForm = ({ onClose }: Props): JSX.Element => {
     <Box>
       <Grid container justify="space-around">
         <Grid item xs={6} className={classes.stripeFormBox}>
-          <h1 className={classes.modalTitle}>Add Card</h1>
+          <Typography variant="h3" className={classes.modalTitle}>
+            Add Card
+          </Typography>
           <IconButton className={classes.modalCloseIcon} onClick={onClose}>
             <CloseIcon />
           </IconButton>
-
-          <form onSubmit={handleSubmit}>
-            <CardElement options={options} className={classes.cardElements} />
-            <Box className={classes.modalBtnBox}>
-              <Button className={classes.modalBtn} variant="contained" color="primary" type="submit" disabled={!stripe}>
-                Submit
-              </Button>
-            </Box>
-          </form>
+          <Formik initialValues={{}} onSubmit={handleSubmit}>
+            {({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <CardElement options={options} className={classes.cardElements} />
+                <Box className={classes.modalBtnBox}>
+                  <Button
+                    className={classes.modalBtn}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={!stripe}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </form>
+            )}
+          </Formik>
         </Grid>
       </Grid>
     </Box>
