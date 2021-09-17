@@ -89,7 +89,10 @@ exports.payRequest = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const profile = await Profile.findOne({ user: userId});
   const paymentMethod = await stripe.paymentMethods.retrieve(profile.paymentId);//get paymentMethod
-  
+  if(!profile||!paymentMethod){
+    res.status(400);
+    throw new Error("Can not find your profile or payment method!!");
+  }
   //pay the request
   const payment = await stripe.paymentIntents.create({
     amount:amount,
@@ -109,5 +112,5 @@ exports.payRequest = asyncHandler(async (req, res, next) => {
    return res.status(201).json({ request });
   }
   res.status(400);
-  throw new Error("something went wrong");
+  throw new Error("The payment failed!");
 });
