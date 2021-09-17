@@ -8,6 +8,7 @@ const useStyles = makeStyles(() => ({
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
     minWidth: '100%',
+    justifyContent: 'center',
   },
   authWrapper: {
     minHeight: '130px',
@@ -20,6 +21,14 @@ const useStyles = makeStyles(() => ({
   searchForm: {
     marginTop: '3rem',
     marginBottom: '1rem',
+    width: 400,
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+  resetBtn: {
+    padding: 20,
+    height: 35,
+    alignSelf: 'center',
   },
   searchContainer: {
     display: 'flex',

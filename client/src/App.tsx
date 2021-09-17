@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import SearchSitter from './pages/SearchSitter/SearchSitter';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import MyBookings from './pages/Booking/MyBookings';
+import Payment from './pages/Payment/Payment';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -14,6 +15,8 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
+import MyProfile from './pages/MyProfile/MyProfile';
+import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
 
 function App(): JSX.Element {
   return (
@@ -28,17 +31,25 @@ function App(): JSX.Element {
                 <Fragment>
                   <NavBar />
                   <Route exact path="/dashboard">
-                    {/* <Dashboard /> */}
-                    <SearchSitter />
+                    <Dashboard />
                   </Route>
                   <Route path="/sitter/:profileId">
                     <ProfileDetails />
+                  </Route>
+                  <Route exact path="/myprofile">
+                    <MyProfile />
+                  </Route>
+                  <Route exact path="/myprofile/edit/photo">
+                    <ProfilePhoto />
                   </Route>
                   <Route exact path="/mybookings">
                     <MyBookings />
                   </Route>
                   <Route exact path="/search">
                     <SearchSitter />
+                  </Route>
+                  <Route exact path="/payment">
+                    <Payment />
                   </Route>
                 </Fragment>
                 <Route path="*">

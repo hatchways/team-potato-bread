@@ -1,12 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexFlow: 'column',
-    maxWidth: 345,
+    maxWidth: 250,
     margin: '2rem',
     flex: '1 1 300px',
+  },
+  link: {
+    textDecoration: 'none',
   },
   contentWrapper: {
     textAlign: 'center',
@@ -18,12 +21,13 @@ const useStyles = makeStyles((theme) => ({
   media: {
     marginTop: '2rem',
     borderRadius: '50%',
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     margin: '0 auto',
   },
   name: {
     fontWeight: 700,
+    color: 'black',
   },
   subTitle: {
     color: 'gray',
@@ -42,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1rem',
     marginLeft: '.5rem',
     marginRight: '.5rem',
+    height: 20,
   },
   location: {
     float: 'left',
@@ -50,12 +55,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     alignSelf: 'center',
     maxWidth: '50%',
+    color: 'gray',
   },
   rate: {
     float: 'right',
     maxWidth: '50%',
     fontWeight: 700,
     fontSize: '16px',
+    color: 'black',
   },
 }));
 
