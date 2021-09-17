@@ -49,6 +49,17 @@ exports.validateProfileCreation = [
   },
 ];
 
+exports.validateSearch = [
+  check("search", "Please enter a city/state/country to search").not().isEmpty(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
 exports.validateNotificationCreation = [
   check("type").not().isEmpty(),
   check("ownerId").not().isEmpty(),
