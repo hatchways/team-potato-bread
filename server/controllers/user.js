@@ -34,3 +34,22 @@ exports.getUserInfo = asyncHandler(async (req, res, next) => {
   }
   res.status(200).json(user);
 });
+
+// @route post /users/update payment
+// @desc add payment card
+exports.addPayment= asyncHandler(async (req, res, next) => {
+
+  const id = req.user.id
+  const {payment}=req.body
+ 
+  const user = await User.findByIdAndUpdate({_id:id},{$push:{
+    payment:payment
+  }} , { new: true })
+  if(!user) {
+      res.status(404);
+      throw new Error('The user does not exist.');
+  }
+  
+  res.status(200).json({success:{user}});
+});
+

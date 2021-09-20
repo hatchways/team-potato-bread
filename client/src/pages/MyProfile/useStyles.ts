@@ -4,11 +4,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
   },
+  settingSideMenu: {
+    margin: '3%  0px 0px auto',
+  },
   profileCard: {
     minWidth: '55%',
     maxWidth: '700px',
     minHeight: '75%',
-    margin: '25px auto',
+    margin: '3% auto 0px 0px',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },

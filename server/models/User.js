@@ -22,6 +22,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: `https://robohash.org/${rand}.png?set=set4`
   },
+  payment:[{
+    stripeId:String,
+    last4:String,
+    expMonth:Number,
+    expYear:Number,
+    email:String,
+    brand:String,
+    name:String
+  }],
   images: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'image'

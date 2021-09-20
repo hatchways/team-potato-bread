@@ -37,7 +37,7 @@ export default function Login(): JSX.Element {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid component="main" className={classes.root}>
       <CssBaseline />
       <AuthHeader asideText="Become a sitter" />
       <Grid container className={classes.authContainer}>
@@ -46,7 +46,7 @@ export default function Login(): JSX.Element {
             <Box width="100%" maxWidth={450} p={3} alignSelf="center">
               <Grid container>
                 <Grid item xs>
-                  <Typography className={classes.welcome} component="h1" variant="h5">
+                  <Typography className={classes.welcome} component="h1" variant="h2">
                     Welcome back!
                   </Typography>
                 </Grid>

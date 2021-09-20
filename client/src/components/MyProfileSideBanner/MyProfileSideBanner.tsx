@@ -15,9 +15,9 @@ const MyProfileSideBanner = ({ user, profile }: Props): JSX.Element => {
 
   return (
     <Grid className={classes.myProfileSideBanner}>
-      <Box>
-        <Typography variant="h5">Edit Profile</Typography>
-        <Typography variant="h5">
+      <Box className={classes.myProfileSideMenu}>
+        <Typography variant="body1">Edit Profile</Typography>
+        <Typography variant="body1">
           <NavLink
             to={{ pathname: `/myprofile/edit/photo`, state: { user: user, profile: profile } }}
             className={classes.navigation}
@@ -26,10 +26,18 @@ const MyProfileSideBanner = ({ user, profile }: Props): JSX.Element => {
             Profile Photo
           </NavLink>
         </Typography>
-        <Typography variant="h5">Availability</Typography>
-        <Typography variant="h5">Payment</Typography>
-        <Typography variant="h5">Security</Typography>
-        <Typography variant="h5">Settings</Typography>
+        <Typography variant="body1">Availability</Typography>
+        <Typography variant="body1">
+          <NavLink
+            to={{ pathname: `/payment`, state: { user: user, profile: profile } }}
+            className={classes.navigation}
+            activeClassName={classes.activeLink}
+          >
+            Payment
+          </NavLink>
+        </Typography>
+        <Typography variant="body1">Security</Typography>
+        <Typography variant="body1">Settings</Typography>
       </Box>
     </Grid>
   );
