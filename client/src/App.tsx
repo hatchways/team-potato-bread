@@ -10,7 +10,6 @@ import Payment from './pages/Payment/Payment';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
-
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';

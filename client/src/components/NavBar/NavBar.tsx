@@ -7,9 +7,11 @@ import logo from '../../Images/logo.png';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
-import { User } from '../../interface/User';
 import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
 import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
+import { User } from '../../interface/User';
+import NotificationList from '../Notification/NotificationList/NotificationList';
+import NotificationCenter from '../Notification/NotificationsCenter';
 
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
@@ -24,9 +26,11 @@ const NavBar = (): JSX.Element => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
+  const [notificationMessageAnchorEl, setNotificationMessageAnchorEl] = useState<null | HTMLElement>(null);
   const isProfileMenuOpen = Boolean(profileAnchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const isNotificationOpen = Boolean(notificationAnchorEl);
+  const isNotificationMessageOpen = Boolean(notificationMessageAnchorEl);
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -53,6 +57,13 @@ const NavBar = (): JSX.Element => {
     setNotificationAnchorEl(null);
   };
 
+  const handleNotificationMessageOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setNotificationMessageAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationMessageClose = () => {
+    setNotificationMessageAnchorEl(null);
+  };
   const handleLogout = () => {
     handleMenuClose();
     logout();
@@ -63,34 +74,33 @@ const NavBar = (): JSX.Element => {
     <Grid>
       <Menu
         anchorEl={notificationAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        getContentAnchorEl={null}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         id={notificationMenuId}
         keepMounted
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={isNotificationOpen}
         onClose={handleNotificationClose}
         className={classes.notificationMenu}
       >
-        <MenuItem onClick={handleMenuClose}>
-          <Box>
-            <Avatar className={classes.avatar} src={avatar2} variant="square" />
-          </Box>
-          <Box className={classes.notificationItemContent}>
-            <Typography className={classes.notificationText}>Marry has requested your service for 2 hours</Typography>
-            <Typography className={classes.notificationSubject}>Dog sitting</Typography>
-            <Typography className={classes.notificationDate}>09/07/2021</Typography>
-          </Box>
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
-          <Box>
-            <Avatar className={classes.avatar} src={avatar} variant="square" />
-          </Box>
-          <Box className={classes.notificationItemContent}>
-            <Typography className={classes.notificationText}>Scott has requested your service for 2 days</Typography>
-            <Typography className={classes.notificationSubject}>Dog sitting</Typography>
-            <Typography className={classes.notificationDate}>09/07/2021</Typography>
-          </Box>
-        </MenuItem>
+        <NotificationList text="notification" />
+      </Menu>
+    </Grid>
+  );
+  const renderNotificationMessageMenu = (
+    <Grid>
+      <Menu
+        anchorEl={notificationMessageAnchorEl}
+        getContentAnchorEl={null}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        id={notificationMenuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={isNotificationMessageOpen}
+        onClose={handleNotificationMessageClose}
+        className={classes.notificationMenu}
+      >
+        <NotificationList text="message" />
       </Menu>
     </Grid>
   );
@@ -130,10 +140,8 @@ const NavBar = (): JSX.Element => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem onClick={handleNotificationOpen}>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge variant="dot" color="primary"></Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <IconButton aria-label="show 4 new mails" color="inherit"></IconButton>
+        <NotificationCenter text="Notifications" mode="mobile" />
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -141,16 +149,15 @@ const NavBar = (): JSX.Element => {
         </IconButton>
         <p>My Jobs</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={handleNotificationMessageOpen}>
         <IconButton
           aria-label="messages of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
           color="inherit"
         >
-          <Badge variant="dot" color="primary"></Badge>
         </IconButton>
-        <p>Messages</p>
+        <NotificationCenter text="Messages" mode="mobile" />
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -177,11 +184,7 @@ const NavBar = (): JSX.Element => {
         <div className={classes.sectionDesktop}>
           <Box className={classes.navWrapper}>
             <Box onClick={handleNotificationOpen}>
-              <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
-                <Typography className={classes.navLink} variant="h6">
-                  Notifications
-                </Typography>
-              </Badge>
+              <NotificationCenter text="Notifications" mode="normal" />
             </Box>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={true}>
               <Typography variant="h6">
@@ -194,11 +197,9 @@ const NavBar = (): JSX.Element => {
                 </NavLink>
               </Typography>
             </Badge>
-            <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
-              <Typography className={classes.navLink} variant="h6">
-                Messages
-              </Typography>
-            </Badge>
+            <Box onClick={handleNotificationMessageOpen}>
+              <NotificationCenter text="Messages" mode="normal" />
+            </Box>
             <Box
               aria-label="account of current user"
               aria-controls={menuId}
@@ -225,6 +226,7 @@ const NavBar = (): JSX.Element => {
       {renderProfileMenu}
       {renderMobileMenu}
       {renderNotificationMenu}
+      {renderNotificationMessageMenu}
     </AppBar>
   );
 };
