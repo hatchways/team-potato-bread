@@ -60,9 +60,11 @@ export default function ProfileDetails(): JSX.Element {
       const sitterProfile = data;
       setSitter(sitterProfile);
       const profileImages = data.user?.images as Image[];
-      const newBannerImage = profileImages.shift();
-      setBannerImage(newBannerImage);
-      setImages(profileImages);
+      if (profileImages) {
+        const newBannerImage = profileImages.shift();
+        setBannerImage(newBannerImage);
+        setImages(profileImages);
+      }
     });
   }, [profileId]);
 

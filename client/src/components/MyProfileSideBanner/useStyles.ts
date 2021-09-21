@@ -5,6 +5,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     margin: 25,
   },
+  myProfileSideMenu: {
+    '& p': {
+      marginTop: 10,
+    },
+  },
   navigation: {
     textDecoration: 'none',
     color: 'black',
@@ -12,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
   activeLink: {
     fontWeight: 'bold',
     color: theme.palette.primary.main,
+    paddingLeft: '5px',
+    borderLeft: '2px solid',
   },
 }));
 

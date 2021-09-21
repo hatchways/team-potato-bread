@@ -87,17 +87,16 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
 exports.payRequest = asyncHandler(async (req, res, next) => {
   const { id, amount, description } = req.body;
   const userId = req.user.id;
-  const profile = await Profile.findOne({ user: userId});
-  const paymentMethod = await stripe.paymentMethods.retrieve(profile.paymentId);//get paymentMethod
-  if(!profile||!paymentMethod){
+  const user = await User.findById({ _id: userId});
+  const paymentMethod = await stripe.paymentMethods.retrieve(user.payment[0].id);//only one card right now
+  if(!user.payment||!paymentMethod){
     res.status(400);
-    throw new Error("Can not find your profile or payment method!!");
+    throw new Error("Can not find your payment method!!");
   }
   //pay the request
   const payment = await stripe.paymentIntents.create({
     amount:amount,
     currency: 'CAD',
-    customer: paymentMethod.customer,
     description: description,
     payment_method: paymentMethod.id,
     confirm: true,

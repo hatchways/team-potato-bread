@@ -12,8 +12,17 @@ export interface User {
   avatar: string;
   images?: Image[];
   profile?: Profile;
+  payment?: Payment[];
 }
-
+export interface Payment {
+  stripeId: string;
+  last4?: string | null;
+  expMonth?: number | null;
+  expYear?: number | null;
+  name?: string | null;
+  email?: string | null;
+  brand?: string | null;
+}
 export interface Image {
   _id?: string;
   imageUrl: string;

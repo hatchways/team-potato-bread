@@ -38,7 +38,7 @@ export default function Register(): JSX.Element {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid component="main" className={classes.root}>
       <CssBaseline />
       <AuthHeader asideText="Become a sitter" />
       <Grid container className={classes.authContainer}>

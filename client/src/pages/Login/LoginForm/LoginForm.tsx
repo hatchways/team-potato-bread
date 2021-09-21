@@ -96,7 +96,6 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             <DemoLogin />
             <AuthSubText linkTo="/signup" linkText="Signup" text="Don't have an account?"></AuthSubText>
           </Box>
-          <div style={{ height: 95 }} />
         </form>
       )}
     </Formik>

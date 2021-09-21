@@ -54,6 +54,7 @@ const profileSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  paymentCard:String,
   availability: [availabilitySchema],
   user: {
     type: mongoose.Schema.Types.ObjectId,

@@ -41,7 +41,6 @@ const useStyles = makeStyles(() => ({
   },
   containerStyle: {
     padding: '20px 50px',
-    marginTop: '100px',
   },
   btnBox: {
     padding: '5% 0px',
@@ -74,11 +73,21 @@ const useStyles = makeStyles(() => ({
   },
   cardElements: {
     border: '1px solid #90909047',
-    padding: 10,
+    padding: 16,
+    marginTop: 16,
     borderRadius: 5,
     '&:hover': {
       boxShadow: '0px 2px 12px #90909047',
     },
+  },
+  formDivider: {
+    margin: '20px 0px',
+  },
+  formInput: {
+    margin: '20px 0px',
+  },
+  formDividerBottom: {
+    marginTop: '20p',
   },
 }));
 

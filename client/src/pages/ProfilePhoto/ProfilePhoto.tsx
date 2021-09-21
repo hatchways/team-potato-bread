@@ -47,7 +47,7 @@ const ProfilePhoto = (): JSX.Element => {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid container>
-        <Grid item>
+        <Grid item className={classes.settingSideMenu}>
           <MyProfileSideBanner profile={profile as Profile} user={user as User} />
         </Grid>
         <Grid item className={classes.card}>

@@ -12,13 +12,14 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: '5%',
   },
   authWrapper: {
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    paddingTop: 23,
+    padding: '5% 0px',
   },
   welcome: {
     fontSize: 30,

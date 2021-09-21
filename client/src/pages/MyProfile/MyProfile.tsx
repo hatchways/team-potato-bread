@@ -62,7 +62,7 @@ export default function MyProfile(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid container>
-        <Grid item>
+        <Grid item className={classes.settingSideMenu}>
           <MyProfileSideBanner profile={userData.profile as Profile} user={userData as User} />
         </Grid>
         <Grid item className={classes.profileCard}>
