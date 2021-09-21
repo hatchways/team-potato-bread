@@ -8,7 +8,7 @@ import useStyles from './useStyles';
 import { Modal, Box, Grid } from '@material-ui/core';
 import { User, Profile } from '../../interface/User';
 import MyProfileSideBanner from '../../components/MyProfileSideBanner/MyProfileSideBanner';
-const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY || 'pk_test_rIpFBtUxylULGOKXpgmmXVXX00ZZP8rQWl');
+const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY || '');
 type locationState = {
   user: User;
   profile: Profile;

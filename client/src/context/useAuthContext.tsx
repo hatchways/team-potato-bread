@@ -31,9 +31,9 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     },
     [history],
   );
-  const addPayment = useCallback((data: AuthApiDataSuccess) => {
+  const addPayment = (data: AuthApiDataSuccess) => {
     setLoggedInUser(data.user);
-  }, []);
+  };
 
   const logout = useCallback(async () => {
     // needed to remove token cookie
