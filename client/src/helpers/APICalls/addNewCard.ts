@@ -10,7 +10,11 @@ const AddNewCard = async (payment: Payment): Promise<AuthApiData> => {
   };
   return await fetch(`/users/payment`, fetchOptions)
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      error: {
+        message: err;
+      }
+    });
 };
 
 export default AddNewCard;

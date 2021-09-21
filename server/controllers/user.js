@@ -41,7 +41,7 @@ exports.getUserInfo = asyncHandler(async (req, res, next) => {
 // @route post /users/update payment
 // @desc add payment card
 exports.addPayment = asyncHandler(async (req, res, next) => {
-  const id = req.user.id;
+  const {id} = req.user;
   const { payment } = req.body;
 
   const user = await User.findByIdAndUpdate(
