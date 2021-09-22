@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Badge, Box, Grid, IconButton, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Badge, Box, Grid, IconButton, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
 import { Link, NavLink } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useStyles from './useStyles';
@@ -6,8 +6,6 @@ import logo from '../../Images/logo.png';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
-import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
-import avatar2 from '../../Images/d9fc84a0d1d545d77e78aaad39c20c11d3355074.png';
 import { User } from '../../interface/User';
 import NotificationList from '../Notification/NotificationList/NotificationList';
 import NotificationCenter from '../Notification/NotificationsCenter';
@@ -154,8 +152,7 @@ const NavBar = (): JSX.Element => {
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
           color="inherit"
-        >
-        </IconButton>
+        ></IconButton>
         <NotificationCenter text="Messages" mode="mobile" />
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
