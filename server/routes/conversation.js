@@ -14,6 +14,6 @@ router.route('/create').post(protect, createConversation);
 
 router.route('/sendMessage').post(protect, sendMessage);
 
-router.route('/:userProfileId/all').get(protect, getAllConversations);
+router.route('/all').get(protect, getAllConversations);
 
 module.exports = router;

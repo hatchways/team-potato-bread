@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+var findOrCreate = require('mongoose-findorcreate')
 const contentSchema = new mongoose.Schema({
-      senderProfileId:{
+      senderId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'profile',
+        ref: 'user',
         required: true,
       },
       text:{type:String, required: true},
@@ -16,7 +17,7 @@ const messageSchema = new mongoose.Schema({
   },
   content:[contentSchema] 
 });
-
+messageSchema.plugin(findOrCreate);
 module.exports = Message = mongoose.model(
   'message',
   messageSchema

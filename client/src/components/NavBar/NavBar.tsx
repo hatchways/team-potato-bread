@@ -2,6 +2,7 @@ import { AppBar, Avatar, Badge, Box, Grid, IconButton, Menu, MenuItem, Toolbar, 
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useStyles from './useStyles';
 import logo from '../../Images/logo.png';
+import { Link } from 'react-router-dom';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
 import avatar from '../../Images/b1f0e680702e811aa8ba333cb19c0e0ea95e8e31.png';
@@ -126,6 +127,7 @@ const NavBar = (): JSX.Element => {
         </IconButton>
         <p>My Jobs</p>
       </MenuItem>
+
       <MenuItem>
         <IconButton
           aria-label="messages of current user"
@@ -137,6 +139,7 @@ const NavBar = (): JSX.Element => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -173,7 +176,9 @@ const NavBar = (): JSX.Element => {
             </Badge>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
               <Typography className={classes.navLink} variant="h6">
-                Messages
+                <Link className={classes.msgLink} to="/conversations">
+                  Messages
+                </Link>
               </Typography>
             </Badge>
             <Box

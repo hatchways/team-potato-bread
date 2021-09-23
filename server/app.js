@@ -27,21 +27,34 @@ const io = socketio(server, {
     origin: "*",
   },
 });
-
-io.on("connection", (socket) => {
-  socket.on('JoinConversation', ({ userProfileId,conversationId },cb) => {
-    const{error}=addUser({id:socket.id,userProfileId,conversationId})
+app.set('socketio', io);
+io.on("connection",(socket) => {
+   
+  socket.on('JoinConversation', async({ userId,conversationId},cb) => {
+    console.log("new conversation",conversationId)
+   const{error,user}=await addUser({id:socket.id,userId,conversationId})
+   console.log("user",user)
     if(error)return cb(error)
     socket.join(conversationId);
+    console.log('socket.rooms', socket.rooms);
     cb()
   }) 
-  socket.on('chatMessage', (message) => {
+  socket.on('chatMessage', (message,cb) => {
     const user=getUser(socket.id)
-    io.to(user.conversationId).emit('message', {userProfileId,message});
+    io.to(socket.id).emit('message', {senderId:user.userId,text:message});
+    cb()
+  });
+  socket.on('isTyping', (userId) => {
+    console.log("is typing",userId)
+    const user=getUser(socket.id)
+    io.to(socket.id).emit('display',userId);
+
   });
 
   socket.on('disconnect',()=>{
-   removeUser(socket.id);
+   const user=removeUser(socket.id);
+   socket.removeAllListeners('chatMessage','isTyping');  
+   console.log("user leave",user)
   })
 });
 

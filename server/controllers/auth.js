@@ -100,12 +100,12 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: {
       user: {
-        id: user._id,
+        _id: user._id,
         username: user.username,
         email: user.email,
         avatar: user.avatar
       }
-    }
+    } 
   });
 });
 
