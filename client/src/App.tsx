@@ -10,6 +10,8 @@ import Payment from './pages/Payment/Payment';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import Conversations from './pages/Conversation/Conversations';
+import { ConversationProvider } from './context/useConversationContext';
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
@@ -28,13 +30,27 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Fragment>
-                  <NavBar />
-                  <Route exact path="/dashboard">
-                    <Dashboard />
+              <ConversationProvider>
+                <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Fragment>
+                    <NavBar />
+                    <Route exact path="/dashboard">
+                      <Dashboard />
+                    </Route>
+                    <Route path="/sitter/:profileId">
+                      <ProfileDetails />
+                    </Route>
+                    <Route exact path="/mybookings">
+                      <MyBookings />
+                    </Route>
+                    <Route exact path="/conversations">
+                      <Conversations />
+                    </Route>
+                  </Fragment>
+                  <Route path="*">
+                    <Redirect to="/login" />
                   </Route>
                   <Route exact path="/sitters">
                     <SearchSitter />
@@ -66,11 +82,11 @@ function App(): JSX.Element {
                   <Route exact path="/payment">
                     <Payment />
                   </Route>
-                </Fragment>
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
+                  <Route path="*">
+                    <Redirect to="/login" />
+                  </Route>
+                </Switch>
+              </ConversationProvider>
             </SocketProvider>
           </AuthProvider>
         </SnackBarProvider>

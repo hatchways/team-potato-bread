@@ -16,6 +16,7 @@ const addUser = async ({ id, userProfileId, conversationId }) => {
 
     return { user };
   }
+
   return { error: 'Wrong userProfileId' };
 };
 
@@ -31,4 +32,4 @@ const getUser = (id) => users.find((user) => user.id === id);
 const getUsersInRoom = (conversationId) =>
   users.filter((user) => user.conversationId === conversationId);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, };

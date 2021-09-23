@@ -81,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '5px',
     alignSelf: 'felx-end',
   },
+  msgLink: {
+    textDecoration: 'none',
+    color: 'black',
+  },
 }));
 
 export default useStyles;
