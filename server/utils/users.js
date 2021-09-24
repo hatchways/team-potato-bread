@@ -17,7 +17,7 @@ const addUser = async ({ id, userProfileId, conversationId }) => {
     return { user };
   }
 
-  return { error: 'Wrong userProfileId' };
+  return { error: 'Wrong userId' };
 };
 
 const removeUser = (id) => {
