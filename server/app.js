@@ -42,12 +42,7 @@ io.on("connection",(socket) => {
 
     cb()
   }) 
-<<<<<<< HEAD
   socket.on('chatMessage', (message,cb) => {
-=======
-
-  socket.on('chatMessage', (message) => {
->>>>>>> origin/main
     const user=getUser(socket.id)
     io.to(socket.id).emit('message', {senderId:user.userId,text:message});
     cb()
