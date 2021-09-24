@@ -8,11 +8,7 @@ const getConversations = async () => {
   };
   return await fetch(`/conversation/all`, fetchOptions)
     .then((res) => res.json())
-    .catch((err) => {
-      err: {
-        message: err;
-      }
-    });
+    .catch((err) => ({ err: { message: err } }));
 };
 
 export default getConversations;

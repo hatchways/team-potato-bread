@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import useStyles from './useStyles';
 import ConversationItem from '../ConversationSideBarItem/ConversationSiderBarItem';
@@ -8,7 +8,7 @@ const ConversationSideBar = (): JSX.Element => {
   const classes = useStyles();
   const { conversations } = useConversation();
   const renderConversations = () => {
-    if (!conversations || conversations.length < 1) return <Box>No Conversations</Box>;
+    if (!conversations || !conversations.length) return <Box>No Conversations</Box>;
     return conversations.map((conversation) => {
       return <ConversationItem key={conversation._id} conversation={conversation} />;
     });
