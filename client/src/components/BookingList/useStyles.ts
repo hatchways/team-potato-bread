@@ -4,7 +4,7 @@ const useStyles = makeStyles(() => ({
   bookingList: {
     display: 'flex',
     flexDirection: 'column',
-    width: '500px',
+    width: '400px',
     padding: '15px 10px',
     margin: '30px',
   },
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   nextBooking: {
     display: 'flex',
     flexDirection: 'column',
-    width: '500px',
+    width: '400px',
     padding: '15px 10px',
     margin: '30px',
     height: '200px',

@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     justifySelf: 'center',
     minWidth: '100%',
-    minHeight: 135,
+    minHeight: 75,
     justifyContent: 'center',
   },
   brand: {
@@ -25,6 +25,17 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 70,
     paddingRight: 5,
     cursor: 'pointer',
+    textDecoration: 'none',
+  },
+  navLinkSmall: {
+    textDecoration: 'none',
+    color: 'black',
+    textAlign: 'center',
+    padding: 5,
+  },
+  activeLink: {
+    fontWeight: 'bold',
+    color: theme.palette.primary.main,
   },
   navText: {
     fontWeight: 700,

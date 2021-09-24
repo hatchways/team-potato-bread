@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: '100%',
+    height: '100px',
   },
   brand: {
     marginRight: 'auto',
