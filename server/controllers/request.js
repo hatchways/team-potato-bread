@@ -1,6 +1,9 @@
 const Request = require("../models/Request");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
+const Profile = require("../models/Profile");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 // @route GET /requests
 // @desc list of requests for logged in user
 // @access Private
@@ -76,4 +79,37 @@ exports.updateRequest = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("Invalid data");
   }
+});
+
+// @route POST /request/pay
+// @desc pay for a request
+// @access Private
+exports.payRequest = asyncHandler(async (req, res, next) => {
+  const { id, amount, description } = req.body;
+  const userId = req.user.id;
+  const user = await User.findById({ _id: userId});
+  const paymentMethod = await stripe.paymentMethods.retrieve(user.payment[0].id);//only one card right now
+  if(!user.payment||!paymentMethod){
+    res.status(400);
+    throw new Error("Can not find your payment method!!");
+  }
+  //pay the request
+  const payment = await stripe.paymentIntents.create({
+    amount:amount,
+    currency: 'CAD',
+    description: description,
+    payment_method: paymentMethod.id,
+    confirm: true,
+  });
+  //if successs, set the paid field to true 
+  if (payment) {
+    const request = await Request.findByIdAndUpdate(
+      { _id: id },
+      { $set: { paid: true } },
+      { new: true }
+    );
+   return res.status(201).json({ request });
+  }
+  res.status(400);
+  throw new Error("The payment failed!");
 });

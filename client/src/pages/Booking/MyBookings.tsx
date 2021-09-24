@@ -1,11 +1,9 @@
 import Grid from '@material-ui/core/Grid';
-import MgnBookingHeader from '../../components/MgnBookingHeader/MgnBookingHeader';
 import BookingCalendar from '../../components/BookingCalendar/BookingCalendar';
 import BookingList from '../../components/BookingList/BookingList';
 import useStyles from './useStyles';
 import { useState, useEffect } from 'react';
 import getRequests from '../../helpers/APICalls/getRequests';
-import { useAuth } from '../../context/useAuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export interface Bookings {
@@ -65,7 +63,6 @@ const MyBookings = (): JSX.Element => {
 
   return (
     <Grid container>
-      <MgnBookingHeader />
       <Grid container className={classes.myBooking} spacing={2}>
         {bookings === undefined || dates === undefined ? (
           <CircularProgress />

@@ -14,7 +14,7 @@ import useStyles from './useStyles';
 import ProfileImageList from '../ProfileDetails/ProfileImageList';
 import { useAuth } from '../../context/useAuthContext';
 import { Sitter, User, Profile, Image } from '../../interface/User';
-import { getSitterProfile } from '../../helpers/APICalls/getSitterProfile';
+import { getUserInfo } from '../../helpers/APICalls/getUserInfo';
 import { useEffect, useState } from 'react';
 import MyProfileSideBanner from '../../components/MyProfileSideBanner/MyProfileSideBanner';
 
@@ -25,36 +25,38 @@ interface Props {
   image: Image;
 }
 
-const initSitter: Sitter = {
+const initUser: User = {
+  email: '',
+  username: '',
+  avatar: '',
+  images: [],
   profile: {
     firstName: '',
     lastName: '',
     location: '',
-    avgRating: 0,
-    user: {
-      email: '',
-      username: '',
-      avatar: '',
-      images: [{ imageUrl: '' }],
-    },
+    ratePerHour: 0,
   },
 };
 
 export default function MyProfile(): JSX.Element {
   const classes = useStyles();
-  const [sitter, setSitter] = useState<Sitter>(initSitter);
-  const [images, setImages] = useState<Image[]>([{ imageUrl: '' }]);
+  const [userData, setUserData] = useState<User>(initUser);
+  const [images, setImages] = useState<Image[]>([]);
   const [bannerImage, setBannerImage] = useState<Image>();
   const { loggedInUser } = useAuth();
 
+  console.log(loggedInUser);
+
   useEffect(() => {
-    getSitterProfile(loggedInUser?._id as string).then((data) => {
-      const sitterProfile = data;
-      setSitter(sitterProfile);
-      const profileImages = data.user?.images as Image[];
-      const newBannerImage = profileImages.shift();
-      setBannerImage(newBannerImage);
-      setImages(profileImages);
+    getUserInfo(loggedInUser?._id as string).then((data) => {
+      const newUserData = data;
+      setUserData(newUserData);
+      if (data.images !== undefined) {
+        const profileImages = data.images as Image[];
+        const newBannerImage = profileImages.shift();
+        setBannerImage(newBannerImage);
+        setImages(profileImages);
+      }
     });
   }, [loggedInUser]);
 
@@ -62,8 +64,8 @@ export default function MyProfile(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid container>
-        <Grid>
-          <MyProfileSideBanner profile={sitter.profile as Profile} user={sitter.user as User} />
+        <Grid item className={classes.settingSideMenu}>
+          <MyProfileSideBanner profile={userData.profile as Profile} user={userData as User} />
         </Grid>
         <Grid item className={classes.profileCard}>
           <Card>
@@ -71,29 +73,43 @@ export default function MyProfile(): JSX.Element {
               {bannerImage ? (
                 <CardMedia className={classes.media} image={bannerImage && bannerImage.imageUrl} />
               ) : (
-                <Button variant="contained" size="large">
-                  Upload Banner
-                </Button>
+                <Box className={classes.imagesBox}>
+                  <Button variant="contained" size="large" color="primary" className={classes.buttons}>
+                    Upload Banner
+                  </Button>
+                </Box>
               )}
               <CardContent className={classes.cardContent}>
-                <Avatar className={classes.avatar} src={sitter?.user?.avatar} />
+                <Avatar className={classes.avatar} src={userData.avatar} />
                 <Typography className={classes.nameField} align="center">
-                  {`${sitter.profile?.firstName} ${sitter.profile?.lastName}`}
+                  {userData.profile !== null
+                    ? `${userData.profile?.firstName} ${userData.profile?.lastName}`
+                    : `${userData.username}`}
                 </Typography>
                 <Typography align="center" variant="subtitle1">
-                  {sitter.profile?.subtitle}
+                  {userData.profile?.subtitle}
                 </Typography>
-                <IconButton className={classes.locationField} disabled>
-                  <LocationOnIcon color="primary" fontSize="small" />
-                  {sitter.profile?.location}
-                </IconButton>
-                <Typography variant="h3">About me</Typography>
-                <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                {userData.profile && (
+                  <IconButton className={classes.locationField} disabled>
+                    <LocationOnIcon color="primary" fontSize="small" />
+                    {userData.profile?.location}
+                  </IconButton>
+                )}
+                {userData.profile && (
+                  <>
+                    <Typography variant="h3" className={classes.aboutMe}>
+                      About me
+                    </Typography>
+                    <Typography variant="subtitle2" className={classes.aboutMe}>
+                      {userData.profile?.description}
+                    </Typography>
+                  </>
+                )}
                 <Box className={classes.imagesBox}>
-                  {images ? (
+                  {images.length !== 0 ? (
                     <ProfileImageList images={images} />
                   ) : (
-                    <Button variant="contained" size="large">
+                    <Button variant="contained" size="large" color="primary" className={classes.buttons}>
                       Add Images
                     </Button>
                   )}

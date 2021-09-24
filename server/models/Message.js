@@ -22,3 +22,4 @@ module.exports = Message = mongoose.model(
   'message',
   messageSchema
 );
+

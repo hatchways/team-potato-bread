@@ -22,6 +22,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: `https://robohash.org/${rand}.png?set=set4`
   },
+  payment:[{
+    stripeId:String,
+    last4:String,
+    expMonth:Number,
+    expYear:Number,
+    email:String,
+    brand:String,
+    name:String
+  }],
   images: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'image'
@@ -29,6 +38,12 @@ const userSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now
+  },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'profile',
+    required: false,
+    default: null
   }
 });
 

@@ -4,10 +4,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
   },
+  settingSideMenu: {
+    margin: '3%  0px 0px auto',
+  },
   profileCard: {
     minWidth: '55%',
+    maxWidth: '700px',
     minHeight: '75%',
-    margin: 25,
+    margin: '3% auto 0px 0px',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
@@ -37,8 +41,13 @@ const useStyles = makeStyles((theme) => ({
     padding: 15,
     fontSize: 12,
   },
+  aboutMe: {
+    margin: '10px 15px',
+  },
   imagesBox: {
     height: 100,
+    display: 'flex',
+    justifyContent: 'center',
   },
   imageList: {
     justifyContent: 'space-evenly',
@@ -47,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   smallProfileImages: {
     maxHeight: 100,
     maxWidth: 100,
+  },
+  buttons: {
+    margin: 'auto',
+    alignSelf: 'center',
   },
 }));
 

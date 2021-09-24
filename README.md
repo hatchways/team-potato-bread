@@ -42,8 +42,9 @@ This is a little description about your project.
 
 1. Registration. Users will be able to create a new account using their email and password
 
-![Signup Demo](demo/images/signup.png)
+![registration screen](https://user-images.githubusercontent.com/57962457/133823450-aa3e3fc1-fa09-4caf-888b-eb1f09fef832.jpg)
 
 2. Dashboard. Here is a description about what a user can expect to see
 
-![Dashboard](demo/images/dashboard.png)
+![dashboard screen](https://user-images.githubusercontent.com/57962457/133823594-a791dd21-7873-42ed-8e72-ab89c3d0862f.jpg)
+

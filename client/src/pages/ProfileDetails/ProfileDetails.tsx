@@ -59,9 +59,11 @@ export default function ProfileDetails(): JSX.Element {
       const sitterProfile = data;
       setSitter(sitterProfile);
       const profileImages = data.user?.images as Image[];
-      const newBannerImage = profileImages.shift();
-      setBannerImage(newBannerImage);
-      setImages(profileImages);
+      if (profileImages) {
+        const newBannerImage = profileImages.shift();
+        setBannerImage(newBannerImage);
+        setImages(profileImages);
+      }
     });
   }, [profileId]);
 
@@ -85,8 +87,10 @@ export default function ProfileDetails(): JSX.Element {
                   <LocationOnIcon color="primary" fontSize="small" />
                   {sitter.profile?.location}
                 </IconButton>
-                <Typography variant="h3">About me</Typography>
-                <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                <Box className={classes.aboutMe}>
+                  <Typography variant="h3">About me</Typography>
+                  <Typography variant="subtitle2">{sitter.profile?.description}</Typography>
+                </Box>
                 <Box className={classes.imagesBox}>{images && <ProfileImageList images={images} />}</Box>
               </CardContent>
             </CardActionArea>
