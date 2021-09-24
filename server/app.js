@@ -31,12 +31,13 @@ app.set('socketio', io);
 io.on("connection",(socket) => {
    
   socket.on('JoinConversation', async({ userId,conversationId},cb) => {
-    console.log("new conversation",conversationId)
+
    const{error,user}=await addUser({id:socket.id,userId,conversationId})
-   console.log("user",user)
+
     if(error)return cb(error)
+
     socket.join(conversationId);
-    console.log('socket.rooms', socket.rooms);
+
     cb()
   }) 
   socket.on('chatMessage', (message,cb) => {
@@ -45,15 +46,16 @@ io.on("connection",(socket) => {
     cb()
   });
   socket.on('isTyping', (userId) => {
-    console.log("is typing",userId)
+
     const user=getUser(socket.id)
+
     io.to(socket.id).emit('display',userId);
 
   });
 
   socket.on('disconnect',()=>{
    const user=removeUser(socket.id);
-   socket.removeAllListeners('chatMessage','isTyping');  
+   socket.removeAllListeners('chatMessage');  
    console.log("user leave",user)
   })
 });

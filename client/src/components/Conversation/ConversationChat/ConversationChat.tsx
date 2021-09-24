@@ -29,7 +29,7 @@ const ConversationChat = (): JSX.Element => {
 
   useEffect(() => {
     if (!currentConversation) return;
-    if (currentConversation && loggedInUser && loggedInUser._id === currentConversation.senderId._id) {
+    if (loggedInUser?._id === currentConversation.senderId?._id) {
       setSender(currentConversation.senderId);
       setReciever(currentConversation.recieverId);
     } else {
@@ -62,7 +62,6 @@ const ConversationChat = (): JSX.Element => {
       sendAndSavaMessage(currentConversation._id, loggedInUser._id, message).then(() => {
         setMessage('');
       });
-      // socket.emit('chatMessage', message, () => setMessage(''));
     }
   };
 

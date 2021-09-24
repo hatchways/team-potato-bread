@@ -8,11 +8,7 @@ const getMessages = async (id: string) => {
   };
   return await fetch(`/conversation/${id}/messages`, fetchOptions)
     .then((res) => res.json())
-    .catch((err) => {
-      err: {
-        message: err;
-      }
-    });
+    .catch((err) => ({ err: { message: err } }));
 };
 
 export default getMessages;

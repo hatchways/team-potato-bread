@@ -1,8 +1,8 @@
 const Conversation = require('../models/Conversation');
 const users = [];
 const addUser = async ({ id, userId ,conversationId}) => {
-  const conversation = await Conversation.findById({ _id: conversationId });
-
+  const conversation = await Conversation.findById( conversationId );
+  console.log("conversation",conversation)
   if (
     conversation.recieverId.equals(userId) ||
     conversation.senderId.equals(userId)
