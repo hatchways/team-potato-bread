@@ -1,8 +1,9 @@
 const Conversation = require('../models/Conversation');
 const users = [];
 const addUser = async ({ id, userId ,conversationId}) => {
+
   const conversation = await Conversation.findById( conversationId );
-  console.log("conversation",conversation)
+
   if (
     conversation.recieverId.equals(userId) ||
     conversation.senderId.equals(userId)
@@ -14,7 +15,7 @@ const addUser = async ({ id, userId ,conversationId}) => {
     return { user };
   }
 
-  return { error: 'Wrong userProfileId' };
+  return { error: 'Wrong userId' };
 };
 
 const removeUser = (id) => {

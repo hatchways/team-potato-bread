@@ -32,7 +32,7 @@ io.on("connection",(socket) => {
    
   socket.on('JoinConversation', async({ userId,conversationId},cb) => {
 
-   const{error,user}=await addUser({id:socket.id,userId,conversationId})
+   const{error}=await addUser({id:socket.id,userId,conversationId})
 
     if(error)return cb(error)
 
@@ -45,18 +45,10 @@ io.on("connection",(socket) => {
     io.to(socket.id).emit('message', {senderId:user.userId,text:message});
     cb()
   });
-  socket.on('isTyping', (userId) => {
-
-    const user=getUser(socket.id)
-
-    io.to(socket.id).emit('display',userId);
-
-  });
 
   socket.on('disconnect',()=>{
    const user=removeUser(socket.id);
    socket.removeAllListeners('chatMessage');  
-   console.log("user leave",user)
   })
 });
 
