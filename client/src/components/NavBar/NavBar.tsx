@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useStyles from './useStyles';
 import logo from '../../Images/logo.png';
-import { Link } from 'react-router-dom';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import { useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
@@ -147,12 +146,7 @@ const NavBar = (): JSX.Element => {
         </IconButton>
         <p>My Jobs</p>
       </MenuItem>
-<<<<<<< HEAD
-
-      <MenuItem>
-=======
       <MenuItem onClick={handleNotificationMessageOpen}>
->>>>>>> origin/main
         <IconButton
           aria-label="messages of current user"
           aria-controls="primary-search-account-menu"
@@ -190,17 +184,6 @@ const NavBar = (): JSX.Element => {
               <NotificationCenter text="Notifications" mode="normal" />
             </Box>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={true}>
-<<<<<<< HEAD
-              <Typography className={classes.navLink} variant="h6">
-                My Jobs
-              </Typography>
-            </Badge>
-            <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
-              <Typography className={classes.navLink} variant="h6">
-                <Link className={classes.msgLink} to="/conversations">
-                  Messages
-                </Link>
-=======
               <Typography variant="h6">
                 <NavLink
                   to={{ pathname: `/mybookings` }}
@@ -209,7 +192,6 @@ const NavBar = (): JSX.Element => {
                 >
                   My Jobs
                 </NavLink>
->>>>>>> origin/main
               </Typography>
             </Badge>
             <Box onClick={handleNotificationMessageOpen}>
