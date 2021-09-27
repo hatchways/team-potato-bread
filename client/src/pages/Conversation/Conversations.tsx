@@ -14,7 +14,7 @@ const Conversations = (): JSX.Element => {
   useEffect(() => {
     if (socket) {
       if (!currentConversation || !loggedInUser) return;
-      socket.emit('JoinConversation', { userId: loggedInUser._id, conversationId: currentConversation._id }, () => {
+      socket.emit('joinConversation', { userId: loggedInUser._id, conversationId: currentConversation._id }, () => {
         return () => {
           socket.emit('disconnect');
           socket.off();
