@@ -1,32 +1,32 @@
 import { useEffect, FormEvent, useState, ChangeEvent } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline, Box, Grid, TextField, Typography, Button, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
-import SitterCard from '../../components/SitterCard/SitterCard';
-import DashboardSideBanner from '../../components/DashboardSideBanner/DashboardSideBanner';
+import { User } from '../../interface/User';
+import MeetupCard from '../../components/MeetupCard/MeetupCard';
+import { Meetup } from '../../interface/Meetup';
 import { useAuth } from '../../context/useAuthContext';
-import { User, Profile } from '../../interface/User';
-import { Button, InputAdornment } from '@material-ui/core';
-import { getAllSitterProfiles } from '../../helpers/APICalls/getSitterProfile';
-import { searchProfiles } from '../../helpers/APICalls/searchUsers';
+import { getAllMeetups, searchPetMeetups } from '../../helpers/APICalls/getMeetupInfo';
+import DashboardSideBanner from '../../components/DashboardSideBanner/DashboardSideBanner';
+import { mockMeetup } from '../../mocks/mockUser';
 
-export default function SearchSitter(): JSX.Element {
+interface Props {
+  loggedInUser: User;
+}
+
+export default function MeetupsList(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const [search, setSearch] = useState<string>('test');
-  const [allSitters, setAllSitters] = useState<Profile[]>([]);
+  const [petMeetups, setPetMeetups] = useState<Meetup[]>([mockMeetup]);
 
-  useEffect(() => {
-    getAllSitters();
-  }, []);
+  //   useEffect(() => {
+  //     listAllMeetups();
+  //   }, []);
 
-  const getAllSitters = () => {
-    getAllSitterProfiles().then((data) => {
-      setAllSitters(data);
+  const listAllMeetups = () => {
+    getAllMeetups().then((data) => {
+      setPetMeetups(data);
     });
   };
 
@@ -36,12 +36,12 @@ export default function SearchSitter(): JSX.Element {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    searchProfiles({ search }).then((data) => {
-      setAllSitters(data);
+    searchPetMeetups({ search }).then((data) => {
+      setPetMeetups(data);
     });
   };
 
-  const sitters = allSitters.map((profile) => <SitterCard sitter={profile} key={profile._id} />);
+  const meetups = petMeetups.map((event) => <MeetupCard meetup={event} key={event._id} />);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -52,10 +52,10 @@ export default function SearchSitter(): JSX.Element {
         </Grid>
         <Grid item className={classes.pageContent}>
           <Typography className={classes.heading} component="h2" variant="h4">
-            Pet Sitters
+            Pet Meetup Events
           </Typography>
           <Box className={classes.searchForm}>
-            <form action="/profile/find" method="GET" onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)}>
+            <form action="/meetup/find" method="GET" onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)}>
               <TextField
                 id="search"
                 label="Search By City/State/Country"
@@ -76,16 +76,18 @@ export default function SearchSitter(): JSX.Element {
                 onChange={handleChange}
               />
             </form>
-            <Button className={classes.resetBtn} variant="contained" color="primary" onClick={getAllSitters}>
+            <Button className={classes.resetBtn} variant="contained" color="primary" onClick={listAllMeetups}>
               Reset
             </Button>
           </Box>
-          {allSitters.length !== 0 ? (
-            <Grid item className={classes.userList}>
-              {sitters}
+          {petMeetups.length !== 0 ? (
+            <Grid item className={classes.meetupsList}>
+              {meetups}
             </Grid>
           ) : (
-            <Typography variant="h3">No Sitters Found</Typography>
+            <Typography variant="h3" align="center">
+              No Pet Meetups Found
+            </Typography>
           )}
           <Button variant="outlined" color="primary" className={classes.outlineBtn}>
             Show More

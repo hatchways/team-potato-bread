@@ -15,6 +15,9 @@ import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import MyProfile from './pages/MyProfile/MyProfile';
 import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
+import MeetupsList from './pages/Meetups/MeetupsList';
+import SearchSitter from './pages/SearchSitter/SearchSitter';
+import MeetupInfoPage from './pages/Meetups/MeetupInfoPage';
 
 function App(): JSX.Element {
   return (
@@ -30,6 +33,15 @@ function App(): JSX.Element {
                   <NavBar />
                   <Route exact path="/dashboard">
                     <Dashboard />
+                  </Route>
+                  <Route exact path="/sitters">
+                    <SearchSitter />
+                  </Route>
+                  <Route exact path="/meetups">
+                    <MeetupsList />
+                  </Route>
+                  <Route path="/meetup/:meetupId">
+                    <MeetupInfoPage />
                   </Route>
                   <Route path="/sitter/:profileId">
                     <ProfileDetails />

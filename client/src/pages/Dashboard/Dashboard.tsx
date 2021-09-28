@@ -5,7 +5,8 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { User } from '../../interface/User';
 import { useHistory } from 'react-router-dom';
-import SearchSitter from '../SearchSitter/SearchSitter';
+import DashboardSideBanner from '../../components/DashboardSideBanner/DashboardSideBanner';
+import WelcomePage from '../WelcomePage/WelcomePage';
 
 interface Props {
   loggedInUser: User;
@@ -25,10 +26,15 @@ export default function Dashboard(): JSX.Element {
   }
 
   return (
-    <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
+    <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid container>
-        <SearchSitter />
+      <Grid container className={classes.container}>
+        <Grid item className={classes.settingSideMenu}>
+          <DashboardSideBanner loggedInUser={loggedInUser} />
+        </Grid>
+        <Grid item className={classes.pageContent}>
+          <WelcomePage />
+        </Grid>
       </Grid>
     </Grid>
   );
