@@ -20,9 +20,7 @@ export default function MeetupsList(): JSX.Element {
   const [search, setSearch] = useState<string>('test');
   const [petMeetups, setPetMeetups] = useState<Meetup[]>([mockMeetup]);
 
-  //   useEffect(() => {
-  //     listAllMeetups();
-  //   }, []);
+  // TODO: setup useEffect to call listAllMeetups once back end is set up
 
   const listAllMeetups = () => {
     getAllMeetups().then((data) => {
@@ -45,7 +43,6 @@ export default function MeetupsList(): JSX.Element {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid container className={classes.container}>
         <Grid item className={classes.settingSideMenu}>
           <DashboardSideBanner loggedInUser={loggedInUser as User} />

@@ -55,23 +55,10 @@ export default function MyProfile(): JSX.Element {
   const [eventImage, setEventImage] = useState<Image>(initMeetup.image as Image);
   const { loggedInUser } = useAuth();
 
-  // TODO: set up once back end is up
-  // useEffect(() => {
-  //   getMeetupInfo(mockMeetup._id as string).then((data) => {
-  //     const newMeetupData = data;
-  //     setMeetupData(newMeetupData);
-  //     if (data.images !== undefined) {
-  //       const profileImages = data.images as Image[];
-  //       const newBannerImage = profileImages.shift();
-  //       setBannerImage(newBannerImage);
-  //       setImages(profileImages);
-  //     }
-  //   });
-  // }, []);
+  // TODO: set up useEffect to getMeetupInfo and set state once back end is up
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid container className={classes.container}>
         <Grid item className={classes.settingSideMenu}>
           <DashboardSideBanner loggedInUser={loggedInUser as User} />

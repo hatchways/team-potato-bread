@@ -8,7 +8,6 @@ export default function MeetupsList(): JSX.Element {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid container className={classes.pageContent}>
         <Typography className={classes.heading} component="h2" variant="h4">
           Welcome To LovingSitter
@@ -16,7 +15,6 @@ export default function MeetupsList(): JSX.Element {
         <Typography variant="subtitle1">
           A place for pet lovers to get together and provide services or just have fun meeting others.
         </Typography>
-        {/* 1st grid section for meetups */}
         <Grid className={classes.sectionGrid}>
           <img
             className={classes.sectionImg}
@@ -27,7 +25,6 @@ export default function MeetupsList(): JSX.Element {
           </Typography>
         </Grid>
         <Divider />
-        {/* 2nd grid section for sitters */}
         <Grid className={classes.sectionGrid}>
           <Typography className={classes.sectionType} variant="body1">
             Find a pet sitter who loves your furry friends as much as you do
@@ -38,7 +35,6 @@ export default function MeetupsList(): JSX.Element {
           />
         </Grid>
         <Divider />
-        {/* 3rd grid section for messaging */}
         <Grid className={classes.sectionGrid}>
           <img
             className={classes.sectionImg}
