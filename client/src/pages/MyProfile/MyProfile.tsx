@@ -45,8 +45,6 @@ export default function MyProfile(): JSX.Element {
   const [bannerImage, setBannerImage] = useState<Image>();
   const { loggedInUser } = useAuth();
 
-  console.log(loggedInUser);
-
   useEffect(() => {
     getUserInfo(loggedInUser?._id as string).then((data) => {
       const newUserData = data;
