@@ -1,16 +1,16 @@
-import { User, Image } from './User';
+import { User } from './User';
 
 export interface Meetup {
   _id?: string;
-  location: string;
-  locationAddress: string;
-  locationCityStateZip: string;
+  location?: string;
+  locationAddress?: string;
+  locationCityStateZip?: string;
   organizer: User;
-  name: string;
-  date: string;
-  timeStart: string;
-  timeEnd: string;
+  name?: string;
+  date?: Date;
+  timeStart?: string;
+  timeEnd?: string;
   attendees?: User[];
-  image?: Image;
+  image?: string;
   description?: string;
 }

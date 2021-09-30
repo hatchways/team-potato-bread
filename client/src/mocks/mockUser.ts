@@ -44,14 +44,11 @@ const mockMeetup: Meetup = {
   locationCityStateZip: 'Austin, TX 78746',
   organizer: mockOtherUser3,
   name: 'Austin Fall Boxer Meetup',
-  date: '10-15-2021',
   timeStart: '10:00 am',
   timeEnd: '5:00 pm',
   attendees: [mockLoggedInUser, mockOtherUser1],
-  image: {
-    imageUrl:
-      'https://images.unsplash.com/photo-1601579112934-17ac2aa86292?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=868&q=80',
-  },
+  image:
+    'https://images.unsplash.com/photo-1601579112934-17ac2aa86292?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=868&q=80',
   description:
     'This is an event for all the Austin area boxers, their siblings, and their cousins to enjoy a fun time outdoors now that it is getting cooler outside. There will be kiddie pools, water stations, treat stations, and consessions for pet parents all over the park.',
 };

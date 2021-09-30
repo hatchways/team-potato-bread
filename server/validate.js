@@ -48,8 +48,35 @@ exports.validateProfileCreation = [
   },
 ];
 
+exports.validateMeetupCreation = [
+  check("location", "Please enter a location Name").not().isEmpty(),
+  check(
+    "locationAddress",
+    "Please enter a valid street address for your location"
+  )
+    .not()
+    .isEmpty(),
+  check(
+    "locationCityStateZip",
+    "Please enter a valid city/state/zip for your location"
+  )
+    .not()
+    .isEmpty(),
+  check("name", "Please name your event").not().isEmpty(),
+  check("date", "Please enter a date for your event").not().isEmpty(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    next();
+  },
+];
+
 exports.validateSearch = [
-  check("search", "Please enter a city/state/country to search").not().isEmpty(),
+  check("search", "Please enter a city/state/country to search")
+    .not()
+    .isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
 
