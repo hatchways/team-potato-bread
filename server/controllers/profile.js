@@ -97,7 +97,7 @@ exports.profileUpdate = asyncHandler(async (req, res, next) => {
 
   let update = await Profile.findOneAndUpdate(_id, newData);
   if (!update) {
-    res.status(400);
+    res.status(422);
     throw new Error("Something went wrong.");
   }
   res.status(200).json({ success: "profile updated" });

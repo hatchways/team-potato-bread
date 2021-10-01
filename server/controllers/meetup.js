@@ -71,9 +71,7 @@ exports.meetupCreate = asyncHandler(async (req, res, next) => {
   } = req.body;
 
   if (req.file) {
-    // upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
-    // create new image in DB
     const image = await Image.create({
       imageUrl: result.secure_url,
       cloudinaryId: result.public_id,
@@ -83,7 +81,6 @@ exports.meetupCreate = asyncHandler(async (req, res, next) => {
     const image = null;
     return image;
   }
-  console.log(image);
 
   const meetup = await Meetup.create({
     location,
@@ -100,7 +97,7 @@ exports.meetupCreate = asyncHandler(async (req, res, next) => {
   if (meetup) {
     res.status(201).json(meetup);
   } else {
-    res.status(400);
+    res.status(422);
     throw new Error("Could not create pet meetup.");
   }
 });
@@ -118,7 +115,7 @@ exports.meetupUpdate = asyncHandler(async (req, res, next) => {
     { new: true }
   );
   if (!update) {
-    res.status(400);
+    res.status(422);
     throw new Error("Something went wrong.");
   }
   res.status(200).json({ success: "pet meetup successfully updated" });
@@ -128,7 +125,6 @@ exports.meetupUpdate = asyncHandler(async (req, res, next) => {
 // @desc Update a meetup event
 exports.meetupRegister = asyncHandler(async (req, res, next) => {
   const { userId, meetupId } = req.body;
-  console.log(req.body);
 
   let meetup = await Meetup.findOne(meetupId).populate("attendees").exec();
 

@@ -3,12 +3,15 @@ const mongoose = require("mongoose");
 const meetupSchema = new mongoose.Schema({
   location: {
     type: String,
+    required: true,
   },
   locationAddress: {
     type: String,
+    required: true,
   },
   locationCityStateZip: {
     type: String,
+    required: true,
   },
   organizer: {
     type: mongoose.Schema.Types.ObjectId,
@@ -16,6 +19,7 @@ const meetupSchema = new mongoose.Schema({
   },
   name: {
     type: String,
+    required: true,
   },
   date: {
     type: Date,

@@ -63,7 +63,6 @@ exports.validateMeetupCreation = [
     .not()
     .isEmpty(),
   check("name", "Please name your event").not().isEmpty(),
-  check("date", "Please enter a date for your event").not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
 
