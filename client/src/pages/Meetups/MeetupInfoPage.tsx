@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import useStyles from './useStyles';
-import ProfileImageList from '../ProfileDetails/ProfileImageList';
 import { useAuth } from '../../context/useAuthContext';
 import { User, Profile, Image } from '../../interface/User';
 import { Meetup } from '../../interface/Meetup';
@@ -41,18 +40,17 @@ const initMeetup: Meetup = {
     username: '',
   },
   name: '',
-  date: '',
   timeStart: '',
   timeEnd: '',
   attendees: [],
-  image: mockMeetup.image as Image,
+  image: mockMeetup.image as string,
   description: '',
 };
 
 export default function MyProfile(): JSX.Element {
   const classes = useStyles();
   const [meetupData, setMeetupData] = useState<Meetup>(mockMeetup);
-  const [eventImage, setEventImage] = useState<Image>(initMeetup.image as Image);
+  const [eventImage, setEventImage] = useState<string>(initMeetup.image as string);
   const { loggedInUser } = useAuth();
 
   // TODO: set up useEffect to getMeetupInfo and set state once back end is up
@@ -66,7 +64,7 @@ export default function MyProfile(): JSX.Element {
         <Grid item className={classes.pageContent}>
           <Card className={classes.meetupInfoPageCard}>
             <CardActionArea>
-              <CardMedia className={classes.media} image={eventImage && eventImage.imageUrl} />
+              <CardMedia className={classes.media} image={eventImage && eventImage} />
               <CardContent className={classes.cardContent}>
                 <Avatar className={classes.avatar} src={meetupData.organizer.avatar} />
                 <Typography align="center">
