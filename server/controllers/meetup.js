@@ -1,5 +1,6 @@
 const Meetup = require("../models/Meetup");
 const Image = require("../models/Image");
+const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 
 // @route GET /meetup
@@ -41,13 +42,27 @@ exports.meetupList = asyncHandler(async (req, res, next) => {
 });
 
 // @route GET /meetup/find
-// @desc Fine one meetup by ID
+// @desc Find one meetup by ID
 exports.getOneMeetup = asyncHandler(async (req, res, next) => {
   const id = req.query._id;
 
-  const meetup = await Meetup.findById(id)
-    .populate("organizer")
-    .populate("attendees").exec;
+  const meetup = await Meetup.findById(id).populate("attendees").exec();
+  const organizer = await User.findOne({ _id: meetup.organizer._id });
+  if (!meetup) {
+    res.status(404);
+    throw new Error("No matching pet meetup found.");
+  }
+  res.status(200).json({ meetup, organizer });
+});
+
+// @route GET /meetup/organizer
+// @desc Find meetups by organizer
+exports.getMeetupsByOrganizer = asyncHandler(async (req, res, next) => {
+  const userId = req.query._id;
+
+  const meetup = await Meetup.find({ organizer: userId })
+    .populate("attendees")
+    .exec();
   if (!meetup) {
     res.status(404);
     throw new Error("No matching pet meetup found.");
@@ -70,18 +85,6 @@ exports.meetupCreate = asyncHandler(async (req, res, next) => {
     description,
   } = req.body;
 
-  if (req.file) {
-    const result = await cloudinary.uploader.upload(req.file.path);
-    const image = await Image.create({
-      imageUrl: result.secure_url,
-      cloudinaryId: result.public_id,
-    });
-    return image;
-  } else if (!req.file) {
-    const image = null;
-    return image;
-  }
-
   const meetup = await Meetup.create({
     location,
     locationAddress,
@@ -91,11 +94,12 @@ exports.meetupCreate = asyncHandler(async (req, res, next) => {
     date,
     timeStart,
     timeEnd,
-    image,
     description,
   });
   if (meetup) {
-    res.status(201).json(meetup);
+    res.status(201).json({
+      success: { meetup },
+    });
   } else {
     res.status(422);
     throw new Error("Could not create pet meetup.");
@@ -126,7 +130,7 @@ exports.meetupUpdate = asyncHandler(async (req, res, next) => {
 exports.meetupRegister = asyncHandler(async (req, res, next) => {
   const { userId, meetupId } = req.body;
 
-  let meetup = await Meetup.findOne(meetupId).populate("attendees").exec();
+  let meetup = await Meetup.findOne({ _id: meetupId });
 
   let attendeesList = meetup.attendees;
   if (!attendeesList.includes(userId)) {
@@ -135,13 +139,16 @@ exports.meetupRegister = asyncHandler(async (req, res, next) => {
       { _id: meetupId },
       { attendees: attendeesList },
       { new: true }
-    );
+    )
+      .populate("attendees")
+      .exec();
     if (!update) {
       res.status(400);
       throw new Error("Something went wrong.");
     }
-    res.status(200).json({ success: "successfully registered for pet meetup" });
+    res.status(200).json(update);
   } else {
+    res.status(400);
     throw new Error("You are already registered for this pet meetup.");
   }
 });

@@ -61,7 +61,7 @@ const NotificationCenter: React.FC<NotificationTypeProps> = ({ text, mode }): JS
         >
           <Typography
             onClick={read}
-            variant="h6"
+            variant="body2"
             className={mode === 'mobile' ? classes.textMobile : classes.textNormal}
           >
             {text}

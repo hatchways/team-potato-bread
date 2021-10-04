@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { theme } from '../../themes/theme';
+import { theme } from '../../../themes/theme';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -41,6 +41,15 @@ const useStyles = makeStyles(() => ({
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
+  },
+  createMeetupLink: {
+    alignSelf: 'flex-end',
+    margin: '0px 0px -45px 0px',
+    padding: 15,
+    fontSize: 14,
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
+    fontWeight: 'bold',
   },
   heading: {
     fontWeight: 700,
@@ -93,13 +102,44 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
   },
   nameField: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: 'black',
+    '&:hover': {
+      color: 'firebrick',
+    },
+    textDecoration: 'none',
+    margin: '5px 5px 10px',
+  },
+  meetupOrganizerAvatar: {
+    height: 20,
+    width: 20,
+    marginLeft: 5,
   },
   locationField: {
+    textDecoration: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  organizerDetails: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
     color: 'gray',
-    padding: 15,
+    fontSize: 12,
+  },
+  locationDetails: {
+    margin: '0 10px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyItems: 'center',
+    color: 'gray',
+    '&:hover': {
+      color: 'firebrick',
+    },
     fontSize: 12,
   },
   meetupInfo: {
@@ -110,15 +150,14 @@ const useStyles = makeStyles(() => ({
   attendeesBox: {
     height: 100,
     display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
     justifyContent: 'center',
   },
   attendeesList: {
     justifyContent: 'center',
     flexWrap: 'wrap',
     padding: 10,
-  },
-  listAvatar: {
-    margin: 10,
   },
 }));
 

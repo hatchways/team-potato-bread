@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   textNormal: {
     fontWeight: 700,
-    fontSize: '1.0714285714285714rem',
     color: 'black',
     marginLeft: 70,
     paddingRight: 5,
