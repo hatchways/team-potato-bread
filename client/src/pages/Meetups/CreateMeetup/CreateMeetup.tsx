@@ -61,14 +61,12 @@ const CreateMeetup = (): JSX.Element => {
       description,
     ).then((data) => {
       if (data.error) {
-        console.error({ error: data.error.message });
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         setSubmitting(false);
         updateSnackBarMessage('Successfully created event!');
       } else {
-        // should not get here from backend but this catch is for an unknown issue
         console.error({ data });
 
         setSubmitting(false);
