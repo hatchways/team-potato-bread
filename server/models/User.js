@@ -7,44 +7,46 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   avatar: {
     type: String,
-    default: `https://robohash.org/${rand}.png?set=set4`
+    default: `https://robohash.org/${rand}.png?set=set4`,
   },
-  payment:[{
-    stripeId:String,
-    last4:String,
-    expMonth:Number,
-    expYear:Number,
-    email:String,
-    brand:String,
-    name:String
-  }],
-  images: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'image'
-  }],
+  payment: [
+    {
+      stripeId: String,
+      last4: String,
+      expMonth: Number,
+      expYear: Number,
+      email: String,
+      brand: String,
+      name: String,
+    },
+  ],
+  images: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "image",
+    },
+  ],
   register_date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'profile',
-    required: false,
-    default: null
-  }
+    ref: "profile",
+  },
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {

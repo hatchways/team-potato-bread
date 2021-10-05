@@ -17,6 +17,9 @@ import NavBar from './components/NavBar/NavBar';
 import MyProfile from './pages/MyProfile/MyProfile';
 import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
 import Conversations from './pages/Conversation/Conversations';
+import MeetupsList from './pages/Meetups/MeetupsList';
+import SearchSitter from './pages/SearchSitter/SearchSitter';
+import MeetupInfoPage from './pages/Meetups/MeetupInfoPage';
 
 function App(): JSX.Element {
   return (
@@ -36,8 +39,17 @@ function App(): JSX.Element {
                     </Route>
                     <Route exact path="/mybookings">
                       <MyBookings />
-                    </Route>
-                    <Route path="/sitter/:profileId">
+                    </Route>  
+                  <Route exact path="/sitters">
+                    <SearchSitter />
+                  </Route>
+                  <Route exact path="/meetups">
+                    <MeetupsList />
+                  </Route>
+                  <Route path="/meetup/:meetupId">
+                    <MeetupInfoPage />
+                  </Route>
+                  <Route path="/sitter/:profileId">
                     <ProfileDetails />
                   </Route>
                   <Route exact path="/myprofile">

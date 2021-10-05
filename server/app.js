@@ -1,22 +1,23 @@
-const colors = require('colors');
-const path = require('path');
-const http = require('http');
-const express = require('express');
-const socketio = require('socket.io');
-const { notFound, errorHandler } = require('./middleware/error');
-const connectDB = require('./db');
-const { join } = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const colors = require("colors");
+const path = require("path");
+const http = require("http");
+const express = require("express");
+const socketio = require("socket.io");
+const { notFound, errorHandler } = require("./middleware/error");
+const connectDB = require("./db");
+const { join } = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-const authRouter = require('./routes/auth');
-const userRouter = require('./routes/user');
-const requestRouter = require('./routes/request');
-const profileRouter = require('./routes/profile');
-const imageRouter = require('./routes/image');
-const conversationRouter = require('./routes/conversation');
-const { addUser, removeUser, getUser } = require('./utils/users');
-const notificationRouter = require('./routes/notification');
+const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
+const requestRouter = require("./routes/request");
+const profileRouter = require("./routes/profile");
+const imageRouter = require("./routes/image");
+const conversationRouter = require("./routes/conversation");
+const { addUser, removeUser, getUser } = require("./utils/users");
+const notificationRouter = require("./routes/notification");
+const meetupRouter = require("./routes/meetup");
 
 const { json, urlencoded } = express;
 
@@ -35,7 +36,7 @@ io.on('connection', (socket) => {
     const { error } = await addUser({ id: socket.id, userId, conversationId });
 
     if (error) return cb(error);
-
+    
     socket.join(conversationId);
 
     cb();
@@ -65,13 +66,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/auth', authRouter);
-app.use('/users', userRouter);
-app.use('/request', requestRouter);
-app.use('/profile', profileRouter);
-app.use('/image', imageRouter);
-app.use('/conversation', conversationRouter);
-app.use('/notification', notificationRouter);
+
+app.use("/auth", authRouter);
+app.use("/users", userRouter);
+app.use("/request", requestRouter);
+app.use("/profile", profileRouter);
+app.use("/image", imageRouter);
+app.use("/conversation", conversationRouter);
+app.use("/notification", notificationRouter);
+app.use("/meetup", meetupRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));

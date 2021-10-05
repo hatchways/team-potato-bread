@@ -10,10 +10,6 @@ const useStyles = makeStyles(() => ({
     minWidth: '100%',
     justifyContent: 'center',
   },
-  authWrapper: {
-    minHeight: '130px',
-    minWidth: '100%',
-  },
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -22,7 +18,7 @@ const useStyles = makeStyles(() => ({
   settingSideMenu: {
     maxWidth: '25%',
     justifySelf: 'flex-start',
-    margin: '3% 0px 0px 3%',
+    margin: '3%  0px 0px 3%',
   },
   pageContent: {
     display: 'flex',
@@ -33,6 +29,15 @@ const useStyles = makeStyles(() => ({
     maxWidth: '75%',
     minHeight: '75%',
     margin: '3% auto 0px auto',
+    [theme.breakpoints.down('md')]: {
+      width: '400px',
+    },
+  },
+  meetupInfoPageCard: {
+    minWidth: '55%',
+    maxWidth: '65%',
+    minHeight: '75%',
+    margin: '3% auto 3% auto',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
@@ -52,20 +57,12 @@ const useStyles = makeStyles(() => ({
     height: 35,
     alignSelf: 'center',
   },
-  userList: {
+  meetupsList: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-    maxWidth: '100vw',
-  },
-  welcome: {
-    fontSize: 30,
-    paddingBottom: 20,
-    color: '#000000',
-    fontWeight: 700,
-    fontFamily: "'Open Sans'",
-    textAlign: 'center',
+    justifyContent: 'center',
+    maxWidth: '80vw',
   },
   outlineBtn: {
     margin: '10px auto',
@@ -78,6 +75,50 @@ const useStyles = makeStyles(() => ({
     marginBottom: 60,
     fontWeight: 700,
     textTransform: 'uppercase',
+  },
+  avatar: {
+    alignSelf: 'center',
+    marginTop: -50,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    border: '2px solid white',
+    width: 100,
+    height: 100,
+  },
+  media: {
+    height: 160,
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  nameField: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  locationField: {
+    color: 'gray',
+    padding: 15,
+    fontSize: 12,
+  },
+  meetupInfo: {
+    textAlign: 'center',
+    margin: '10px auto',
+    maxWidth: '80%',
+  },
+  attendeesBox: {
+    height: 100,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  attendeesList: {
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    padding: 10,
+  },
+  listAvatar: {
+    margin: 10,
   },
 }));
 

@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 
@@ -25,27 +26,40 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   const user = await User.create({
     username,
     email,
-    password
+    password,
   });
+  const userId = user._id;
 
-  if (user) {
-    const token = generateToken(user._id);
+  const profile = await Profile.create({
+    user: userId,
+  });
+  const profileId = profile._id;
+
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: userId },
+    { profile: profileId },
+    { new: true }
+  );
+
+  if (updatedUser) {
+    const token = generateToken(updatedUser._id);
     const secondsInWeek = 604800;
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(201).json({
       success: {
         user: {
-          _id: user._id,
-          username: user.username,
-          email: user.email,
-          avatar: user.avatar
-        }
-      }
+          _id: updatedUser._id,
+          username: updatedUser.username,
+          email: updatedUser.email,
+          avatar: updatedUser.avatar,
+          profile: updatedUser.profile,
+        },
+      },
     });
   } else {
     res.status(400);
@@ -67,7 +81,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(200).json({
@@ -76,9 +90,10 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           _id: user._id,
           username: user.username,
           email: user.email,
-          avatar: user.avatar
-        }
-      }
+          avatar: user.avatar,
+          profile: user.profile,
+        },
+      },
     });
   } else {
     res.status(401);
@@ -104,9 +119,10 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         username: user.username,
         email: user.email,
         avatar: user.avatar,
-        payment:user.payment
-      }
-    } 
+        payment: user.payment,
+        profile: user.profile,
+      },
+    },
   });
 });
 
@@ -117,6 +133,6 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
   res.clearCookie("token");
 
   res.status(205).json({
-    message: "You have successfully logged out"
+    message: "You have successfully logged out",
   });
 });
