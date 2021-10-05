@@ -1,6 +1,6 @@
 import { useEffect, FormEvent, useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { CssBaseline, Box, Grid, TextField, Typography, Button, InputAdornment } from '@material-ui/core';
+import { Box, Grid, TextField, Typography, Button, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import useStyles from '../../../components/MeetupAttendeesList/useStyles';
 import { User } from '../../../interface/User';
@@ -45,7 +45,6 @@ export default function MeetupsList(): JSX.Element {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid container className={classes.container}>
         <Grid item className={classes.settingSideMenu}>
           <DashboardSideBanner loggedInUser={loggedInUser as User} />
