@@ -10,12 +10,14 @@ import Payment from './pages/Payment/Payment';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import { ConversationProvider } from './context/useConversationContext';
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import MyProfile from './pages/MyProfile/MyProfile';
 import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
 import MeetupsList from './pages/Meetups/MeetupsList/MeetupsList';
+import Conversations from './pages/Conversation/Conversations';
 import SearchSitter from './pages/SearchSitter/SearchSitter';
 import MeetupInfoPage from './pages/Meetups/MeetupInfoPage/MeetupInfoPage';
 import CreateMeetup from './pages/Meetups/CreateMeetup/CreateMeetup';
@@ -28,14 +30,18 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Fragment>
-                  <NavBar />
-                  <Route exact path="/dashboard">
-                    <Dashboard />
-                  </Route>
+              <ConversationProvider>
+                <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Fragment>
+                    <NavBar />
+                    <Route exact path="/dashboard">
+                      <Dashboard />
+                    </Route>
+                    <Route exact path="/mybookings">
+                      <MyBookings />
+                    </Route>  
                   <Route exact path="/sitters">
                     <SearchSitter />
                   </Route>
@@ -60,17 +66,18 @@ function App(): JSX.Element {
                   <Route exact path="/myprofile/edit/photo">
                     <ProfilePhoto />
                   </Route>
-                  <Route exact path="/mybookings">
-                    <MyBookings />
-                  </Route>
                   <Route exact path="/payment">
                     <Payment />
                   </Route>
-                </Fragment>
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
+                    <Route exact path="/conversations">
+                      <Conversations />
+                    </Route>
+                  </Fragment>
+                  <Route path="*">
+                    <Redirect to="/login" />
+                  </Route>
+                </Switch>
+              </ConversationProvider>
             </SocketProvider>
           </AuthProvider>
         </SnackBarProvider>

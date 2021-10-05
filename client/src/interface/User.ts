@@ -43,7 +43,14 @@ export interface Profile {
   availability?: string;
   user?: User;
 }
-
+export interface Conversation {
+  _id: string;
+  senderId: User;
+  recieverId: User;
+  lastMessage: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export interface SearchUsersApiData {
   users?: User[];
   sitters?: Profile[];

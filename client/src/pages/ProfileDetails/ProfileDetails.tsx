@@ -49,7 +49,6 @@ type idParams = {
 
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
-
   const { profileId } = useParams<idParams>();
   const [sitter, setSitter] = useState<Sitter>(initSitter);
   const [images, setImages] = useState<Image[]>([{ imageUrl: '' }]);
