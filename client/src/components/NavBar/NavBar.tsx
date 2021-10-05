@@ -155,6 +155,7 @@ const NavBar = (): JSX.Element => {
         ></IconButton>
         <NotificationCenter text="Messages" mode="mobile" />
       </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
