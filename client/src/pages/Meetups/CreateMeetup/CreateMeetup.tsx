@@ -258,7 +258,7 @@ const CreateMeetup = (): JSX.Element => {
                   label={<Typography className={classes.label}>Event Details</Typography>}
                   fullWidth
                   multiline
-                  rows={4}
+                  rows={7}
                   margin="normal"
                   InputLabelProps={{
                     shrink: true,
@@ -276,7 +276,7 @@ const CreateMeetup = (): JSX.Element => {
                 />
 
                 <Box textAlign="center">
-                  <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
+                  <Button type="submit" variant="contained" color="primary" className={classes.submit}>
                     {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Create Event'}
                   </Button>
                 </Box>

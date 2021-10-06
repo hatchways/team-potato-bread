@@ -8,7 +8,7 @@ import { useAuth } from '../../../context/useAuthContext';
 import { getMyMeetups } from '../../../helpers/APICalls/getMeetupInfo';
 import DashboardSideBanner from '../../../components/DashboardSideBanner/DashboardSideBanner';
 
-export default function MeetupsList(): JSX.Element {
+export default function MyMeetupsList(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const userId = loggedInUser?._id as string;
@@ -20,7 +20,9 @@ export default function MeetupsList(): JSX.Element {
     });
   }, [userId]);
 
-  const meetups = myMeetups.map((event) => <MeetupCard meetup={event} key={event._id} />);
+  const meetups = myMeetups.map((event) => (
+    <MeetupCard loggedInUser={loggedInUser as User} meetup={event} key={event._id} />
+  ));
 
   return (
     <Grid container component="main" className={classes.root}>

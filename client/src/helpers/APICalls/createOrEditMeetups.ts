@@ -36,6 +36,32 @@ export const createNewMeetup = async (
     }));
 };
 
+export const editMeetup = async (
+  meetupId: string,
+  organizerId: string,
+  location: string,
+  locationAddress: string,
+  locationCityStateZip: string,
+  name: string,
+  date: Date,
+  timeStart: string,
+  timeEnd: string,
+  description: string,
+): Promise<Meetup> => {
+  const newData = { location, locationAddress, locationCityStateZip, name, date, timeStart, timeEnd, description };
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ newData, meetupId, organizerId }),
+    credentials: 'include',
+  };
+  return await fetch(`/meetup/update`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
 export const meetupRSVP = async (userId: string, meetupId: string): Promise<AuthApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',

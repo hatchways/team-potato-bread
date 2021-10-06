@@ -22,6 +22,7 @@ import SearchSitter from './pages/SearchSitter/SearchSitter';
 import MeetupInfoPage from './pages/Meetups/MeetupInfoPage/MeetupInfoPage';
 import CreateMeetup from './pages/Meetups/CreateMeetup/CreateMeetup';
 import MyMeetupsList from './pages/Meetups/MyMeetupsList/MyMeetupsList';
+import EditMeetup from './pages/Meetups/EditMeetup/EditMeetup';
 
 function App(): JSX.Element {
   return (
@@ -41,34 +42,37 @@ function App(): JSX.Element {
                     </Route>
                     <Route exact path="/mybookings">
                       <MyBookings />
-                    </Route>  
-                  <Route exact path="/sitters">
-                    <SearchSitter />
-                  </Route>
-                  <Route exact path="/meetups">
-                    <MeetupsList />
-                  </Route>
-                  <Route exact path="/meetup/create">
-                    <CreateMeetup />
-                  </Route>
-                  <Route exact path="/mymeetups">
-                    <MyMeetupsList />
-                  </Route>
-                  <Route exact path="/meetups/:meetupId">
-                    <MeetupInfoPage />
-                  </Route>
-                  <Route path="/profile/:profileId">
-                    <ProfileDetails />
-                  </Route>
-                  <Route exact path="/myprofile">
-                    <MyProfile />
-                  </Route>
-                  <Route exact path="/myprofile/edit/photo">
-                    <ProfilePhoto />
-                  </Route>
-                  <Route exact path="/payment">
-                    <Payment />
-                  </Route>
+                    </Route>
+                    <Route exact path="/sitters">
+                      <SearchSitter />
+                    </Route>
+                    <Route exact path="/meetups">
+                      <MeetupsList />
+                    </Route>
+                    <Route exact path="/meetup/create">
+                      <CreateMeetup />
+                    </Route>
+                    <Route exact path="/meetup/edit/:meetupId">
+                      <EditMeetup />
+                    </Route>
+                    <Route exact path="/mymeetups">
+                      <MyMeetupsList />
+                    </Route>
+                    <Route exact path="/meetups/:meetupId">
+                      <MeetupInfoPage />
+                    </Route>
+                    <Route path="/profile/:profileId">
+                      <ProfileDetails />
+                    </Route>
+                    <Route exact path="/myprofile">
+                      <MyProfile />
+                    </Route>
+                    <Route exact path="/myprofile/edit/photo">
+                      <ProfilePhoto />
+                    </Route>
+                    <Route exact path="/payment">
+                      <Payment />
+                    </Route>
                     <Route exact path="/conversations">
                       <Conversations />
                     </Route>

@@ -1,16 +1,21 @@
 import useStyles from './useStyles';
 import { Meetup } from '../../interface/Meetup';
-import { Typography, Box, Card, CardContent, CardMedia, Divider, Grid } from '@material-ui/core';
+import { User } from '../../interface/User';
+import { Typography, Box, Card, CardContent, Divider, Grid } from '@material-ui/core';
 import RoomIcon from '@material-ui/icons/Room';
 import { Link } from 'react-router-dom';
 import Moment from 'moment';
 
 interface Props {
   meetup: Meetup;
+  loggedInUser: User;
 }
 
-const MeetupCard = ({ meetup }: Props): JSX.Element => {
+const MeetupCard = ({ meetup, loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
+
+  const organizer = meetup.organizer._id;
+  const userId = loggedInUser._id;
 
   const date = Moment(meetup.date).format('MM-DD-YYYY');
 
@@ -18,6 +23,11 @@ const MeetupCard = ({ meetup }: Props): JSX.Element => {
     <Card className={classes.root}>
       <Link to={`/meetups/${meetup._id}`} className={classes.link}>
         <CardContent className={classes.contentWrapper}>
+          {organizer === userId && (
+            <Link to={`/meetup/edit/${meetup._id}`} className={classes.editMeetupLink}>
+              Edit Event
+            </Link>
+          )}
           <Typography className={classes.name} variant="h5" component="h5">
             {meetup.name}
           </Typography>

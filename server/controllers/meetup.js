@@ -55,12 +55,15 @@ exports.getOneMeetup = asyncHandler(async (req, res, next) => {
   res.status(200).json({ meetup, organizer });
 });
 
-// @route GET /meetup/organizer
-// @desc Find meetups by organizer
-exports.getMeetupsByOrganizer = asyncHandler(async (req, res, next) => {
+// @route GET /meetup/mymeetups
+// @desc Find meetups by userId
+exports.getMeetupsByUserId = asyncHandler(async (req, res, next) => {
   const userId = req.query._id;
 
-  const meetup = await Meetup.find({ organizer: userId })
+  const meetup = await Meetup.find({
+    $or: [{ organizer: userId }, { attendees: userId }],
+  })
+    .populate("organizer")
     .populate("attendees")
     .exec();
   if (!meetup) {
@@ -123,6 +126,26 @@ exports.meetupUpdate = asyncHandler(async (req, res, next) => {
     throw new Error("Something went wrong.");
   }
   res.status(200).json({ success: "pet meetup successfully updated" });
+});
+
+// @route POST /meetup/image
+// @desc Upload meetup image
+// @access Private
+exports.uploadImage = asyncHandler(async (req, res, next) => {
+  // upload image to cloudinary
+  const result = await cloudinary.uploader.upload(req.file.path);
+  // create new event image
+  const newImage = await Image.create({
+    imageUrl: result.secure_url,
+    cloudinaryId: result.public_id,
+  });
+  // update image for current meetup
+  const updateMeetup = await Meetup.findOneAndUpdate(
+    { _id: req.body.meetupId },
+    { image: newImage.imageUrl },
+    { new: true }
+  );
+  res.json(newImage);
 });
 
 // @route POST /meetup/register

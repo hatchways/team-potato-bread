@@ -34,22 +34,42 @@ const useStyles = makeStyles(() => ({
     },
   },
   meetupInfoPageCard: {
-    minWidth: '55%',
-    maxWidth: '65%',
+    minWidth: '85%',
+    maxWidth: '100%',
     minHeight: '75%',
     margin: '3% auto 3% auto',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
   },
-  createMeetupLink: {
-    alignSelf: 'flex-end',
-    margin: '0px 0px -45px 0px',
-    padding: 15,
+  form: {
+    padding: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifySelf: 'center',
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  label: {
     fontSize: 14,
-    textDecoration: 'none',
-    color: theme.palette.primary.main,
     fontWeight: 'bold',
+    color: 'black',
+    paddingLeft: '5px',
+    textTransform: 'uppercase',
+  },
+  hiddenInput: {
+    display: 'none',
+  },
+  inputs: {
+    width: '90%',
+    marginTop: '.3rem',
+    padding: '10px',
+    border: '1px solid lightgray',
+    margin: 5,
+    borderRadius: theme.shape.borderRadius,
+  },
+  uploadIcon: {
+    float: 'right',
   },
   heading: {
     fontWeight: 700,
@@ -61,15 +81,6 @@ const useStyles = makeStyles(() => ({
   cardContent: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  dateTime: {
-    padding: 15,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignContent: 'center',
-    fontWeight: 700,
-    color: 'black',
   },
   nameField: {
     display: 'flex',
@@ -101,33 +112,25 @@ const useStyles = makeStyles(() => ({
     fontSize: 12,
   },
   locationDetails: {
-    margin: '0 10px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyItems: 'center',
     color: 'gray',
-    '&:hover': {
-      color: 'firebrick',
-    },
     fontSize: 12,
+  },
+  dateTime: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    fontWeight: 700,
+    color: 'black',
   },
   meetupInfo: {
     textAlign: 'center',
     margin: '10px auto',
     maxWidth: '80%',
-  },
-  attendeesBox: {
-    height: 100,
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  attendeesList: {
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    padding: 10,
   },
 }));
 

@@ -6,9 +6,10 @@ const {
   searchMeetups,
   meetupList,
   getOneMeetup,
-  getMeetupsByOrganizer,
+  getMeetupsByUserId,
   meetupCreate,
   meetupUpdate,
+  uploadImage,
   meetupRegister,
 } = require("../controllers/meetup");
 
@@ -18,11 +19,13 @@ router.route("/all").get(meetupList);
 
 router.route("/find").get(getOneMeetup);
 
-router.route("/organizer").get(getMeetupsByOrganizer);
+router.route("/mymeetups").get(getMeetupsByUserId);
 
 router.route("/create").post(protect, validateMeetupCreation, meetupCreate);
 
 router.route("/update").post(protect, meetupUpdate);
+
+router.route("/image").post(protect, uploadImage);
 
 router.route("/register").post(protect, meetupRegister);
 
