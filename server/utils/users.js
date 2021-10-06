@@ -1,16 +1,14 @@
 const Conversation = require('../models/Conversation');
 const users = [];
+const addUser = async ({ id, userId ,conversationId}) => {
 
-const addUser = async ({ id, userProfileId, conversationId }) => {
-  const conversation = await Conversation.findById({ _id: conversationId });
-
-  if (!conversation) return { error: 'The conversation does not exist!' };
+  const conversation = await Conversation.findById( conversationId );
 
   if (
-    conversation.recieverProfileId.equals(userProfileId) ||
-    conversation.senderProfileId.equals(userProfileId)
+    conversation.recieverId.equals(userId) ||
+    conversation.senderId.equals(userId)
   ) {
-    const user = { id, userProfileId, conversationId };
+    const user = { id, userId, conversationId };
 
     users.push(user);
 
@@ -22,9 +20,7 @@ const addUser = async ({ id, userProfileId, conversationId }) => {
 
 const removeUser = (id) => {
   const index = users.findIndex((user) => user.id === id);
-  
   if (index > -1) return users.splice(index, 1)[0];
-
 };
 
 const getUser = (id) => users.find((user) => user.id === id);

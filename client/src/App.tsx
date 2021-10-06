@@ -38,7 +38,6 @@ function App(): JSX.Element {
                     <NavBar />
                     <Route exact path="/dashboard">
                       <Dashboard />
-                    </Route>
                     <Route path="/sitter/:profileId">
                       <ProfileDetails />
                     </Route>
@@ -76,12 +75,13 @@ function App(): JSX.Element {
                   <Route exact path="/myprofile/edit/photo">
                     <ProfilePhoto />
                   </Route>
-                  <Route exact path="/mybookings">
-                    <MyBookings />
-                  </Route>
                   <Route exact path="/payment">
                     <Payment />
                   </Route>
+                    <Route exact path="/conversations">
+                      <Conversations />
+                    </Route>
+                  </Fragment>
                   <Route path="*">
                     <Redirect to="/login" />
                   </Route>

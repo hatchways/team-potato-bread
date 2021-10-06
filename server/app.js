@@ -34,13 +34,11 @@ app.set('socketio', io);
 io.on('connection', (socket) => {
   socket.on('joinConversation', async ({ userId, conversationId }, cb) => {
     const { error } = await addUser({ id: socket.id, userId, conversationId });
-
     if (error) return cb(error);
-
     socket.join(conversationId);
-
     cb();
   });
+  
   socket.on('chatMessage', (message, cb) => {
     const user = getUser(socket.id);
     io.to(socket.id).emit('message', { senderId: user.userId, text: message });
@@ -65,6 +63,7 @@ app.use((req, res, next) => {
   req.io = io;
   next();
 });
+
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
