@@ -15,9 +15,11 @@ import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import MyProfile from './pages/MyProfile/MyProfile';
 import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
-import MeetupsList from './pages/Meetups/MeetupsList';
+import MeetupsList from './pages/Meetups/MeetupsList/MeetupsList';
 import SearchSitter from './pages/SearchSitter/SearchSitter';
-import MeetupInfoPage from './pages/Meetups/MeetupInfoPage';
+import MeetupInfoPage from './pages/Meetups/MeetupInfoPage/MeetupInfoPage';
+import CreateMeetup from './pages/Meetups/CreateMeetup/CreateMeetup';
+import MyMeetupsList from './pages/Meetups/MyMeetupsList/MyMeetupsList';
 
 function App(): JSX.Element {
   return (
@@ -40,10 +42,16 @@ function App(): JSX.Element {
                   <Route exact path="/meetups">
                     <MeetupsList />
                   </Route>
-                  <Route path="/meetup/:meetupId">
+                  <Route exact path="/meetup/create">
+                    <CreateMeetup />
+                  </Route>
+                  <Route exact path="/mymeetups">
+                    <MyMeetupsList />
+                  </Route>
+                  <Route exact path="/meetups/:meetupId">
                     <MeetupInfoPage />
                   </Route>
-                  <Route path="/sitter/:profileId">
+                  <Route path="/profile/:profileId">
                     <ProfileDetails />
                   </Route>
                   <Route exact path="/myprofile">

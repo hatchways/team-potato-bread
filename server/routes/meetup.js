@@ -6,6 +6,7 @@ const {
   searchMeetups,
   meetupList,
   getOneMeetup,
+  getMeetupsByOrganizer,
   meetupCreate,
   meetupUpdate,
   meetupRegister,
@@ -16,6 +17,8 @@ router.route("/").get(validateSearch, searchMeetups);
 router.route("/all").get(meetupList);
 
 router.route("/find").get(getOneMeetup);
+
+router.route("/organizer").get(getMeetupsByOrganizer);
 
 router.route("/create").post(protect, validateMeetupCreation, meetupCreate);
 

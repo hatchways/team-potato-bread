@@ -18,7 +18,7 @@ const SitterCard = ({ sitter }: Props): JSX.Element => {
 
   return (
     <Card className={classes.root}>
-      <Link to={`/sitter/${sitter._id}`} className={classes.link}>
+      <Link to={`/profile/${sitter._id}`} className={classes.link}>
         <CardMedia className={classes.media} image={sitter.user?.avatar} title="User image" />
         <CardContent className={classes.contentWrapper}>
           <Typography variant="h5" component="h5" className={classes.name}>
