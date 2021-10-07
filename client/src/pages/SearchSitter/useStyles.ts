@@ -14,13 +14,35 @@ const useStyles = makeStyles(() => ({
     minHeight: '130px',
     minWidth: '100%',
   },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyItems: 'center',
+  },
+  settingSideMenu: {
+    maxWidth: '25%',
+    justifySelf: 'flex-start',
+    margin: '3% 0px 0px 3%',
+  },
+  pageContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    textAlign: 'center',
+    minWidth: '55%',
+    maxWidth: '75%',
+    minHeight: '75%',
+    margin: '3% auto 0px auto',
+    [theme.breakpoints.down('md')]: {
+      width: '400px',
+    },
+  },
   heading: {
     fontWeight: 700,
     marginTop: '5rem',
   },
   searchForm: {
-    marginTop: '3rem',
-    marginBottom: '1rem',
+    margin: '3rem auto 1rem auto',
     width: 400,
     display: 'flex',
     justifyContent: 'space-around',
@@ -30,17 +52,12 @@ const useStyles = makeStyles(() => ({
     height: 35,
     alignSelf: 'center',
   },
-  searchContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   userList: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxWidth: '80vw',
+    justifyContent: 'space-evenly',
+    maxWidth: '100vw',
   },
   welcome: {
     fontSize: 30,
@@ -51,7 +68,7 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
   },
   outlineBtn: {
-    margin: theme.spacing(3, 2, 2),
+    margin: '10px auto',
     padding: 10,
     width: 170,
     height: 56,

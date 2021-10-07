@@ -7,13 +7,16 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import SitterCard from '../../components/SitterCard/SitterCard';
-import { Profile } from '../../interface/User';
+import DashboardSideBanner from '../../components/DashboardSideBanner/DashboardSideBanner';
+import { useAuth } from '../../context/useAuthContext';
+import { User, Profile } from '../../interface/User';
 import { Button, InputAdornment } from '@material-ui/core';
 import { getAllSitterProfiles } from '../../helpers/APICalls/getSitterProfile';
 import { searchProfiles } from '../../helpers/APICalls/searchUsers';
 
 export default function SearchSitter(): JSX.Element {
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
   const [search, setSearch] = useState<string>('test');
   const [allSitters, setAllSitters] = useState<Profile[]>([]);
 
@@ -43,46 +46,51 @@ export default function SearchSitter(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid container className={classes.searchContainer}>
-        <Typography className={classes.heading} component="h2" variant="h4">
-          LovingSitter Profiles
-        </Typography>
-        <Box className={classes.searchForm}>
-          <form action="/profile/find" method="GET" onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)}>
-            <TextField
-              id="search"
-              label="Search By City/State/Country"
-              type="text"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="primary" />
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              onChange={handleChange}
-            />
-          </form>
-          <Button className={classes.resetBtn} variant="contained" color="primary" onClick={getAllSitters}>
-            Reset
+      <Grid container className={classes.container}>
+        <Grid item className={classes.settingSideMenu}>
+          <DashboardSideBanner loggedInUser={loggedInUser as User} />
+        </Grid>
+        <Grid item className={classes.pageContent}>
+          <Typography className={classes.heading} component="h2" variant="h4">
+            Pet Sitters
+          </Typography>
+          <Box className={classes.searchForm}>
+            <form action="/profile/find" method="GET" onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)}>
+              <TextField
+                id="search"
+                label="Search By City/State/Country"
+                type="text"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                onChange={handleChange}
+              />
+            </form>
+            <Button className={classes.resetBtn} variant="contained" color="primary" onClick={getAllSitters}>
+              Reset
+            </Button>
+          </Box>
+          {allSitters.length !== 0 ? (
+            <Grid item className={classes.userList}>
+              {sitters}
+            </Grid>
+          ) : (
+            <Typography variant="h3">No Sitters Found</Typography>
+          )}
+          <Button variant="outlined" color="primary" className={classes.outlineBtn}>
+            Show More
           </Button>
-        </Box>
-        {allSitters.length !== 0 ? (
-          <Grid item className={classes.userList}>
-            {sitters}
-          </Grid>
-        ) : (
-          <Typography variant="h3">No Sitters Found</Typography>
-        )}
-        <Button variant="outlined" color="primary" className={classes.outlineBtn}>
-          Show More
-        </Button>
+        </Grid>
       </Grid>
     </Grid>
   );

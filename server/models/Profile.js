@@ -24,6 +24,11 @@ const profileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sitter: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   subtitle: {
     type: String,
   },
@@ -38,7 +43,6 @@ const profileSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
   },
   ratePerHour: {
     type: Number,
@@ -54,10 +58,13 @@ const profileSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  paymentCard: {
+    type: String,
+  },
   availability: [availabilitySchema],
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: "user",
   },
 });
 

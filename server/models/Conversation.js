@@ -1,23 +1,24 @@
 const mongoose = require("mongoose");
-
+var findOrCreate = require('mongoose-findorcreate')
 const conversationSchema = new mongoose.Schema(
   {
-    senderProfileId: {
+    senderId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'profile',
+      ref: 'user',
       required: true,
     },
-    recieverProfileId: {
+    recieverId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'profile',
+      ref: 'user',
       required: true,
     },
+    lastMessage:String,
   },
   {
     timestamps: true,
   }
 );
-
+conversationSchema.plugin(findOrCreate);
 module.exports = Conversation = mongoose.model(
   'conversation',
   conversationSchema
