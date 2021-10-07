@@ -27,7 +27,7 @@ exports.createPet = asyncHandler(async (req, res, next) => {
     sex,
     spayedOrNeutered,
     FeedingSchedule,
-    profileId,
+    owner: profileId,
   });
   if (newPet) {
     if (req.file) {
