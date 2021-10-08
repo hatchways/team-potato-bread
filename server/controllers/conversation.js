@@ -46,6 +46,7 @@ exports.createConversation = asyncHandler(async (req, res, next) => {
     });
   }
 });
+
 // @route POST /conversation/sendMessage
 // @desc send a messsage
 // @access Private

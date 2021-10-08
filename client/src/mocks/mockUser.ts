@@ -11,6 +11,7 @@ const mockLoggedInUser: User = {
 const mockProfileUser: Profile = {
   _id: '123abc',
   subtitle: 'Loving Pet Sitter',
+  sitter: true,
   avgRating: 3.5,
   firstName: 'Jane',
   lastName: 'Doe',

@@ -33,6 +33,7 @@ const initUser: User = {
   profile: {
     firstName: '',
     lastName: '',
+    sitter: false,
     location: '',
     ratePerHour: 0,
   },

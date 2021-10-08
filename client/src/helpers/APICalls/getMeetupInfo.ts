@@ -40,3 +40,15 @@ export async function getAllMeetups(): Promise<Meetup[]> {
       error: { message: 'Unable to connect to server. Please try again.' },
     }));
 }
+
+export async function getMyMeetups(userId: string): Promise<Meetup[]> {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/meetup/organizer?_id=${userId}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again.' },
+    }));
+}
