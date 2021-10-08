@@ -17,7 +17,9 @@ const MeetupCard = ({ meetup, loggedInUser }: Props): JSX.Element => {
   const organizer = meetup.organizer._id;
   const userId = loggedInUser._id;
 
-  const date = Moment(meetup.date).format('MM-DD-YYYY');
+  const date = Moment.utc(meetup.date).format('MM-DD-YYYY');
+  const eventStartTime = Moment(meetup.timeStart, 'HH:mm').format('hh:mm A');
+  const eventEndTime = Moment(meetup.timeEnd, 'HH:mm').format('hh:mm A');
 
   return (
     <Card className={classes.root}>
@@ -45,7 +47,7 @@ const MeetupCard = ({ meetup, loggedInUser }: Props): JSX.Element => {
             </Typography>
             <Typography className={classes.dateTime} variant="body2" component="h6">
               <Grid>{date}</Grid>
-              <Grid>{`${meetup.timeStart} - ${meetup.timeEnd}`}</Grid>
+              <Grid>{`${eventStartTime} - ${eventEndTime}`}</Grid>
             </Typography>
           </Box>
         </CardContent>

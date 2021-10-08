@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => ({
     marginTop: '5rem',
   },
   media: {
-    height: 160,
+    height: '40vh',
   },
   cardContent: {
     display: 'flex',

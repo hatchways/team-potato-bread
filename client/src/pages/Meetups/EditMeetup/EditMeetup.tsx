@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import useStyles from './useStyles';
-import { editMeetup } from '../../../helpers/APICalls/createOrEditMeetups';
+import { editMyMeetup } from '../../../helpers/APICalls/createOrEditMeetups';
 import { Formik, FormikHelpers } from 'formik';
 import { useAuth } from '../../../context/useAuthContext';
 import { User, Profile, Image } from '../../../interface/User';
@@ -25,7 +25,6 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSnackBar } from '../../../context/useSnackbarContext';
 import DashboardSideBanner from '../../../components/DashboardSideBanner/DashboardSideBanner';
-import Moment from 'moment';
 import uploadMeetupImage from '../../../helpers/APICalls/uploadMeetupImage';
 
 interface Props {
@@ -75,8 +74,56 @@ export default function EditMeetup(): JSX.Element {
   const [eventImage, setEventImage] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { loggedInUser } = useAuth();
+  const organizerId = meetupData.organizer?._id as string;
+  const userId = loggedInUser?._id as string;
 
-  const meetupDate = Moment(meetupData.meetup?.date).format('MM-DD-YYYY');
+  useEffect(() => {
+    getMeetupInfo(meetupId as string).then((data) => {
+      const newData: MeetupInfoData = data;
+      setMeetupData(newData);
+      if (newData.meetup?.image) {
+        const newImage = newData.meetup?.image as string;
+        setEventImage(newImage);
+      }
+    });
+  }, [meetupId, imageUrl]);
+
+  const initFormMeetup = {
+    meetupId: meetupId as string,
+    organizerId: organizerId as string,
+    location: meetupData.meetup?.location as string,
+    locationAddress: meetupData.meetup?.locationAddress as string,
+    locationCityStateZip: meetupData.meetup?.locationCityStateZip as string,
+    name: meetupData.meetup?.name as string,
+    date: meetupData.meetup?.date as Date,
+    timeStart: meetupData.meetup?.timeStart as string,
+    timeEnd: meetupData.meetup?.timeEnd as string,
+    description: meetupData.meetup?.description as string,
+  };
+
+  const handleUpload = async (file: File) => {
+    const newFile = file as File;
+    setFile(newFile);
+    if (file) {
+      setIsSubmitting(true);
+
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('meetupId', meetupId);
+
+      try {
+        const data = await uploadMeetupImage(formData);
+        setImageUrl(data.imageUrl);
+        setFile(null);
+        setIsSubmitting(false);
+        return data.imageUrl;
+      } catch (error) {
+        setIsSubmitting(false);
+        setFile(null);
+        throw new Error('Something went wrong.');
+      }
+    }
+  };
 
   const handleSubmit = (
     {
@@ -117,54 +164,33 @@ export default function EditMeetup(): JSX.Element {
       description: string;
     }>,
   ) => {
-    editMeetup(
-      meetupId,
-      organizerId,
-      location,
-      locationAddress,
-      locationCityStateZip,
-      name,
-      date,
-      timeStart,
-      timeEnd,
-      description,
-    ).then((data) => {
-      setMeetupData(data);
+    if (organizerId === userId) {
+      editMyMeetup(
+        meetupId,
+        organizerId,
+        location,
+        locationAddress,
+        locationCityStateZip,
+        name,
+        date,
+        timeStart,
+        timeEnd,
+        description,
+      ).then((data) => {
+        if (data.error) {
+          setSubmitting(false);
+          updateSnackBarMessage('Update failed.');
+        } else if (data.success) {
+          setSubmitting(false);
+          updateSnackBarMessage('Successfully updated event!');
+        } else {
+          setSubmitting(false);
+          updateSnackBarMessage('An unexpected error occurred. Please try again');
+        }
+      });
+    } else {
       setSubmitting(false);
-      updateSnackBarMessage('Successfully updated event!');
-    });
-  };
-
-  useEffect(() => {
-    getMeetupInfo(meetupId as string).then((data) => {
-      const newData: MeetupInfoData = data;
-      setMeetupData(newData);
-      if (newData.meetup?.image) {
-        const newImage = newData.meetup?.image as string;
-        setEventImage(newImage);
-      }
-    });
-  }, [meetupId, imageUrl]);
-
-  const handleUpload = async (file: File) => {
-    const newFile = file as File;
-    setFile(newFile);
-    if (file) {
-      setIsSubmitting(true);
-
-      const formData = new FormData();
-      formData.append('image', file);
-      formData.append('meetupId', meetupId);
-
-      try {
-        const data = await uploadMeetupImage(formData);
-        setImageUrl(data.imageUrl);
-        setFile(null);
-        setIsSubmitting(false);
-        return data.imageUrl;
-      } catch (error) {
-        throw new Error('Something went wrong.');
-      }
+      updateSnackBarMessage('You are not authorized to edit this event.');
     }
   };
 
@@ -177,21 +203,7 @@ export default function EditMeetup(): JSX.Element {
         </Grid>
         <Grid item className={classes.pageContent}>
           <Card className={classes.meetupInfoPageCard}>
-            <Formik
-              initialValues={{
-                meetupId: meetupData.meetup?._id as string,
-                organizerId: meetupData.organizer?._id as string,
-                location: meetupData.meetup?.location as string,
-                locationAddress: meetupData.meetup?.locationAddress as string,
-                locationCityStateZip: meetupData.meetup?.locationCityStateZip as string,
-                name: meetupData.meetup?.name as string,
-                date: meetupData.meetup?.date as Date,
-                timeStart: meetupData.meetup?.timeStart as string,
-                timeEnd: meetupData.meetup?.timeEnd as string,
-                description: meetupData.meetup?.description as string,
-              }}
-              onSubmit={handleSubmit}
-            >
+            <Formik initialValues={initFormMeetup} onSubmit={handleSubmit} enableReinitialize>
               {({ handleSubmit, handleChange, setFieldValue, values, isSubmitting }) => (
                 <form onSubmit={handleSubmit} className={classes.form} noValidate>
                   <CardActionArea>

@@ -2,6 +2,7 @@ const Meetup = require("../models/Meetup");
 const Image = require("../models/Image");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const cloudinary = require("../cloudinary");
 
 // @route GET /meetup
 // @desc Search for meetups by city
@@ -118,14 +119,14 @@ exports.meetupUpdate = asyncHandler(async (req, res, next) => {
     {
       $and: [{ _id: meetupId }, { organizer: organizerId }],
     },
-    { newData },
+    { $set: newData },
     { new: true }
   );
   if (!update) {
     res.status(422);
-    throw new Error("Something went wrong.");
+    throw new Error({ message: "Update failed" });
   }
-  res.status(200).json({ success: "pet meetup successfully updated" });
+  res.status(200).json({ success: "Pet meetup successfully updated" });
 });
 
 // @route POST /meetup/image

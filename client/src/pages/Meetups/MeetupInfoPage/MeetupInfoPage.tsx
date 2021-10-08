@@ -67,7 +67,9 @@ export default function MeetupInfoPage(): JSX.Element {
   const [eventImage, setEventImage] = useState<string>('');
   const { loggedInUser } = useAuth();
 
-  const meetupDate = Moment(meetupData.meetup?.date).format('MM-DD-YYYY');
+  const meetupDate = Moment.utc(meetupData.meetup?.date).format('MM-DD-YYYY');
+  const eventStartTime = Moment(meetupData.meetup?.timeStart, 'HH:mm').format('hh:mm A');
+  const eventEndTime = Moment(meetupData.meetup?.timeEnd, 'HH:mm').format('hh:mm A');
 
   useEffect(() => {
     getMeetupInfo(meetupId as string).then((data) => {
@@ -137,7 +139,7 @@ export default function MeetupInfoPage(): JSX.Element {
                 </Link>
                 <Typography className={classes.dateTime} variant="body1" component="h6">
                   <Grid>{meetupDate}</Grid>
-                  <Grid>{`${meetupData.meetup?.timeStart} - ${meetupData.meetup?.timeEnd}`}</Grid>
+                  <Grid>{`${eventStartTime} - ${eventEndTime}`}</Grid>
                 </Typography>
                 <Typography variant="h3" align="center" className={classes.meetupInfo}>
                   {meetupData.meetup?.name}

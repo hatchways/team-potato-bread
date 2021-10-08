@@ -92,8 +92,8 @@ const CreateMeetup = (): JSX.Element => {
               organizer: loggedInUser?._id as string,
               name: '',
               date: eventDate,
-              timeStart: '12:00 am',
-              timeEnd: '11:59 pm',
+              timeStart: '00:00',
+              timeEnd: '23:59',
               description: '',
             }}
             validationSchema={Yup.object().shape({

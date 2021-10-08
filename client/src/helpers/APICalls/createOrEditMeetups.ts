@@ -36,7 +36,7 @@ export const createNewMeetup = async (
     }));
 };
 
-export const editMeetup = async (
+export const editMyMeetup = async (
   meetupId: string,
   organizerId: string,
   location: string,
@@ -47,7 +47,7 @@ export const editMeetup = async (
   timeStart: string,
   timeEnd: string,
   description: string,
-): Promise<Meetup> => {
+): Promise<AuthApiData> => {
   const newData = { location, locationAddress, locationCityStateZip, name, date, timeStart, timeEnd, description };
   const fetchOptions: FetchOptions = {
     method: 'POST',

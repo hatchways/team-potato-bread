@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware/multer");
 const protect = require("../middleware/auth");
 const { validateSearch, validateMeetupCreation } = require("../validate");
 const {
@@ -25,7 +26,7 @@ router.route("/create").post(protect, validateMeetupCreation, meetupCreate);
 
 router.route("/update").post(protect, meetupUpdate);
 
-router.route("/image").post(protect, uploadImage);
+router.route("/image").post(upload.single("image"), protect, uploadImage);
 
 router.route("/register").post(protect, meetupRegister);
 
