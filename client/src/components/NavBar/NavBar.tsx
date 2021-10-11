@@ -196,14 +196,19 @@ const NavBar = (): JSX.Element => {
                   My Pet Meetups
                 </NavLink>
               </Typography>
-              <Typography>
-                <NavLink
-                  to={{ pathname: `/mybookings` }}
-                  className={classes.navLink}
-                  activeClassName={classes.activeLink}
-                >
-                  My Jobs
-                </NavLink>
+              <NavLink
+                to={{ pathname: `/mybookings` }}
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+              >
+                My Jobs
+              </NavLink>
+            </Badge>
+            <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
+              <Typography className={classes.navLink} variant="h6">
+                <Link className={classes.msgLink} to="/conversations">
+                  Messages
+                </Link>
               </Typography>
             </Badge>
             <Box onClick={handleNotificationMessageOpen}>

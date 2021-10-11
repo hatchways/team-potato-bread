@@ -10,6 +10,7 @@ import Payment from './pages/Payment/Payment';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import Conversations from './pages/Conversation/Conversations';
 import { ConversationProvider } from './context/useConversationContext';
 import './App.css';
 import { Fragment } from 'react';
@@ -17,7 +18,6 @@ import NavBar from './components/NavBar/NavBar';
 import MyProfile from './pages/MyProfile/MyProfile';
 import ProfilePhoto from './pages/ProfilePhoto/ProfilePhoto';
 import MeetupsList from './pages/Meetups/MeetupsList/MeetupsList';
-import Conversations from './pages/Conversation/Conversations';
 import SearchSitter from './pages/SearchSitter/SearchSitter';
 import MeetupInfoPage from './pages/Meetups/MeetupInfoPage/MeetupInfoPage';
 import CreateMeetup from './pages/Meetups/CreateMeetup/CreateMeetup';
@@ -39,6 +39,9 @@ function App(): JSX.Element {
                     <NavBar />
                     <Route exact path="/dashboard">
                       <Dashboard />
+                    </Route>
+                    <Route path="/sitter/:profileId">
+                      <ProfileDetails />
                     </Route>
                     <Route exact path="/mybookings">
                       <MyBookings />
