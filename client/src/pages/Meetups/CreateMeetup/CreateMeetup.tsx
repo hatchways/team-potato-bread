@@ -62,13 +62,11 @@ const CreateMeetup = (): JSX.Element => {
     ).then((data) => {
       if (data.error) {
         setSubmitting(false);
-        updateSnackBarMessage(data.error.message);
+        updateSnackBarMessage('Could not create event');
       } else if (data.success) {
         setSubmitting(false);
         updateSnackBarMessage('Successfully created event!');
       } else {
-        console.error({ data });
-
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
