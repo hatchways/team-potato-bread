@@ -29,6 +29,7 @@ export interface Image {
 
 export interface Profile {
   _id?: string;
+  sitter: boolean;
   avgRating?: number;
   firstName: string;
   lastName: string;

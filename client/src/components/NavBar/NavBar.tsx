@@ -141,6 +141,9 @@ const NavBar = (): JSX.Element => {
         <NotificationCenter text="Notifications" mode="mobile" />
       </MenuItem>
       <MenuItem>
+        <p>My Pet Meetups</p>
+      </MenuItem>
+      <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge invisible={true} variant="dot" color="primary"></Badge>
         </IconButton>
@@ -184,14 +187,28 @@ const NavBar = (): JSX.Element => {
               <NotificationCenter text="Notifications" mode="normal" />
             </Box>
             <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={true}>
-              <Typography variant="h6">
+              <Typography>
                 <NavLink
-                  to={{ pathname: `/mybookings` }}
+                  to={{ pathname: `/mymeetups` }}
                   className={classes.navLink}
                   activeClassName={classes.activeLink}
                 >
-                  My Jobs
+                  My Pet Meetups
                 </NavLink>
+              </Typography>
+              <NavLink
+                to={{ pathname: `/mybookings` }}
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+              >
+                My Jobs
+              </NavLink>
+            </Badge>
+            <Badge className={classes.notificationBadge} color="secondary" variant="dot" invisible={false}>
+              <Typography className={classes.navLink} variant="h6">
+                <Link className={classes.msgLink} to="/conversations">
+                  Messages
+                </Link>
               </Typography>
             </Badge>
             <Box onClick={handleNotificationMessageOpen}>

@@ -49,7 +49,6 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexFlow: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
     maxWidth: '50%',
     color: 'gray',
   },
@@ -60,6 +59,7 @@ const useStyles = makeStyles(() => ({
   dateTime: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
     float: 'right',
     maxWidth: '50%',
     fontWeight: 700,

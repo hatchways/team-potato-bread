@@ -1,6 +1,5 @@
 import {
   Grid,
-  CssBaseline,
   Card,
   CardActionArea,
   CardContent,
@@ -8,7 +7,6 @@ import {
   Avatar,
   IconButton,
   Box,
-  Button,
   Typography,
 } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -20,7 +18,7 @@ import { getMeetupInfo } from '../../helpers/APICalls/getMeetupInfo';
 import { useEffect, useState } from 'react';
 import DashboardSideBanner from '../../components/DashboardSideBanner/DashboardSideBanner';
 import { mockMeetup } from '../../mocks/mockUser';
-import AttendeesList from './AttendeesList';
+import AttendeesList from '../../components/MeetupAttendeesList/AttendeesList';
 
 interface Props {
   meetup: Meetup;

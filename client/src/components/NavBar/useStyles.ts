@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 35,
     display: 'flex',
     flexFlow: 'row nowrap',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   navLink: {

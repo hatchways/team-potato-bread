@@ -1,14 +1,14 @@
 import { useEffect, FormEvent, useState, ChangeEvent } from 'react';
-import { CssBaseline, Box, Grid, TextField, Typography, Button, InputAdornment } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Box, Grid, TextField, Typography, Button, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import useStyles from './useStyles';
-import { User } from '../../interface/User';
-import MeetupCard from '../../components/MeetupCard/MeetupCard';
-import { Meetup } from '../../interface/Meetup';
-import { useAuth } from '../../context/useAuthContext';
-import { getAllMeetups, searchPetMeetups } from '../../helpers/APICalls/getMeetupInfo';
-import DashboardSideBanner from '../../components/DashboardSideBanner/DashboardSideBanner';
-import { mockMeetup } from '../../mocks/mockUser';
+import useStyles from '../../../components/MeetupAttendeesList/useStyles';
+import { User } from '../../../interface/User';
+import MeetupCard from '../../../components/MeetupCard/MeetupCard';
+import { Meetup } from '../../../interface/Meetup';
+import { useAuth } from '../../../context/useAuthContext';
+import { getAllMeetups, searchPetMeetups } from '../../../helpers/APICalls/getMeetupInfo';
+import DashboardSideBanner from '../../../components/DashboardSideBanner/DashboardSideBanner';
 
 interface Props {
   loggedInUser: User;
@@ -17,10 +17,12 @@ interface Props {
 export default function MeetupsList(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const [search, setSearch] = useState<string>('test');
-  const [petMeetups, setPetMeetups] = useState<Meetup[]>([mockMeetup]);
+  const [search, setSearch] = useState<string>('');
+  const [petMeetups, setPetMeetups] = useState<Meetup[]>([]);
 
-  // TODO: setup useEffect to call listAllMeetups once back end is set up
+  useEffect(() => {
+    listAllMeetups();
+  }, []);
 
   const listAllMeetups = () => {
     getAllMeetups().then((data) => {
@@ -48,6 +50,9 @@ export default function MeetupsList(): JSX.Element {
           <DashboardSideBanner loggedInUser={loggedInUser as User} />
         </Grid>
         <Grid item className={classes.pageContent}>
+          <Link to={{ pathname: '/meetup/create' }} className={classes.createMeetupLink}>
+            Create a Pet Meetup
+          </Link>
           <Typography className={classes.heading} component="h2" variant="h4">
             Pet Meetup Events
           </Typography>

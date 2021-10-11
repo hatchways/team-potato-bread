@@ -1,4 +1,5 @@
 import { User } from './User';
+import { Meetup } from './Meetup';
 
 export interface AuthApiDataSuccess {
   message: string;
@@ -9,4 +10,5 @@ export interface AuthApiDataSuccess {
 export interface AuthApiData {
   error?: { message: string };
   success?: AuthApiDataSuccess;
+  meetup?: Meetup;
 }

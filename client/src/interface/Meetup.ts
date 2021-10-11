@@ -14,3 +14,8 @@ export interface Meetup {
   image?: string;
   description?: string;
 }
+
+export interface MeetupInfoData {
+  meetup?: Meetup;
+  organizer?: User;
+}

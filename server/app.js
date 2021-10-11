@@ -38,11 +38,10 @@ io.on('connection', (socket) => {
     const { error } = await addUser({ id: socket.id, userId, conversationId });
     
     if (error) return cb(error);
-    
     socket.join(conversationId);
-
     cb();
   });
+  
   socket.on('chatMessage', (message, cb) => {
     const user = getUser(socket.id);
     io.to(socket.id).emit('message', { senderId: user.userId, text: message });

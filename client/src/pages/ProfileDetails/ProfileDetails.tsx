@@ -31,6 +31,7 @@ const initSitter: Sitter = {
   profile: {
     firstName: '',
     lastName: '',
+    sitter: false,
     location: '',
     avgRating: 0,
     user: {
@@ -96,45 +97,47 @@ export default function ProfileDetails(): JSX.Element {
             </CardActionArea>
           </Card>
         </Grid>
-        <Grid item className={classes.requestCard}>
-          <Card>
-            <CardActionArea>
-              <CardContent component="form">
-                <Typography variant="h3">${sitter.profile?.ratePerHour}/hr</Typography>
-                <Rating
-                  name="read-only-rating"
-                  readOnly
-                  className={classes.ratingStars}
-                  precision={0.5}
-                  value={sitter.profile?.avgRating}
-                />
-                <TextField
-                  id="startDate"
-                  label="Start Date"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  className={classes.datePicker}
-                />
-                <TextField
-                  id="endDate"
-                  label="End Date"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  className={classes.datePicker}
-                />
-                <Button className={classes.requestButton} size="large" color="primary" variant="contained">
-                  Send Request
-                </Button>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
+        {sitter.profile?.sitter && (
+          <Grid item className={classes.requestCard}>
+            <Card>
+              <CardActionArea>
+                <CardContent component="form">
+                  <Typography variant="h3">${sitter.profile?.ratePerHour}/hr</Typography>
+                  <Rating
+                    name="read-only-rating"
+                    readOnly
+                    className={classes.ratingStars}
+                    precision={0.5}
+                    value={sitter.profile?.avgRating}
+                  />
+                  <TextField
+                    id="startDate"
+                    label="Start Date"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                    className={classes.datePicker}
+                  />
+                  <TextField
+                    id="endDate"
+                    label="End Date"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                    className={classes.datePicker}
+                  />
+                  <Button className={classes.requestButton} size="large" color="primary" variant="contained">
+                    Send Request
+                  </Button>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );
