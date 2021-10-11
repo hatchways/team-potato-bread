@@ -280,13 +280,7 @@ const CreatePetForm = (): JSX.Element => {
                   />
                 </Grid>
                 <Box className={classes.btnBox}>
-                  <Button
-                    type="submit"
-                    variant="outlined"
-                    color="primary"
-                    // onClick={savePet}
-                    className={classes.addNewPetBtn}
-                  >
+                  <Button type="submit" variant="outlined" color="primary" className={classes.addNewPetBtn}>
                     Create Pet
                   </Button>
                 </Box>

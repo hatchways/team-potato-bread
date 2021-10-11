@@ -33,6 +33,7 @@ const PetDetails = (): JSX.Element => {
       'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
   };
   const renderPetGallery = () => {
+    if (!pet.petPhotoGallery.length) return;
     return pet.petPhotoGallery.map((g) => {
       return (
         <Grid key={g.id} item xs={4} className={classes.petPhotoRow}>

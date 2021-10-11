@@ -274,15 +274,14 @@ const EditPetForm = (): JSX.Element => {
                   <Typography variant={'h3'}>Your Pet Photo Gallery</Typography>
                 </Grid>
                 <Grid container className={classes.petPhotoGalleryRow}>
-                  {petGalleries
-                    ? petGalleries.map((p) => {
-                        return (
-                          <Box key={p.name} className={classes.addNewPetPhotoGallery}>
-                            <img src={URL.createObjectURL(p)} className={classes.petImgSize} />
-                          </Box>
-                        );
-                      })
-                    : ''}
+                  {!!petGalleries &&
+                    petGalleries.map((p) => {
+                      return (
+                        <Box key={p.name} className={classes.addNewPetPhotoGallery}>
+                          <img src={URL.createObjectURL(p)} className={classes.petImgSize} />
+                        </Box>
+                      );
+                    })}
                   <Box className={classes.addNewPetPhotoGallery} onClick={handlePetPhotoGalleryUpload}>
                     <Box className={classes.addIcon}>
                       <AddIcon className={classes.addIconSize} />
@@ -305,13 +304,7 @@ const EditPetForm = (): JSX.Element => {
                   />
                 </Grid>
                 <Box className={classes.btnBox}>
-                  <Button
-                    type="submit"
-                    variant="outlined"
-                    color="primary"
-                    // onClick={savePet}
-                    className={classes.addNewPetBtn}
-                  >
+                  <Button type="submit" variant="outlined" color="primary" className={classes.addNewPetBtn}>
                     Save Pet
                   </Button>
                 </Box>
