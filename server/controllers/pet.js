@@ -15,7 +15,7 @@ exports.createPet = asyncHandler(async (req, res, next) => {
     description,
     sex,
     spayedOrNeutered,
-    FeedingSchedule,
+    feedingSchedule,
     profileId,
   } = req.body;
   const newPet = await Pet.create({
@@ -26,7 +26,7 @@ exports.createPet = asyncHandler(async (req, res, next) => {
     description,
     sex,
     spayedOrNeutered,
-    FeedingSchedule,
+    feedingSchedule,
     owner: profileId,
   });
   if (newPet) {
@@ -74,7 +74,7 @@ exports.updatePet = asyncHandler(async (req, res, next) => {
     description,
     sex,
     spayedOrNeutered,
-    FeedingSchedule,
+    feedingSchedule,
   } = req.body;
   const updatedPet = await Pet.findByIdAndUpdate(
     petId,
@@ -87,7 +87,7 @@ exports.updatePet = asyncHandler(async (req, res, next) => {
         description,
         sex,
         spayedOrNeutered,
-        FeedingSchedule,
+        feedingSchedule,
       },
     },
     { new: true }

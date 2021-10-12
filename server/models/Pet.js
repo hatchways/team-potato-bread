@@ -19,7 +19,7 @@ const petSchema = new mongoose.Schema(
     description: String,
     sex: String,
     spayedOrNeutered: Boolean,
-    FeedingSchedule: String,
+    feedingSchedule: String,
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'profile',
