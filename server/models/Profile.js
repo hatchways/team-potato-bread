@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const availabilitySchema = new mongoose.Schema({
   date: {
@@ -18,9 +18,11 @@ const availabilitySchema = new mongoose.Schema({
 const profileSchema = new mongoose.Schema({
   firstName: {
     type: String,
+    required: true,
   },
   lastName: {
     type: String,
+    required: true,
   },
   sitter: {
     type: Boolean,
@@ -66,4 +68,4 @@ const profileSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Profile = mongoose.model("profile", profileSchema);
+module.exports = Profile = mongoose.model('profile', profileSchema);
