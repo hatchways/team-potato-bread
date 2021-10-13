@@ -7,6 +7,7 @@ const cloudinary = require("../cloudinary");
 // @desc Upload avatar image
 // @access Public
 exports.uploadAvatar = asyncHandler(async (req, res, next) => {
+
     // upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
     // create new avatar image

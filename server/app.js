@@ -13,11 +13,13 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const requestRouter = require("./routes/request");
 const profileRouter = require("./routes/profile");
+const petRouter = require('./routes/pet');
 const imageRouter = require("./routes/image");
 const conversationRouter = require("./routes/conversation");
 const { addUser, removeUser, getUser } = require("./utils/users");
 const notificationRouter = require("./routes/notification");
 const meetupRouter = require("./routes/meetup");
+
 
 const { json, urlencoded } = express;
 
@@ -34,6 +36,7 @@ app.set('socketio', io);
 io.on('connection', (socket) => {
   socket.on('joinConversation', async ({ userId, conversationId }, cb) => {
     const { error } = await addUser({ id: socket.id, userId, conversationId });
+    
     if (error) return cb(error);
     socket.join(conversationId);
     cb();
@@ -48,6 +51,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
     socket.removeAllListeners('chatMessage');
+    
   });
 });
 
@@ -64,7 +68,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/request", requestRouter);
@@ -73,6 +76,8 @@ app.use("/image", imageRouter);
 app.use("/conversation", conversationRouter);
 app.use("/notification", notificationRouter);
 app.use("/meetup", meetupRouter);
+app.use('/pet', petRouter);
+  
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));
