@@ -1,6 +1,5 @@
 import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
-import { Meetup } from '../../interface/Meetup';
 
 export const createNewMeetup = async (
   location: string,

@@ -11,13 +11,16 @@ import DashboardSideBanner from '../../../components/DashboardSideBanner/Dashboa
 export default function MyMeetupsList(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const userId = loggedInUser?._id as string;
+  const userId: string = loggedInUser?._id as string;
   const [myMeetups, setMyMeetups] = useState<Meetup[]>([]);
 
+  const getUserMeetups = async (userId: string) => {
+    const newMeetups = await getMyMeetups(userId);
+    setMyMeetups(newMeetups);
+  };
+
   useEffect(() => {
-    getMyMeetups(userId).then((data) => {
-      setMyMeetups(data);
-    });
+    getUserMeetups(userId);
   }, [userId]);
 
   const meetups = myMeetups.map((event) => (
