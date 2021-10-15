@@ -41,7 +41,9 @@ export default function MeetupsList(): JSX.Element {
     });
   };
 
-  const meetups = petMeetups.map((event) => <MeetupCard meetup={event} key={event._id} />);
+  const meetups = petMeetups.map((event) => (
+    <MeetupCard loggedInUser={loggedInUser as User} meetup={event} key={event._id} />
+  ));
 
   return (
     <Grid container component="main" className={classes.root}>

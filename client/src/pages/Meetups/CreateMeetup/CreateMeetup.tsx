@@ -62,13 +62,11 @@ const CreateMeetup = (): JSX.Element => {
     ).then((data) => {
       if (data.error) {
         setSubmitting(false);
-        updateSnackBarMessage(data.error.message);
+        updateSnackBarMessage('Could not create event');
       } else if (data.success) {
         setSubmitting(false);
         updateSnackBarMessage('Successfully created event!');
       } else {
-        console.error({ data });
-
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
@@ -92,8 +90,8 @@ const CreateMeetup = (): JSX.Element => {
               organizer: loggedInUser?._id as string,
               name: '',
               date: eventDate,
-              timeStart: '12:00 am',
-              timeEnd: '11:59 pm',
+              timeStart: '00:00',
+              timeEnd: '23:59',
               description: '',
             }}
             validationSchema={Yup.object().shape({
@@ -258,7 +256,7 @@ const CreateMeetup = (): JSX.Element => {
                   label={<Typography className={classes.label}>Event Details</Typography>}
                   fullWidth
                   multiline
-                  rows={4}
+                  rows={7}
                   margin="normal"
                   InputLabelProps={{
                     shrink: true,
@@ -276,7 +274,7 @@ const CreateMeetup = (): JSX.Element => {
                 />
 
                 <Box textAlign="center">
-                  <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
+                  <Button type="submit" variant="contained" color="primary" className={classes.submit}>
                     {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Create Event'}
                   </Button>
                 </Box>

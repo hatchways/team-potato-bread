@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     height: 100,
   },
   media: {
-    height: 160,
+    height: '30vh',
   },
   cardContent: {
     display: 'flex',

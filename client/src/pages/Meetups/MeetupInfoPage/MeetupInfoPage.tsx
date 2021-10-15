@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import useStyles from '../../../components/MeetupAttendeesList/useStyles';
+import useStyles from './useStyles';
 import { useAuth } from '../../../context/useAuthContext';
 import { User, Profile, Image } from '../../../interface/User';
 import { Meetup, MeetupInfoData } from '../../../interface/Meetup';
@@ -22,6 +22,7 @@ import { useSnackBar } from '../../../context/useSnackbarContext';
 import DashboardSideBanner from '../../../components/DashboardSideBanner/DashboardSideBanner';
 import AttendeesList from '../../../components/MeetupAttendeesList/AttendeesList';
 import { meetupRSVP } from '../../../helpers/APICalls/createOrEditMeetups';
+import Moment from 'moment';
 
 interface Props {
   meetup: Meetup;
@@ -57,7 +58,7 @@ type idParams = {
   meetupId: string;
 };
 
-export default function MyProfile(): JSX.Element {
+export default function MeetupInfoPage(): JSX.Element {
   const classes = useStyles();
   const { meetupId } = useParams<idParams>();
   const [meetupData, setMeetupData] = useState<MeetupInfoData>(initData);
@@ -65,6 +66,10 @@ export default function MyProfile(): JSX.Element {
   const { updateSnackBarMessage } = useSnackBar();
   const [eventImage, setEventImage] = useState<string>('');
   const { loggedInUser } = useAuth();
+
+  const meetupDate = Moment.utc(meetupData.meetup?.date).format('MM-DD-YYYY');
+  const eventStartTime = Moment(meetupData.meetup?.timeStart, 'HH:mm').format('hh:mm A');
+  const eventEndTime = Moment(meetupData.meetup?.timeEnd, 'HH:mm').format('hh:mm A');
 
   useEffect(() => {
     getMeetupInfo(meetupId as string).then((data) => {
@@ -132,6 +137,10 @@ export default function MyProfile(): JSX.Element {
                     }
                   </Button>
                 </Link>
+                <Typography className={classes.dateTime} variant="body1" component="h6">
+                  <Grid>{meetupDate}</Grid>
+                  <Grid>{`${eventStartTime} - ${eventEndTime}`}</Grid>
+                </Typography>
                 <Typography variant="h3" align="center" className={classes.meetupInfo}>
                   {meetupData.meetup?.name}
                 </Typography>

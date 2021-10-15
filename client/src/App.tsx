@@ -25,6 +25,8 @@ import MyMeetupsList from './pages/Meetups/MyMeetupsList/MyMeetupsList';
 import Pets from './pages/Pets/Pets';
 import CreatePet from './pages/Pets/CreatePet/CreatePet';
 import EditPet from './pages/Pets/EditPet/EditPet';
+import EditMeetup from './pages/Meetups/EditMeetup/EditMeetup';
+
 function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
@@ -55,6 +57,9 @@ function App(): JSX.Element {
                     </Route>
                     <Route exact path="/meetup/create">
                       <CreateMeetup />
+                    </Route>
+                    <Route exact path="/meetup/edit/:meetupId">
+                      <EditMeetup />
                     </Route>
                     <Route exact path="/mymeetups">
                       <MyMeetupsList />

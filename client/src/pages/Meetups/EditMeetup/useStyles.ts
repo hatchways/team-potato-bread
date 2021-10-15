@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { theme } from '../../themes/theme';
+import { theme } from '../../../themes/theme';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,68 +34,49 @@ const useStyles = makeStyles(() => ({
     },
   },
   meetupInfoPageCard: {
-    minWidth: '55%',
-    maxWidth: '65%',
+    minWidth: '85%',
+    maxWidth: '100%',
     minHeight: '75%',
     margin: '3% auto 3% auto',
     [theme.breakpoints.down('md')]: {
       width: '400px',
     },
   },
-  createMeetupLink: {
-    alignSelf: 'flex-end',
-    margin: '0px 0px -45px 0px',
-    padding: 15,
+  form: {
+    padding: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifySelf: 'center',
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  label: {
     fontSize: 14,
-    textDecoration: 'none',
-    color: theme.palette.primary.main,
     fontWeight: 'bold',
+    color: 'black',
+    paddingLeft: '5px',
+    textTransform: 'uppercase',
+  },
+  hiddenInput: {
+    display: 'none',
+  },
+  inputs: {
+    width: '90%',
+    marginTop: '.3rem',
+    padding: '10px',
+    border: '1px solid lightgray',
+    margin: 5,
+    borderRadius: theme.shape.borderRadius,
+  },
+  uploadIcon: {
+    float: 'right',
   },
   heading: {
     fontWeight: 700,
     marginTop: '5rem',
   },
-  searchForm: {
-    margin: '3rem auto 1rem auto',
-    width: 400,
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-  resetBtn: {
-    padding: 20,
-    height: 35,
-    alignSelf: 'center',
-  },
-  meetupsList: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxWidth: '80vw',
-  },
-  outlineBtn: {
-    margin: '10px auto',
-    padding: 10,
-    width: 170,
-    height: 56,
-    borderRadius: theme.shape.borderRadius,
-    border: '1px solid lightgray',
-    marginTop: 49,
-    marginBottom: 60,
-    fontWeight: 700,
-    textTransform: 'uppercase',
-  },
-  avatar: {
-    alignSelf: 'center',
-    marginTop: -50,
-    marginBottom: 10,
-    backgroundColor: 'white',
-    border: '2px solid white',
-    width: 100,
-    height: 100,
-  },
   media: {
-    height: 160,
+    height: '40vh',
   },
   cardContent: {
     display: 'flex',
@@ -131,33 +112,25 @@ const useStyles = makeStyles(() => ({
     fontSize: 12,
   },
   locationDetails: {
-    margin: '0 10px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyItems: 'center',
     color: 'gray',
-    '&:hover': {
-      color: 'firebrick',
-    },
     fontSize: 12,
+  },
+  dateTime: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    fontWeight: 700,
+    color: 'black',
   },
   meetupInfo: {
     textAlign: 'center',
     margin: '10px auto',
     maxWidth: '80%',
-  },
-  attendeesBox: {
-    height: 100,
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  attendeesList: {
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    padding: 10,
   },
 }));
 
