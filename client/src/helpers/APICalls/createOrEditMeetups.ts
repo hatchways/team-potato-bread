@@ -49,7 +49,7 @@ export const editMyMeetup = async (
 ): Promise<AuthApiData> => {
   const newData = { location, locationAddress, locationCityStateZip, name, date, timeStart, timeEnd, description };
   const fetchOptions: FetchOptions = {
-    method: 'POST',
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ newData, meetupId, organizerId }),
     credentials: 'include',
@@ -63,7 +63,7 @@ export const editMyMeetup = async (
 
 export const meetupRSVP = async (userId: string, meetupId: string): Promise<AuthApiData> => {
   const fetchOptions: FetchOptions = {
-    method: 'POST',
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId, meetupId }),
     credentials: 'include',

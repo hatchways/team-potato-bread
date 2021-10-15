@@ -110,7 +110,7 @@ exports.meetupCreate = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route POST /meetup/update
+// @route PUT /meetup/update
 // @desc Update a meetup event
 exports.meetupUpdate = asyncHandler(async (req, res, next) => {
   const { newData, meetupId, organizerId } = req.body;
@@ -133,14 +133,13 @@ exports.meetupUpdate = asyncHandler(async (req, res, next) => {
 // @desc Upload meetup image
 // @access Private
 exports.uploadImage = asyncHandler(async (req, res, next) => {
-  // upload image to cloudinary
   const result = await cloudinary.uploader.upload(req.file.path);
-  // create new event image
+
   const newImage = await Image.create({
     imageUrl: result.secure_url,
     cloudinaryId: result.public_id,
   });
-  // update image for current meetup
+
   const updateMeetup = await Meetup.findOneAndUpdate(
     { _id: req.body.meetupId },
     { image: newImage.imageUrl },
@@ -149,8 +148,8 @@ exports.uploadImage = asyncHandler(async (req, res, next) => {
   res.json(newImage);
 });
 
-// @route POST /meetup/register
-// @desc Update a meetup event
+// @route PUT /meetup/register
+// @desc Update a meetup event's attendees
 exports.meetupRegister = asyncHandler(async (req, res, next) => {
   const { userId, meetupId } = req.body;
 

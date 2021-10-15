@@ -24,10 +24,10 @@ router.route("/mymeetups").get(getMeetupsByUserId);
 
 router.route("/create").post(protect, validateMeetupCreation, meetupCreate);
 
-router.route("/update").post(protect, meetupUpdate);
+router.route("/update").put(protect, meetupUpdate);
 
 router.route("/image").post(upload.single("image"), protect, uploadImage);
 
-router.route("/register").post(protect, meetupRegister);
+router.route("/register").put(protect, meetupRegister);
 
 module.exports = router;
