@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware/multer");
 const protect = require("../middleware/auth");
 const { validateSearch, validateMeetupCreation } = require("../validate");
 const {
   searchMeetups,
   meetupList,
   getOneMeetup,
-  getMeetupsByOrganizer,
+  getMeetupsByUserId,
   meetupCreate,
   meetupUpdate,
+  uploadImage,
   meetupRegister,
 } = require("../controllers/meetup");
 
@@ -18,12 +20,14 @@ router.route("/all").get(meetupList);
 
 router.route("/find").get(getOneMeetup);
 
-router.route("/organizer").get(getMeetupsByOrganizer);
+router.route("/mymeetups").get(getMeetupsByUserId);
 
 router.route("/create").post(protect, validateMeetupCreation, meetupCreate);
 
-router.route("/update").post(protect, meetupUpdate);
+router.route("/update").put(protect, meetupUpdate);
 
-router.route("/register").post(protect, meetupRegister);
+router.route("/image").post(upload.single("image"), protect, uploadImage);
+
+router.route("/register").put(protect, meetupRegister);
 
 module.exports = router;

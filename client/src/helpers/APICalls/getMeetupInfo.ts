@@ -46,7 +46,7 @@ export async function getMyMeetups(userId: string): Promise<Meetup[]> {
     method: 'GET',
     credentials: 'include',
   };
-  return await fetch(`/meetup/organizer?_id=${userId}`, fetchOptions)
+  return await fetch(`/meetup/mymeetups?_id=${userId}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again.' },

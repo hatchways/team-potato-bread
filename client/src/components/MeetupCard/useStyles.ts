@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexFlow: 'column',
@@ -25,7 +25,18 @@ const useStyles = makeStyles(() => ({
     width: 75,
     margin: '0 auto',
   },
+  editMeetupLink: {
+    float: 'right',
+    margin: '0px 5px',
+    fontSize: 14,
+    display: 'block',
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    color: theme.palette.primary.main,
+  },
   name: {
+    textAlign: 'center',
+    marginTop: 25,
     fontWeight: 700,
     color: 'black',
   },
