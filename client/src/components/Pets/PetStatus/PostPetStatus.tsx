@@ -4,15 +4,15 @@ import { Box, TextField, Button } from '@material-ui/core';
 import { Formik } from 'formik';
 const PostPetStatus = (): JSX.Element => {
   const classes = useStyles();
-  const handleSubmit = ({ description }: { description: string }) => {
-    console.log('submit');
-  };
+
   return (
     <Formik
       initialValues={{
         description: '',
       }}
-      onSubmit={handleSubmit}
+      onSubmit={() => {
+        return;
+      }}
     >
       {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} noValidate className={classes.petStatusForm}>

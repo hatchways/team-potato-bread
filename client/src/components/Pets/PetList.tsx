@@ -33,9 +33,6 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
         'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
     },
   ];
-  const handlePetDetails = () => {
-    console.log('pet details');
-  };
   const handleEditPet = () => {
     history.push('/editPet', history.location.state);
   };
@@ -45,7 +42,7 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
         <Grid key={p.name} item xs={6}>
           <Box className={classes.petCard}>
             <Box className={classes.petPhotoBox}>
-              <img className={classes.petPhoto} src={p.petPhoto} onClick={handlePetDetails} />
+              <img className={classes.petPhoto} src={p.petPhoto} />
             </Box>
             <Box className={classes.editPet} onClick={handleEditPet}>
               <Typography variant="body1">Edit</Typography>
