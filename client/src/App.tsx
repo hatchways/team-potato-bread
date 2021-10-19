@@ -22,6 +22,9 @@ import SearchSitter from './pages/SearchSitter/SearchSitter';
 import MeetupInfoPage from './pages/Meetups/MeetupInfoPage/MeetupInfoPage';
 import CreateMeetup from './pages/Meetups/CreateMeetup/CreateMeetup';
 import MyMeetupsList from './pages/Meetups/MyMeetupsList/MyMeetupsList';
+import Pets from './pages/Pets/Pets';
+import CreatePet from './pages/Pets/CreatePet/CreatePet';
+import EditPet from './pages/Pets/EditPet/EditPet';
 import EditMeetup from './pages/Meetups/EditMeetup/EditMeetup';
 
 function App(): JSX.Element {
@@ -78,6 +81,15 @@ function App(): JSX.Element {
                     </Route>
                     <Route exact path="/conversations">
                       <Conversations />
+                    </Route>
+                    <Route exact path="/pets">
+                      <Pets />
+                    </Route>
+                    <Route exact path="/createPet">
+                      <CreatePet />
+                    </Route>
+                    <Route exact path="/editPet">
+                      <EditPet />
                     </Route>
                   </Fragment>
                   <Route path="*">

@@ -36,6 +36,15 @@ const MyProfileSideBanner = ({ user, profile }: Props): JSX.Element => {
             Payment
           </NavLink>
         </Typography>
+        <Typography variant="body1">
+          <NavLink
+            to={{ pathname: `/pets`, state: { user: user, profile: profile } }}
+            className={classes.navigation}
+            activeClassName={classes.activeLink}
+          >
+            Pets
+          </NavLink>
+        </Typography>
         <Typography variant="body1">Security</Typography>
         <Typography variant="body1">Settings</Typography>
       </Box>

@@ -1,6 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const sendAndSavaMessage = async (conversationId: string, senderId: string, text: string) => {
+const sendAndSaveMessage = async (conversationId: string, senderId: string, text: string) => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -16,4 +16,4 @@ const sendAndSavaMessage = async (conversationId: string, senderId: string, text
     });
 };
 
-export default sendAndSavaMessage;
+export default sendAndSaveMessage;

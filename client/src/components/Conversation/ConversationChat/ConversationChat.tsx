@@ -4,7 +4,7 @@ import MessageInput from '../MessageInput/MessageInput';
 import { Box, Container, Typography } from '@material-ui/core';
 import { User } from '../../../interface/User';
 import getMessages from '../../../helpers/APICalls/getMessages';
-import sendAndSavaMessage from '../../../helpers/APICalls/sendMessage';
+import sendAndSaveMessage from '../../../helpers/APICalls/sendMessage';
 import { useAuth } from '../../../context/useAuthContext';
 import { useSocket } from '../../../context/useSocketContext';
 import { useConversation } from '../../../context/useConversationContext';
@@ -59,7 +59,7 @@ const ConversationChat = (): JSX.Element => {
     e.preventDefault();
     if (!loggedInUser || !loggedInUser._id || !currentConversation) return;
     if (message) {
-      sendAndSavaMessage(currentConversation._id, loggedInUser._id, message).then(() => {
+      sendAndSaveMessage(currentConversation._id, loggedInUser._id, message).then(() => {
         setMessage('');
       });
     }
