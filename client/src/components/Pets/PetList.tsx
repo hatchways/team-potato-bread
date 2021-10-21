@@ -60,9 +60,7 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
         <Grid key={p.name} item xs={6}>
           <Box className={classes.petCard}>
             <Box className={classes.petPhotoBox}>
-              {p.petPhoto instanceof File ? (
-                ''
-              ) : (
+              {!(p.petPhoto instanceof File) && (
                 <CardMedia
                   component={'img'}
                   alt={'petPhoto'}
@@ -96,7 +94,7 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
                 {p.breed}
               </Typography>
               <Typography component="span" className={classes.petStatus}>
-                {p.status ? p.status[0]?.description : ''}
+                {!!p.status && p.status[0]?.description}
               </Typography>
             </Box>
           </Box>
@@ -127,7 +125,7 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
             </NavLink>
           </Box>
         </Box>
-        {currentPet ? <PetDetails currentPet={currentPet} /> : ''}
+        {!!currentPet && <PetDetails currentPet={currentPet} />}
       </Card>
     </Container>
   );

@@ -48,26 +48,31 @@ exports.createPet = asyncHandler(async (req, res, next) => {
   }
 });
 exports.addPetPhotoGallery = asyncHandler(async (req, res, next) => {
-  let { petId } = req.body;
-  let currentPet = await Pet.findById(petId);
-  let images = req.files;
-  for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.uploader.upload(images[i].path);
-    const newImage = await Image.create({
-      imageUrl: result.secure_url,
-      cloudinaryId: result.public_id,
+  if (!req.files || !req.body.petId) {
+    res.status(400);
+    throw new Error('Incomplete required data!');
+  } else {
+    let { petId } = req.body;
+    let currentPet = await Pet.findById(petId);
+    let images = req.files;
+    for (let i = 0; i < images.length; i++) {
+      const result = await cloudinary.uploader.upload(images[i].path);
+      const newImage = await Image.create({
+        imageUrl: result.secure_url,
+        cloudinaryId: result.public_id,
+      });
+      await currentPet.photoGallery.push(newImage._id);
+    }
+    await currentPet.save();
+    let updatedPet = await Pet.findById(currentPet._id)
+      .populate('petPhoto')
+      .populate('photoGallery');
+    res.status(201).json({
+      success: {
+        pet: updatedPet,
+      },
     });
-    await currentPet.photoGallery.push(newImage._id);
   }
-  await currentPet.save();
-  let updatedPet = await Pet.findById(currentPet._id)
-    .populate('petPhoto')
-    .populate('photoGallery');
-  res.status(201).json({
-    success: {
-      pet: updatedPet,
-    },
-  });
 });
 // @route PUT /pet/update
 // @desc update a new pet
