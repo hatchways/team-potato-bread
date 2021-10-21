@@ -2,7 +2,7 @@ const Pet = require('../models/Pet');
 const Status = require('../models/Status');
 const Image = require('../models/Image');
 const asyncHandler = require('express-async-handler');
-
+const cloudinary = require('../cloudinary');
 // @route POST /pet/create
 // @desc create a new pet
 // @access Private
@@ -39,34 +39,42 @@ exports.createPet = asyncHandler(async (req, res, next) => {
       newPet.petPhoto = petPhoto._id;
       await newPet.save();
     }
-    if (req.files) {
-      let images = req.files;
-
-      images.forEach(async (image) => {
-        const result = await cloudinary.uploader.upload(image.path);
-
-        const newImage = await Image.create({
-          imageUrl: result.secure_url,
-          cloudinaryId: result.public_id,
-        });
-        newPet.photoGallery.push(newImage._id);
-      });
-      await newPet.save();
-    }
+    let updatedPet = await Pet.findById(newPet._id).populate('petPhoto');
     res.status(201).json({
       success: {
-        pet: newPet,
+        pet: updatedPet,
       },
     });
   }
 });
-
+exports.addPetPhotoGallery = asyncHandler(async (req, res, next) => {
+  let { petId } = req.body;
+  let currentPet = await Pet.findById(petId);
+  let images = req.files;
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.uploader.upload(images[i].path);
+    const newImage = await Image.create({
+      imageUrl: result.secure_url,
+      cloudinaryId: result.public_id,
+    });
+    await currentPet.photoGallery.push(newImage._id);
+  }
+  await currentPet.save();
+  let updatedPet = await Pet.findById(currentPet._id)
+    .populate('petPhoto')
+    .populate('photoGallery');
+  res.status(201).json({
+    success: {
+      pet: updatedPet,
+    },
+  });
+});
 // @route PUT /pet/update
 // @desc update a new pet
 // @access Private
 exports.updatePet = asyncHandler(async (req, res, next) => {
   const {
-    petId,
+    _id,
     name,
     breed,
     age,
@@ -77,7 +85,7 @@ exports.updatePet = asyncHandler(async (req, res, next) => {
     feedingSchedule,
   } = req.body;
   const updatedPet = await Pet.findByIdAndUpdate(
-    petId,
+    _id,
     {
       $set: {
         name,
@@ -97,7 +105,7 @@ exports.updatePet = asyncHandler(async (req, res, next) => {
     throw new Error('The pet update pet failed!');
   }
   res.status(200).json({
-    seccuess: {
+    success: {
       pet: updatedPet,
     },
   });
@@ -114,7 +122,7 @@ exports.deleteOnePet = asyncHandler(async (req, res, next) => {
     throw new Error('Can not find the pet or delete failed!');
   }
   res.status(200).json({
-    seccuess: {
+    success: {
       message: 'The pet has been deleted!',
     },
   });
@@ -126,11 +134,11 @@ exports.deleteOnePet = asyncHandler(async (req, res, next) => {
 exports.findUseAllPets = asyncHandler(async (req, res, next) => {
   const { profileId } = req.params;
   const pets = await Pet.find({ owner: profileId })
-    .populate('petPhoto')
-    .populate('photoGallery')
+    .populate('petPhoto', '_id imageUrl')
+    .populate('photoGallery', '_id imageUrl')
     .populate('status');
   res.status(200).json({
-    seccuess: {
+    success: {
       pets,
     },
   });
@@ -147,7 +155,7 @@ exports.findPetById = asyncHandler(async (req, res, next) => {
     throw new Error('Can not find the pet');
   }
   res.status(200).json({
-    seccuess: {
+    success: {
       pet,
     },
   });
@@ -161,12 +169,15 @@ exports.postPetStatus = asyncHandler(async (req, res, next) => {
   const newStatus = await Status.create({
     description,
   });
-
   const updatedPet = await Pet.findByIdAndUpdate(
     petId,
-    { $push: { status: newStatus._d } },
+    { $push: { status: newStatus._id } },
     { new: true }
-  );
+  )
+    .populate('petPhoto', '_id imageUrl')
+    .populate('photoGallery', '_id imageUrl')
+    .populate('status');
+
   if (!updatedPet) {
     res.status(400);
     throw new Error('The pet update failed!');

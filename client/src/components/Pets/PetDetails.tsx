@@ -1,56 +1,38 @@
 import React, { useState } from 'react';
 import useStyles from './useStyles';
-import { Box, Typography, Button, Grid } from '@material-ui/core';
+import { Box, Typography, Button, Grid, CardMedia } from '@material-ui/core';
 import PostPetStatus from './PetStatus/PostPetStatus';
-const PetDetails = (): JSX.Element => {
+import { Pet } from '../../interface/Pet';
+import moment from 'moment';
+interface Props {
+  currentPet: Pet;
+}
+
+const PetDetails = ({ currentPet }: Props): JSX.Element => {
   const [showPostForm, setShowPostForm] = useState<boolean>(false);
   const classes = useStyles();
-  const pet = {
-    name: 'Lucky',
-    age: 1.5,
-    weight: 30,
-    sex: 'male',
-    status: [{ id: '23d2', description: 'Lucky status', date: '2 days ago' }],
-    breed: 'American Pugabull',
-    petPhotoGallery: [
-      {
-        id: 'd2u3',
-        photoURL:
-          'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      },
-      {
-        id: '1d2u3',
-        photoURL:
-          'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      },
-      {
-        id: '1d42u3',
-        photoURL:
-          'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      },
-    ],
-    petPhoto:
-      'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-  };
+
   const renderPetGallery = () => {
-    if (!pet.petPhotoGallery.length) return;
-    return pet.petPhotoGallery.map((g) => {
+    if (!currentPet.photoGallery) return;
+    return currentPet.photoGallery.map((g: any) => {
+      if (g instanceof File) return;
       return (
-        <Grid key={g.id} item xs={4} className={classes.petPhotoRow}>
+        <Grid key={g._id} item xs={4} className={classes.petPhotoRow}>
           <Box className={classes.petPhotoGalleryDetailsBox}>
-            <img src={g.photoURL} className={classes.petImgSize} />
+            <CardMedia component={'img'} alt={'photoGallery'} src={g.imageUrl} className={classes.petImgSize} />
           </Box>
         </Grid>
       );
     });
   };
   const renderPetStatus = () => {
-    return pet.status.map((s) => {
+    if (!currentPet.status) return;
+    return currentPet.status.map((s) => {
       return (
-        <Grid item key={s.id} xs={12} className={classes.petPhotoRow}>
+        <Grid item key={s._id} xs={12} className={classes.petPhotoRow}>
           <Box className={classes.petStatusRow}>
             <Typography className={classes.selectedPetStatusContent}>{s.description}</Typography>
-            <Typography className={classes.selectedPetStatusContentDate}>{s.date}</Typography>
+            <Typography className={classes.selectedPetStatusContentDate}> {moment(s.createdAt).fromNow()}</Typography>
           </Box>
         </Grid>
       );
@@ -61,28 +43,37 @@ const PetDetails = (): JSX.Element => {
       <Grid container className={classes.gridContainer}>
         <Grid item xs={12} className={classes.petPhotoRow}>
           <Box className={classes.petPhotoDetailsBox}>
-            <img src={pet.petPhoto} className={classes.petImgSize} />
+            {currentPet.petPhoto instanceof File ? (
+              ''
+            ) : (
+              <CardMedia
+                component={'img'}
+                alt={'petPhoto'}
+                src={currentPet.petPhoto?.imageUrl}
+                className={classes.petImgSize}
+              />
+            )}
           </Box>
         </Grid>
         <Grid item xs={12} className={classes.petPhotoRow}>
           <Box>
-            <Typography className={classes.selectedPetName}>{pet.name}</Typography>
-            <Typography className={classes.selectedPetBreed}>{pet.breed}</Typography>
+            <Typography className={classes.selectedPetName}>{currentPet.name}</Typography>
+            <Typography className={classes.selectedPetBreed}>{currentPet.breed}</Typography>
             <Typography className={classes.selectedPetinfo}>
-              {pet.sex}, {pet.age} years old, {pet.weight} Ib
+              {currentPet.sex}, {currentPet.age} years old, {currentPet.weight} Ib
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} className={classes.petPhotoRow}>
           <Box>
             <Button variant={'outlined'} color="primary" onClick={() => setShowPostForm(!showPostForm)}>
-              Post Status
+              {showPostForm ? 'Hide Form' : 'Post Status'}
             </Button>
           </Box>
         </Grid>
         {showPostForm ? (
           <Grid item xs={12} className={classes.petPhotoRow}>
-            <PostPetStatus />
+            <PostPetStatus petId={currentPet._id} setShowPostForm={() => setShowPostForm(!showPostForm)} />
           </Grid>
         ) : (
           ''
@@ -91,7 +82,7 @@ const PetDetails = (): JSX.Element => {
       <Grid container className={classes.gridContainer}>
         <Grid item xs={12} className={classes.petPhotoRow}>
           <Box>
-            <Typography className={classes.selectedPetSubtitle}>{pet.name} Photo Gallery</Typography>
+            <Typography className={classes.selectedPetSubtitle}>{currentPet.name} Photo Gallery</Typography>
           </Box>
         </Grid>
         {renderPetGallery()}

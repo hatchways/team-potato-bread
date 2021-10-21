@@ -33,11 +33,9 @@ const UploadPhotoForm = ({ handleAvatar, handleNewAvatar, user }: Props): JSX.El
     setFile(newFile);
     if (file) {
       setIsSubmitting(true);
-
       const formData = new FormData();
       formData.append('avatar', file);
       formData.append('email', user.email);
-
       try {
         const data = await uploadAvatar(formData);
         setAvatarUrl(data.imageUrl);

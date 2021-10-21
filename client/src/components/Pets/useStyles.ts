@@ -110,15 +110,8 @@ const useStyles = makeStyles(() => ({
   },
   editPet: {
     position: 'absolute',
-    top: 25,
-    right: 30,
-    padding: '2px 8px',
-    borderRadius: '5px',
-    '&:hover': {
-      background: 'gray',
-      color: 'white',
-      cursor: 'pointer',
-    },
+    top: 5,
+    right: 5,
   },
   petStatus: {
     color: 'gray',

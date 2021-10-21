@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifySelf: 'center',
-    width: '80%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    width: '85%', // Fix IE 11 issue.
+    margin: '3% auto',
   },
   settingSideMenu: {
     maxWidth: '25%',
@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputs: {
     marginTop: '.3rem',
-    height: '2rem',
     padding: '10px',
     border: '1px solid lightgray',
     borderRadius: theme.shape.borderRadius,

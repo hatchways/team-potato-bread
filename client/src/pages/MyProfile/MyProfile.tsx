@@ -69,19 +69,11 @@ export default function MyProfile(): JSX.Element {
         <Grid item className={classes.profileCard}>
           <Card>
             <CardActionArea>
-              {bannerImage ? (
-                <CardMedia className={classes.media} image={bannerImage && bannerImage.imageUrl} />
-              ) : (
-                <Box className={classes.imagesBox}>
-                  <Button variant="contained" size="large" color="primary" className={classes.buttons}>
-                    Upload Banner
-                  </Button>
-                </Box>
-              )}
+              <CardMedia className={classes.media} image={bannerImage && bannerImage.imageUrl} />
               <CardContent className={classes.cardContent}>
-                <Avatar className={classes.avatar} src={userData.avatar} />
+                <Avatar alt={'useAvatar'} className={classes.avatar} src={userData.avatar} />
                 <Typography className={classes.nameField} align="center">
-                  {userData.profile !== null
+                  {userData.profile?.firstName !== undefined && userData.profile?.lastName !== undefined
                     ? `${userData.profile?.firstName} ${userData.profile?.lastName}`
                     : `${userData.username}`}
                 </Typography>
@@ -105,13 +97,7 @@ export default function MyProfile(): JSX.Element {
                   </>
                 )}
                 <Box className={classes.imagesBox}>
-                  {images.length !== 0 ? (
-                    <ProfileImageList images={images} />
-                  ) : (
-                    <Button variant="contained" size="large" color="primary" className={classes.buttons}>
-                      Add Images
-                    </Button>
-                  )}
+                  <ProfileImageList images={images} />
                 </Box>
               </CardContent>
             </CardActionArea>

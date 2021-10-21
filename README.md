@@ -46,5 +46,6 @@ This is a little description about your project.
 
 2. Dashboard. Here is a description about what a user can expect to see
 
-![dashboard screen](https://user-images.githubusercontent.com/57962457/133823594-a791dd21-7873-42ed-8e72-ab89c3d0862f.jpg)
+![dashboard screenshot](https://user-images.githubusercontent.com/57962457/137535940-abe6d4b6-3dba-41df-8bd8-b4f90ba023e5.jpg)
+
 

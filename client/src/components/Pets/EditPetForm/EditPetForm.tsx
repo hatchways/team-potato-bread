@@ -11,40 +11,70 @@ import {
   Divider,
   FormControlLabel,
   Radio,
+  CardMedia,
   RadioGroup,
 } from '@material-ui/core';
 import PetStatus from '../PetStatus/PetStatus';
-import PostPetStatus from '../PetStatus/PostPetStatus';
 import { Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
-const EditPetForm = (): JSX.Element => {
+import { Pet } from '../../../interface/Pet';
+import { usePet } from '../../../context/usePetContext';
+import { useSnackBar } from '../../../context/useSnackbarContext';
+import { updatePet, addPhotoGallery } from '../../../helpers/APICalls/pet';
+interface Props {
+  currentPet: Pet;
+}
+const EditPetForm = ({ currentPet }: Props): JSX.Element => {
   const classes = useStyles();
   const history = useHistory();
-  const pet = {
-    name: 'Lucky',
-    age: 1.5,
-    weight: 30,
-    sex: 'male',
-    status: 'pet status',
-    breed: 'American Pugabull',
-    description: 'my good pet',
-    feedingSchedule: 'morning',
-    spayedOrNeutered: false,
-    petPhoto:
-      'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-  };
-  const [petURL, setPetURL] = useState<string | ''>();
-  const [petGalleries, setPetGalleries] = useState<File[]>([]);
+  const { updateCurrentPet } = usePet();
+  const { updateSnackBarMessage } = useSnackBar();
+  const [petURL, setPetURL] = useState<string | File | undefined>();
+  const [petGallery, setPetGallery] = useState<File[]>([]);
   const petPhotoInput = useRef<any>();
   const petPhotoGalleryInput = useRef<any>();
 
   useEffect(() => {
-    setPetURL(pet.petPhoto);
-  }, [pet.petPhoto]);
+    if (currentPet.petPhoto) {
+      currentPet.petPhoto instanceof File ? '' : setPetURL(currentPet.petPhoto.imageUrl);
+    }
+  }, [currentPet]);
 
-  const handleSubmit = () => {
-    history.push('/pets', history.location.state);
+  const handleSubmit = async (pet: Pet) => {
+    try {
+      const updatedData = await updatePet(pet);
+      if (updatedData) {
+        const updatedData = await updatePet(pet);
+
+        if (petGallery.length) {
+          const galleryFormData = new FormData();
+          galleryFormData.append('petId', updatedData.success.pet._id);
+          for (let i = 0; i < petGallery.length; i++) {
+            galleryFormData.append('photoGallery', petGallery[i]);
+            const updatedPhotoGallery = await addPhotoGallery(galleryFormData);
+            updateCurrentPet(updatedPhotoGallery.success.pet);
+          }
+        } else {
+          updateCurrentPet(updatedData.success.pet);
+        }
+        updateSnackBarMessage('The pet profile updated successfully!');
+        history.push('/pets', history.location.state);
+      }
+    } catch (e) {
+      updateSnackBarMessage('The pet profile update failed!');
+    }
+  };
+  const renderPetGallery = () => {
+    if (!currentPet.photoGallery) return;
+    return currentPet.photoGallery.map((g: any) => {
+      if (g instanceof File) return;
+      return (
+        <Box key={g._id} className={classes.addNewPetPhotoGallery}>
+          <img src={g.imageUrl} className={classes.petImgSize} />
+        </Box>
+      );
+    });
   };
   const handlePetPhotoUpload = () => {
     petPhotoInput.current.click();
@@ -64,24 +94,30 @@ const EditPetForm = (): JSX.Element => {
           </Typography>
           <Formik
             initialValues={{
-              name: pet.name,
-              breed: pet.breed,
-              weight: pet.weight,
-              sex: pet.sex,
-              age: pet.age,
-              spayedOrNeutered: pet.spayedOrNeutered,
-              feedingSchedule: pet.feedingSchedule,
-              description: pet.description,
-              petPhoto: pet.petPhoto,
+              _id: currentPet._id,
+              name: currentPet.name,
+              breed: currentPet.breed,
+              weight: currentPet.weight,
+              sex: currentPet.sex,
+              age: currentPet.age,
+              spayedOrNeutered: currentPet.spayedOrNeutered,
+              feedingSchedule: currentPet.feedingSchedule,
+              description: currentPet.description,
             }}
             onSubmit={handleSubmit}
           >
-            {({ handleSubmit, handleChange, setFieldValue, values, isSubmitting }) => (
+            {({ handleSubmit, handleChange, setFieldValue, values }) => (
               <form onSubmit={handleSubmit} noValidate>
                 <Grid container className={classes.petPhotoRow}>
                   <Box className={classes.addNewPetPhoto} onClick={handlePetPhotoUpload}>
                     {petURL ? (
-                      <img src={petURL} className={classes.petImgSize} />
+                      <CardMedia
+                        component={'img'}
+                        alt={'petImage'}
+                        title="petImage"
+                        src={petURL instanceof File ? URL.createObjectURL(petURL) : petURL}
+                        className={classes.petImgSize}
+                      />
                     ) : (
                       <Box className={classes.addIcon}>
                         <AddIcon className={classes.addIconSize} />
@@ -99,14 +135,13 @@ const EditPetForm = (): JSX.Element => {
                     autoFocus
                     onChange={(event: any) => {
                       if (event.target.files[0]) {
-                        setPetURL(URL.createObjectURL(event.target.files[0]));
-                        setFieldValue('petPhoto', event.target.files[0]);
+                        setPetURL(event.target.files[0]);
                       }
                     }}
                     placeholder="Your Email"
                   />
                 </Grid>
-                <PetStatus />
+                {currentPet.status ? <PetStatus status={currentPet.status} /> : ''}
                 <Divider className={classes.spaceTop} />
                 <Grid container justify="center" className={classes.formSpace}>
                   <Typography className={classes.petFormSubtitle}>Pet Details</Typography>
@@ -274,8 +309,9 @@ const EditPetForm = (): JSX.Element => {
                   <Typography variant={'h3'}>Your Pet Photo Gallery</Typography>
                 </Grid>
                 <Grid container className={classes.petPhotoGalleryRow}>
-                  {!!petGalleries &&
-                    petGalleries.map((p) => {
+                  {renderPetGallery()}
+                  {!!petGallery &&
+                    petGallery.map((p) => {
                       return (
                         <Box key={p.name} className={classes.addNewPetPhotoGallery}>
                           <img src={URL.createObjectURL(p)} className={classes.petImgSize} />
@@ -298,7 +334,7 @@ const EditPetForm = (): JSX.Element => {
                     autoFocus
                     onChange={(event: any) => {
                       if (event.target.files[0]) {
-                        setPetGalleries([...petGalleries, event.target.files[0]]);
+                        setPetGallery([...petGallery, event.target.files[0]]);
                       }
                     }}
                   />

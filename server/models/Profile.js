@@ -18,11 +18,9 @@ const availabilitySchema = new mongoose.Schema({
 const profileSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true,
   },
   lastName: {
     type: String,
-    required: true,
   },
   sitter: {
     type: Boolean,

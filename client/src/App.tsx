@@ -12,6 +12,7 @@ import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import Conversations from './pages/Conversation/Conversations';
 import { ConversationProvider } from './context/useConversationContext';
+import { PetProvider } from './context/usePetContext';
 import './App.css';
 import { Fragment } from 'react';
 import NavBar from './components/NavBar/NavBar';
@@ -25,6 +26,8 @@ import MyMeetupsList from './pages/Meetups/MyMeetupsList/MyMeetupsList';
 import Pets from './pages/Pets/Pets';
 import CreatePet from './pages/Pets/CreatePet/CreatePet';
 import EditPet from './pages/Pets/EditPet/EditPet';
+import EditMeetup from './pages/Meetups/EditMeetup/EditMeetup';
+
 function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
@@ -33,64 +36,69 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <ConversationProvider>
-                <Switch>
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/signup" component={Signup} />
-                  <Fragment>
-                    <NavBar />
-                    <Route exact path="/dashboard">
-                      <Dashboard />
+                <PetProvider>
+                  <Switch>
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={Signup} />
+                    <Fragment>
+                      <NavBar />
+                      <Route exact path="/dashboard">
+                        <Dashboard />
+                      </Route>
+                      <Route path="/sitter/:profileId">
+                        <ProfileDetails />
+                      </Route>
+                      <Route exact path="/mybookings">
+                        <MyBookings />
+                      </Route>
+                      <Route exact path="/sitters">
+                        <SearchSitter />
+                      </Route>
+                      <Route exact path="/meetups">
+                        <MeetupsList />
+                      </Route>
+                      <Route exact path="/meetup/create">
+                        <CreateMeetup />
+                      </Route>
+                      <Route exact path="/meetup/edit/:meetupId">
+                        <EditMeetup />
+                      </Route>
+                      <Route exact path="/mymeetups">
+                        <MyMeetupsList />
+                      </Route>
+                      <Route exact path="/meetups/:meetupId">
+                        <MeetupInfoPage />
+                      </Route>
+                      <Route path="/profile/:profileId">
+                        <ProfileDetails />
+                      </Route>
+                      <Route exact path="/myprofile">
+                        <MyProfile />
+                      </Route>
+                      <Route exact path="/myprofile/edit/photo">
+                        <ProfilePhoto />
+                      </Route>
+                      <Route exact path="/payment">
+                        <Payment />
+                      </Route>
+                      <Route exact path="/conversations">
+                        <Conversations />
+                      </Route>
+                      <Route exact path="/pets">
+                        <Pets />
+                      </Route>
+                      <Route exact path="/createPet">
+                        <CreatePet />
+                      </Route>
+                      <Route exact path="/editPet">
+                        <EditPet />
+                      </Route>
+                    </Fragment>
+                    <Route path="*">
+                      <Redirect to="/login" />
                     </Route>
-                    <Route path="/sitter/:profileId">
-                      <ProfileDetails />
-                    </Route>
-                    <Route exact path="/mybookings">
-                      <MyBookings />
-                    </Route>
-                    <Route exact path="/sitters">
-                      <SearchSitter />
-                    </Route>
-                    <Route exact path="/meetups">
-                      <MeetupsList />
-                    </Route>
-                    <Route exact path="/meetup/create">
-                      <CreateMeetup />
-                    </Route>
-                    <Route exact path="/mymeetups">
-                      <MyMeetupsList />
-                    </Route>
-                    <Route exact path="/meetups/:meetupId">
-                      <MeetupInfoPage />
-                    </Route>
-                    <Route path="/profile/:profileId">
-                      <ProfileDetails />
-                    </Route>
-                    <Route exact path="/myprofile">
-                      <MyProfile />
-                    </Route>
-                    <Route exact path="/myprofile/edit/photo">
-                      <ProfilePhoto />
-                    </Route>
-                    <Route exact path="/payment">
-                      <Payment />
-                    </Route>
-                    <Route exact path="/conversations">
-                      <Conversations />
-                    </Route>
-                    <Route exact path="/pets">
-                      <Pets />
-                    </Route>
-                    <Route exact path="/createPet">
-                      <CreatePet />
-                    </Route>
-                    <Route exact path="/editPet">
-                      <EditPet />
-                    </Route>
-                  </Fragment>
-                  <Route path="*">
-                    <Redirect to="/login" />
-                  </Route>
-                </Switch>
+                  </Switch>
+                </PetProvider>
               </ConversationProvider>
             </SocketProvider>
           </AuthProvider>
