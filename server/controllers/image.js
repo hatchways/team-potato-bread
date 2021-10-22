@@ -7,14 +7,13 @@ const cloudinary = require('../cloudinary');
 // @desc Upload avatar image
 // @access Public
 exports.uploadAvatar = asyncHandler(async (req, res, next) => {
-  // upload image to cloudinary
   const result = await cloudinary.uploader.upload(req.file.path);
-  // create new avatar image
+
   const newImage = await Image.create({
     imageUrl: result.secure_url,
     cloudinaryId: result.public_id,
   });
-  // update avatar for current user
+
   const updateUser = await User.findOneAndUpdate(
     { email: req.body.email },
     { avatar: newImage.imageUrl },
@@ -28,11 +27,10 @@ exports.uploadAvatar = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.uploadImages = asyncHandler(async (req, res, next) => {
   let images = req.files;
-  // loop through array and upload each image
+
   images.forEach(async (image) => {
-    // upload image to cloudinary
     const result = await cloudinary.uploader.upload(image.path);
-    // create new image
+
     const newImage = await Image.create({
       imageUrl: result.secure_url,
       cloudinaryId: result.public_id,
