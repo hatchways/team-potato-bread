@@ -1,51 +1,90 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useStyles from './useStyles';
-import { Box, Card, Typography, Button, Container, Grid } from '@material-ui/core';
+import { Box, Card, Typography, Button, Container, Grid, CardMedia, IconButton } from '@material-ui/core';
 import { NavLink, useHistory } from 'react-router-dom';
 import { User, Profile } from '../../interface/User';
+import { usePet } from '../../context/usePetContext';
+import { Pet } from '../../interface/Pet';
 import PetDetails from './PetDetails';
+import { PetsApiData } from '../../interface/PetApiData';
+import { getPets, deletePet } from '../../helpers/APICalls/pet';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/Edit';
 interface Props {
   user: User;
   profile: Profile;
 }
+
 const PetList = ({ user, profile }: Props): JSX.Element => {
   const classes = useStyles();
   const history = useHistory();
-  const pets = [
-    {
-      name: 'Lucky',
-      age: 1.5,
-      weight: 30,
-      sex: 'male',
-      status: 'Lucky status',
-      breed: 'American Pugabull',
-      petPhoto:
-        'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-    },
-    {
-      name: 'Bella',
-      age: 2,
-      weight: 22,
-      sex: 'male',
-      status: 'Bella status',
-      breed: 'American Foxhound',
-      petPhoto:
-        'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8ZG9nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-    },
-  ];
-  const handleEditPet = () => {
+  const { updateSnackBarMessage } = useSnackBar();
+  const { updatePetContext, pets, currentPet, updateCurrentPet } = usePet();
+
+  useEffect(() => {
+    if (!profile._id) return;
+    getPets(profile._id).then((data: PetsApiData) => {
+      if (!data) return;
+      if (data.success) {
+        updatePetContext(data.success.pets);
+      }
+    });
+  }, [updatePetContext, profile]);
+
+  const handleEditPet = (p: Pet) => {
+    updateCurrentPet(p);
     history.push('/editPet', history.location.state);
   };
+  const handleDeletePet = async (p: Pet) => {
+    try {
+      if (p._id) {
+        await deletePet(p._id);
+        if (pets) {
+          const result = pets.filter((pet) => pet._id !== p._id);
+          updatePetContext(result);
+          currentPet?._id === p._id ? updateCurrentPet(undefined) : '';
+          updateSnackBarMessage('The Pet profile was deleted successfully!');
+        }
+      }
+    } catch (e) {
+      updateSnackBarMessage('Something went wrong!');
+    }
+
+    history.push('/pets', history.location.state);
+  };
   const renderPets = () => {
+    if (!pets || !pets.length) return;
     return pets.map((p) => {
       return (
         <Grid key={p.name} item xs={6}>
           <Box className={classes.petCard}>
             <Box className={classes.petPhotoBox}>
-              <img className={classes.petPhoto} src={p.petPhoto} />
+              {!(p.petPhoto instanceof File) && (
+                <CardMedia
+                  component={'img'}
+                  alt={'petPhoto'}
+                  className={classes.petPhoto}
+                  src={p.petPhoto?.imageUrl}
+                  onClick={() => updateCurrentPet(p)}
+                />
+              )}
             </Box>
-            <Box className={classes.editPet} onClick={handleEditPet}>
-              <Typography variant="body1">Edit</Typography>
+            <Box className={classes.editPet}>
+              <IconButton>
+                <DeleteOutlineIcon
+                  onClick={() => {
+                    handleDeletePet(p);
+                  }}
+                />
+              </IconButton>
+              <IconButton>
+                <EditIcon
+                  onClick={() => {
+                    handleEditPet(p);
+                  }}
+                />
+              </IconButton>
             </Box>
             <Box className={classes.petInfoBox}>
               <Typography variant="body1" className={classes.petName}>
@@ -55,7 +94,7 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
                 {p.breed}
               </Typography>
               <Typography component="span" className={classes.petStatus}>
-                {p.status}
+                {!!p.status && p.status[0]?.description}
               </Typography>
             </Box>
           </Box>
@@ -86,7 +125,7 @@ const PetList = ({ user, profile }: Props): JSX.Element => {
             </NavLink>
           </Box>
         </Box>
-        <PetDetails />
+        {!!currentPet && <PetDetails currentPet={currentPet} />}
       </Card>
     </Container>
   );

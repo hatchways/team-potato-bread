@@ -71,7 +71,7 @@ export default function MyProfile(): JSX.Element {
             <CardActionArea>
               <CardMedia className={classes.media} image={bannerImage && bannerImage.imageUrl} />
               <CardContent className={classes.cardContent}>
-                <Avatar className={classes.avatar} src={userData.avatar} />
+                <Avatar alt={'useAvatar'} className={classes.avatar} src={userData.avatar} />
                 <Typography className={classes.nameField} align="center">
                   {userData.profile?.firstName !== undefined && userData.profile?.lastName !== undefined
                     ? `${userData.profile?.firstName} ${userData.profile?.lastName}`

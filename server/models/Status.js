@@ -7,6 +7,6 @@ const statusSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
-);
+);  
 
 module.exports = Status = mongoose.model('status', statusSchema);

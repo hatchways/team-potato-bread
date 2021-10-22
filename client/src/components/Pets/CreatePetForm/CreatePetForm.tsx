@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import useStyles from './useStyles';
 import {
   Box,
@@ -10,6 +10,7 @@ import {
   Grid,
   Divider,
   FormControlLabel,
+  CardMedia,
   Radio,
   RadioGroup,
 } from '@material-ui/core';
@@ -17,16 +18,43 @@ import {
 import { Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
-
-const CreatePetForm = (): JSX.Element => {
+import { Pet } from '../../../interface/Pet';
+import { createPet, addPhotoGallery } from '../../../helpers/APICalls/pet';
+import { Profile } from '../../../interface/User';
+import { useSnackBar } from '../../../context/useSnackbarContext';
+const CreatePetForm = ({ profile }: { profile: Profile }): JSX.Element => {
   const classes = useStyles();
   const history = useHistory();
-  const [petURL, setPetURL] = useState<string | ''>('');
-  const [petGalleries, setPetGalleries] = useState<File[]>([]);
-  const petPhotoInput = useRef<any>();
-  const petPhotoGalleryInput = useRef<any>();
-  const handleSubmit = () => {
-    history.push('/pets', history.location.state);
+  const { updateSnackBarMessage } = useSnackBar();
+  const [petURL, setPetURL] = useState<File | undefined>(undefined);
+  const [petGallery, setPetGallery] = useState<File[]>([]);
+  const petPhotoInput = createRef<any>();
+  const petPhotoGalleryInput = createRef<any>();
+  const handleSubmit = async (pet: Pet) => {
+    const formData = new FormData();
+    const profileId = profile._id;
+    for (const [key, value] of Object.entries(pet)) {
+      key ? formData.append(key, value) : '';
+    }
+    profileId ? formData.append('profileId', profileId) : '';
+    petURL ? formData.append('petPhoto', petURL) : '';
+    try {
+      const petData = await createPet(formData);
+
+      if (petGallery.length) {
+        const galleryFormData = new FormData();
+        galleryFormData.append('petId', petData.success.pet._id);
+        for (let i = 0; i < petGallery.length; i++) {
+          galleryFormData.append('photoGallery', petGallery[i]);
+        }
+        await addPhotoGallery(galleryFormData);
+      }
+
+      updateSnackBarMessage('The Pet profile created successfully!');
+      history.push('/pets', history.location.state);
+    } catch (e) {
+      updateSnackBarMessage('Something went wrong!');
+    }
   };
   const handlePetPhotoUpload = () => {
     petPhotoInput.current.click();
@@ -59,12 +87,18 @@ const CreatePetForm = (): JSX.Element => {
             }}
             onSubmit={handleSubmit}
           >
-            {({ handleSubmit, handleChange, setFieldValue, values, isSubmitting }) => (
-              <form onSubmit={handleSubmit} noValidate>
+            {({ handleSubmit, handleChange, setFieldValue, values }) => (
+              <form action="/pet/create" encType="multipart/form-data" method="POST" onSubmit={handleSubmit} noValidate>
                 <Grid container className={classes.petPhotoRow}>
                   <Box className={classes.addNewPetPhoto} onClick={handlePetPhotoUpload}>
                     {petURL ? (
-                      <img src={petURL} className={classes.petImgSize} />
+                      <CardMedia
+                        component={'img'}
+                        alt={'petImage'}
+                        title="petImage"
+                        src={URL.createObjectURL(petURL)}
+                        className={classes.petImgSize}
+                      />
                     ) : (
                       <Box className={classes.addIcon}>
                         <AddIcon className={classes.addIconSize} />
@@ -79,11 +113,11 @@ const CreatePetForm = (): JSX.Element => {
                     type="file"
                     inputRef={petPhotoInput}
                     name="petPhoto"
+                    required
                     autoFocus
                     onChange={(event: any) => {
                       if (event.target.files[0]) {
-                        setPetURL(URL.createObjectURL(event.target.files[0]));
-                        setFieldValue('petPhoto', event.target.files[0]);
+                        setPetURL(event.target.files[0]);
                       }
                     }}
                     placeholder="Your Email"
@@ -249,11 +283,17 @@ const CreatePetForm = (): JSX.Element => {
                   <Typography variant={'h3'}>Add Pet Photo Gallery</Typography>
                 </Grid>
                 <Grid container className={classes.petPhotoGalleryRow}>
-                  {petGalleries
-                    ? petGalleries.map((p) => {
+                  {petGallery
+                    ? petGallery.map((p) => {
                         return (
                           <Box key={p.name} className={classes.addNewPetPhotoGallery}>
-                            <img src={URL.createObjectURL(p)} className={classes.petImgSize} />
+                            <CardMedia
+                              component={'img'}
+                              alt={'petGallery'}
+                              title="petGallery"
+                              src={URL.createObjectURL(p)}
+                              className={classes.petImgSize}
+                            />
                           </Box>
                         );
                       })
@@ -274,7 +314,7 @@ const CreatePetForm = (): JSX.Element => {
                     autoFocus
                     onChange={(event: any) => {
                       if (event.target.files[0]) {
-                        setPetGalleries([...petGalleries, event.target.files[0]]);
+                        setPetGallery([...petGallery, event.target.files[0]]);
                       }
                     }}
                   />
