@@ -4,7 +4,7 @@ LovingSitter is a beautiful, easy-to-use platform that dog owners can easily fin
 
 **Tech Stack:** MongoDB, Express.js, React.js, Node.js, Typescript
 
-**Contributors**: [Hatchways](https://github.com/hatchways),[Yachao](https://github.com/yachaoxiong),
+**Contributors**: [Hatchways](https://github.com/hatchways),[Yachao](https://github.com/yachaoxiong), [Sabrina Lewis](https://github.com/slewis80),
 
 ---
 
